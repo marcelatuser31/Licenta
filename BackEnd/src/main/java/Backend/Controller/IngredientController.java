@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 public class IngredientController {
     @Autowired
     private IngredientServiceImplementation ingredientServiceImplementation;
-
     @GetMapping("/getName1")
     public String getName() {
         return "cvghbkj";

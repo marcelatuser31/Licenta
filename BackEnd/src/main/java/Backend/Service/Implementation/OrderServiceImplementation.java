@@ -24,10 +24,7 @@ public class OrderServiceImplementation implements OrderService {
     private final OrderRepository orderRepository;
     private final CakeRepository cakeRepository;
     private final PersonRepository personRepository;
-<<<<<<< HEAD
     private final DrinkRepository drinkRepository;
-=======
->>>>>>> 5f1a4839f23cd1c1de9cd87cc79e65b224249607
 
     @Override
     public Order readById(Long id) {
@@ -37,11 +34,11 @@ public class OrderServiceImplementation implements OrderService {
     public OrderResponseDTO addOrder(OrderDTO orderDTO) {
         List<Cake> cakeList = new ArrayList<>();
         List<Drink> drinkList = new ArrayList<>();
-        List<String> errorMessages=new ArrayList<>();
+        List<String> errorMessages = new ArrayList<>();
 
         for (int i = 0; i < orderDTO.getCakes().size(); i++) {
             Long id = orderDTO.getCakes().get(i).getId();
-            Cake currentCake=cakeRepository.findFirstById(id);
+            Cake currentCake = cakeRepository.findFirstById(id);
             Integer dbAmountCake = currentCake.getAmount();
             Integer amountCake = orderDTO.getCakes().get(i).getAmount();
             if (amountCake < dbAmountCake) {
@@ -50,9 +47,8 @@ public class OrderServiceImplementation implements OrderService {
                 Integer newAmountCake = dbAmountCake - amountCake;
                 cake.setAmount(newAmountCake);
                 cakeRepository.save(cake);
-            }
-            else{
-                String message="Tortul " + currentCake.getName() + " nu este disponibil ";
+            } else {
+                String message = "Tortul " + currentCake.getName() + " nu este disponibil ";
                 errorMessages.add(message);
             }
         }
@@ -69,9 +65,8 @@ public class OrderServiceImplementation implements OrderService {
                 Integer newAmountDrink = dbAmountDrink - amountDrink;
                 drink.setAmount(newAmountDrink);
                 drinkRepository.save(drink);
-            }
-            else {
-                String message= "Bautura " + currentDrink.getName() +" nu este disponibila";
+            } else {
+                String message = "Bautura " + currentDrink.getName() + " nu este disponibila";
                 errorMessages.add(message);
             }
         }
@@ -99,7 +94,7 @@ public class OrderServiceImplementation implements OrderService {
         }
         suma = sumaCake + sumaDrink;
 
-        OrderResponseDTO orderResponseDTO=new OrderResponseDTO(suma,errorMessages);
+        OrderResponseDTO orderResponseDTO = new OrderResponseDTO(suma, errorMessages);
         return orderResponseDTO;
     }
 
