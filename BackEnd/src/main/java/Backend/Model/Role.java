@@ -1,6 +1,6 @@
 package Backend.Model;
 
-import Backend.Utils.Type;
+import Backend.Utils.RoleType;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -20,5 +20,5 @@ public class Role {
     private Long id;
     private String username;
     private String password;
-    private Type type;
+    private RoleType type;
 }

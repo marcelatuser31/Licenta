@@ -3,12 +3,13 @@ package Backend.Controller;
 import Backend.Model.Cake;
 import Backend.Model.Ingredient;
 import Backend.Service.Implementation.CakeServiceImplementation;
+import Backend.Utils.CakeType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -16,13 +17,14 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/Cake")
 public class CakeController {
+    @Autowired
+    private CakeServiceImplementation cakeServiceImplementation;
 
-    private final CakeServiceImplementation cakeServiceImplementation;
-
-    @PostMapping("/readCakeById")
+    @PostMapping("/readById")
     public ResponseEntity readById(@RequestBody Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.readById(id));
     }
+
     @PostMapping("/getIngredientsByCakeId")
     public ResponseEntity getIngredientsByCakeId(@RequestBody Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getIngredientsByCakeId(id));
@@ -30,7 +32,7 @@ public class CakeController {
 
     @GetMapping("/getName")
     public String getName(){
-        return "bvdc";
+        return "Cake";
     }
 
     @GetMapping("/getAll")
@@ -46,5 +48,15 @@ public class CakeController {
     @PostMapping("/update")
     public ResponseEntity update(@RequestBody Cake cake){
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.update(cake));
+    }
+
+    @PostMapping("/readByType")
+    public ResponseEntity readByType(@RequestBody CakeType type){
+        return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.readByType(type));
+    }
+
+    @GetMapping("/getExpiredCakes")
+    public ResponseEntity getExpiredCakes(){
+        return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getExpiredCakes());
     }
 }

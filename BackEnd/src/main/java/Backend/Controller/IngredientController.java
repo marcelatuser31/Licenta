@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-
 @Controller
 @CrossOrigin
 @Validated
@@ -26,13 +24,11 @@ public class IngredientController {
 
     @PostMapping("/readById")
     public ResponseEntity<Ingredient> readById(@RequestBody Long id) {
-        System.out.println(ingredientServiceImplementation.readById(id));
         return new ResponseEntity<>(ingredientServiceImplementation.readById(id), HttpStatus.OK);
     }
 
     @PostMapping("/readByName")
     public ResponseEntity readByName(@RequestBody String name) {
-        System.out.println(ingredientServiceImplementation.readByName(name));
         return ResponseEntity.status(HttpStatus.OK).body(ingredientServiceImplementation.readByName(name));
     }
     

@@ -2,10 +2,7 @@ package Backend.Model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Builder
@@ -15,7 +12,7 @@ import javax.persistence.Id;
 @Data
 public class Ingredient{
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     private String name;
 }

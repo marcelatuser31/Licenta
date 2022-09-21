@@ -11,10 +11,10 @@ import Backend.Repository.DrinkRepository;
 import Backend.Repository.OrderRepository;
 import Backend.Repository.PersonRepository;
 import Backend.Service.OrderService;
-import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,42 +39,48 @@ public class OrderServiceImplementation implements OrderService {
         for (int i = 0; i < orderDTO.getCakes().size(); i++) {
             Long id = orderDTO.getCakes().get(i).getId();
             Cake currentCake = cakeRepository.findFirstById(id);
-            Integer dbAmountCake = currentCake.getAmount();
-            Integer amountCake = orderDTO.getCakes().get(i).getAmount();
-            if (amountCake < dbAmountCake) {
-                Cake cake = cakeRepository.findFirstById(id);
-                cakeList.add(cake);
-                Integer newAmountCake = dbAmountCake - amountCake;
-                cake.setAmount(newAmountCake);
-                cakeRepository.save(cake);
-            } else {
-                String message = "Tortul " + currentCake.getName() + " nu este disponibil ";
-                errorMessages.add(message);
+            if (currentCake != null) {
+
+                Integer dbAmountCake = currentCake.getAmount();
+                Integer amountCake = orderDTO.getCakes().get(i).getAmount();
+
+                if (amountCake < dbAmountCake) {
+                    Cake cake = cakeRepository.findFirstById(id);
+                    cakeList.add(cake);
+                    Integer newAmountCake = dbAmountCake - amountCake;
+                    cake.setAmount(newAmountCake);
+                    cakeRepository.save(cake);
+                } else {
+                    String message = "Tortul " + currentCake.getName() + " nu este disponibil ";
+                    errorMessages.add(message);
+                }
             }
         }
 
         for (int i = 0; i < orderDTO.getDrinks().size(); i++) {
             Long id = orderDTO.getDrinks().get(i).getId();
             Drink currentDrink = drinkRepository.findFirstById(id);
-            Integer dbAmountDrink = currentDrink.getAmount();
-            Integer amountDrink = orderDTO.getDrinks().get(i).getAmount();
+            if (currentDrink != null) {
 
-            if (amountDrink < dbAmountDrink) {
-                Drink drink = drinkRepository.findFirstById(id);
-                drinkList.add(drink);
-                Integer newAmountDrink = dbAmountDrink - amountDrink;
-                drink.setAmount(newAmountDrink);
-                drinkRepository.save(drink);
-            } else {
-                String message = "Bautura " + currentDrink.getName() + " nu este disponibila";
-                errorMessages.add(message);
+                Integer dbAmountDrink = currentDrink.getAmount();
+                Integer amountDrink = orderDTO.getDrinks().get(i).getAmount();
+
+                if (amountDrink < dbAmountDrink) {
+                    Drink drink = drinkRepository.findFirstById(id);
+                    drinkList.add(drink);
+                    Integer newAmountDrink = dbAmountDrink - amountDrink;
+                    drink.setAmount(newAmountDrink);
+                    drinkRepository.save(drink);
+                } else {
+                    String message = "Bautura " + currentDrink.getName() + " nu este disponibila";
+                    errorMessages.add(message);
+                }
             }
         }
 
         Person person = personRepository.findFirstById(orderDTO.getId());
-        Order order = new Order(100L, person, cakeList, drinkList);
+        Order order = new Order(100L, person, cakeList, drinkList, LocalDateTime.now());
         orderRepository.save(order);
-
 
         Float suma;
         Float sumaCake;
@@ -82,20 +88,18 @@ public class OrderServiceImplementation implements OrderService {
         sumaCake = 0F;
         sumaDrink = 0F;
 
-
         for (int i = 0; i < cakeList.size(); i++) {
-            Float price = cakeList.get(i).getPrice();
-            sumaCake = sumaCake + price;
+            Float CakePrice = cakeList.get(i).getPrice();
+            sumaCake = sumaCake + CakePrice;
         }
-
         for (int i = 0; i < drinkList.size(); i++) {
-            Float price = drinkList.get(i).getPrice();
-            sumaDrink = sumaDrink + price;
+            Float DrinkPrice = drinkList.get(i).getPrice();
+            sumaDrink = sumaDrink + DrinkPrice;
         }
         suma = sumaCake + sumaDrink;
 
-        OrderResponseDTO orderResponseDTO = new OrderResponseDTO(suma, errorMessages);
-        return orderResponseDTO;
+
+        return new OrderResponseDTO(suma, errorMessages);
     }
 
     @Override
@@ -107,5 +111,15 @@ public class OrderServiceImplementation implements OrderService {
         orderRepository.save(dbOrder);
 
         return dbOrder;
+    }
+
+    @Override
+    public void cancelOrder(Long id) {
+        Order order = orderRepository.findFirstById(id);
+        LocalDateTime currentDate = LocalDateTime.now();
+        if (order.getDate().getYear() == currentDate.getYear() && order.getDate().getMonth() == currentDate.getMonth() && order.getDate().getDayOfMonth() == currentDate.getDayOfMonth()) {
+            orderRepository.delete(order);
+        }
+
     }
 }

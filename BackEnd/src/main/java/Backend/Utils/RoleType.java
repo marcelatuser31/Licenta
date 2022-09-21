@@ -1,5 +1,5 @@
 package Backend.Utils;
 
-public enum Type {
+public enum RoleType {
     Client,Admin
 }

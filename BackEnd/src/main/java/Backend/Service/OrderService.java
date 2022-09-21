@@ -10,4 +10,6 @@ public interface OrderService {
     Order readById(Long id);
     OrderResponseDTO addOrder(OrderDTO orderDTO);
     Order update(Order order);
+
+    void cancelOrder(Long id);
 }

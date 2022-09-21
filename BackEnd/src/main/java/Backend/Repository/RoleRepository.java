@@ -12,11 +12,4 @@ public interface RoleRepository extends CrudRepository<Role, Long> {
     List<Role> findAllByIdGreaterThan(Long id);
     List<Role> findAllByPassword(String password);
     Role findFirstByUsername(String username);
-
 }
-
-
-
-
-
-

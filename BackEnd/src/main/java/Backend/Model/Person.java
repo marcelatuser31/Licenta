@@ -1,5 +1,6 @@
 package Backend.Model;
 
+import Backend.Utils.RoleType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,4 +19,5 @@ public class Person {
     private String phone;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Role role;
+
 }

@@ -3,6 +3,7 @@ package Backend.Model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -23,6 +24,8 @@ public class Order {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Drink> drinks;
+
+    private LocalDateTime date;
 
     public Order(Person p, List<Cake> c){
         this.person=p;

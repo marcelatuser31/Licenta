@@ -37,15 +37,15 @@ public class RoleServiceImplementation implements RoleService {
     @Override
     public String LogIn(LogInDTO logInDTO) {
         String password = roleRepository.findFirstByUsername(logInDTO.getUsername()).getPassword();
-        if (password.equals(logInDTO.getPassword()))
-        {
+        if (password.equals(logInDTO.getPassword())) {
             return logInDTO.getUsername();
         }
         return null;
     }
+
     @Override
     public Role update(Role role) {
-        Role dbRole=roleRepository.findAllById(role.getId());
+        Role dbRole = roleRepository.findAllById(role.getId());
 
         dbRole.setUsername(role.getUsername());
         dbRole.setPassword(role.getPassword());

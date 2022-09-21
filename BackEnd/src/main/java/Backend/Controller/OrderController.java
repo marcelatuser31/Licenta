@@ -31,4 +31,8 @@ public class OrderController {
     public ResponseEntity update(@RequestBody Order order){
         return ResponseEntity.status(HttpStatus.OK).body(orderServiceImplementation.update(order));
     }
+    @PostMapping("/cancelOrder")
+    public void cancelOrder(@RequestBody Long id){
+        orderServiceImplementation.cancelOrder(id);
+    }
 }

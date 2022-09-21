@@ -1,12 +1,21 @@
 package Backend;
 
+import Backend.Model.*;
 import Backend.Repository.*;
+import Backend.Utils.CakeType;
+import Backend.Utils.RoleType;
+import io.swagger.models.auth.In;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.validation.annotation.Validated;
+import sun.util.resources.cldr.cgg.CalendarData_cgg_UG;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 @Validated
@@ -16,60 +25,66 @@ public class MainClass extends SpringBootServletInitializer {
     }
 
     @Bean
-    CommandLineRunner init (CakeRepository cakeRepository, IngredientRepository ingredientRepository, OrderRepository orderRepository, PersonRepository personRepository, RoleRepository roleRepository){
-        return  args ->{
-//          Cake cake = new Cake();
-//           Ingredient ingredient = Ingredient.builder().id(1L).name("zahar").build();
-//            ingredientRepository.save(ingredient);
-
-//    Ingredient ingredient1= Ingredient.builder().id(5L).name("faina").build();
-//           ingredientRepository.save(ingredient1);
-//            System.out.println(ingredient1);
-//            System.out.println(ingredientRepository.findFirstById(1L));
-//            System.out.println(ingredientRepository.findAllByIdIsLessThan(5L));
-
-//      Cake cake1 = Cake.builder().name("Prajitura").id(124L).weight(12F).amount(54).build();
-//      cakeRepository.save(cake1);
-//      System.out.println(cake1);
-//            System.out.println(cake);
-
-//        Order order= Order.builder().id(4L).build();
-//        orderRepository.save(order);
-
-            //Person person = Person.builder().id(10L).phone("0757492753").name("ana").build();
-            //personRepository.save(person);
-
-           // Role role = Role.builder().username("ana").id(6L).password("1234").build();
-            //roleRepository.save(role);
-
-//            System.out.println(cakeRepository.findAllById(3L));
-//            System.out.println(ingredientRepository.findAllById(8L));
-//            //System.out.println(orderRepository.findFirstById(9L));
-//            System.out.println(personRepository.findAllById(11L));
-//            //System.out.println(roleRepository.findAllById(14L));
-
-//            Role roles= roleRepository.findFirstByUsername("ana");
-//            System.out.println(roles);
+    CommandLineRunner init(CakeRepository cakeRepository, IngredientRepository ingredientRepository, OrderRepository orderRepository, PersonRepository personRepository, RoleRepository roleRepository, DrinkRepository drinkRepository) {
+        return args -> {
+////
+//            Ingredient i = new Ingredient(1L, "ciocolata");
+//            Ingredient i1 = new Ingredient(2L, "vanilie");
+//            Ingredient i2 = new Ingredient(3L, "zahar");
+//            Ingredient i3 = new Ingredient(4L, "frisca");
+//            Ingredient i4 = new Ingredient(5L, "oua");
+//            Ingredient i5 = new Ingredient(6L, "lapte");
+//            Ingredient i6 = new Ingredient(7L, "caramel");
 //
+//            ingredientRepository.save(i);
+//            ingredientRepository.save(i1);
+//            ingredientRepository.save(i2);
+//            ingredientRepository.save(i3);
+//            ingredientRepository.save(i4);
+//            ingredientRepository.save(i5);
+//            ingredientRepository.save(i6);
+////
+//            List<Ingredient> ingredientList1 = new ArrayList<>();
+//            List<Ingredient> ingredientList2 = new ArrayList<>();
+//            List<Ingredient> ingredientList3 = new ArrayList<>();
+//            List<Ingredient> ingredientList4 = new ArrayList<>();
+//            List<Ingredient> ingredientList5 = new ArrayList<>();
 //
-//            Role role1=new Role(2L,"ghfdhgfhj","hgdhgfhg", Type.Admin);
-//            System.out.println(role1);
+//            ingredientList1.add(i);
+//            ingredientList1.add(i1);
+//            ingredientList2.add(i2);
+//            ingredientList3.add(i3);
+//            ingredientList3.add(i4);
+//            ingredientList4.add(i5);
+//            ingredientList5.add(i6);
+////
+//            Cake cake1 = new Cake(1L, "Ciocolata", 80F, 1200F, 5, ingredientList1, CakeType.Torturi, LocalDateTime.of(2022,8,25, 20, 25,6));
+//            Cake cake2 = new Cake(2L, "Vanilie", 90F, 1100F, 5, ingredientList2, CakeType.Torturi, LocalDateTime.of(2022,12,26,21,25,3));
+//            Cake cake3 = new Cake(3L, "Frisca", 100F, 1150F, 4, ingredientList3, CakeType.Prajituri, LocalDateTime.of(2022,11,20,15,30,6));
+//            Cake cake4 = new Cake(4L, "Croissant", 5F, 200F, 6, ingredientList4, CakeType.Patiserie,LocalDateTime.of(2022,10,10,5,31,5));
+//            Cake cake5 = new Cake(5l, "Snickers", 100F, 1400F, 7, ingredientList5, CakeType.Prajituri, LocalDateTime.of(2022,11,14,14,23,2));
+////
+//            cakeRepository.save(cake1);
+//            cakeRepository.save(cake2);
+//            cakeRepository.save(cake3);
+//            cakeRepository.save(cake4);
+//            cakeRepository.save(cake5);
+////
+//            Role role1 = new Role(1L, "Marce", "1234", RoleType.Admin);
+//            Role role2 = new Role(2L, "Ale", "1234", RoleType.Client);
 //
-//            roleRepository.save(role1);
-
-
-
-
-//            Ingredient i= new Ingredient(20L, "ciocolata");
-//            Ingredient i1=new Ingredient(10L, "vanilie");
+//            Person person1 = new Person(1L, "Marce", "Zalau", "0757492753", role1);
+//            Person person2 = new Person(2L, "Ale", "Chiesd", "0749473472", role2);
 //
-//            List<Ingredient> ingredientList=new ArrayList<>();
-//            ingredientList.add(i);
-//            ingredientList.add(i1);
+//            personRepository.save(person1);
+//            personRepository.save(person2);
 //
-//            Cake cake= new Cake(662L,"ciocolata",100F,1200F,5,ingredientList);
-//            cakeRepository.save(cake);
+//            Drink drink1 = new Drink(1L, "Cola", 330F, 5F, 20);
+//            Drink drink2 = new Drink(2L, "Sprite", 330F, 5F, 25);
+//
+//            drinkRepository.save(drink1);
+//            drinkRepository.save(drink2);
+
         };
-
     }
 }
