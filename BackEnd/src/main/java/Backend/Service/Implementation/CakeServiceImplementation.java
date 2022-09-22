@@ -26,8 +26,8 @@ public class CakeServiceImplementation implements CakeService {
 
     @Override
     public List<Ingredient> getIngredientsByCakeId(Long id) {
-        Cake cake=cakeRepository.findFirstById(id);
-        if(cake==null){
+        Cake cake = cakeRepository.findFirstById(id);
+        if (cake == null) {
             return new ArrayList<>();
         }
         return cakeRepository.findFirstById(id).getIngredients();
@@ -76,10 +76,18 @@ public class CakeServiceImplementation implements CakeService {
 
     @Override
     public List<Cake> getExpiredCakes() {
-        List<Cake> cakeList=cakeRepository.findAllByExpirationDateBefore(LocalDateTime.now());
-         if(cakeList==null){
-             return new ArrayList<>();
-         }
+        List<Cake> cakeList = cakeRepository.findAllByExpirationDateBefore(LocalDateTime.now());
+        if (cakeList == null) {
+            return new ArrayList<>();
+        }
         return cakeList;
+    }
+
+    @Override
+    public void deleteCake(Long id) {
+        Cake cake = cakeRepository.findFirstById(id);
+        if (cake != null) {
+            cakeRepository.delete(cake);
+        }
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -31,32 +32,37 @@ public class CakeController {
     }
 
     @GetMapping("/getName")
-    public String getName(){
+    public String getName() {
         return "Cake";
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity getAll(){
+    public ResponseEntity getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getAll());
     }
 
     @PostMapping("/getTotalPrice")
-    public ResponseEntity getTotalPrice(@RequestBody List<Long> cakeIds){
+    public ResponseEntity getTotalPrice(@RequestBody List<Long> cakeIds) {
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getTotalPrice(cakeIds));
     }
 
     @PostMapping("/update")
-    public ResponseEntity update(@RequestBody Cake cake){
+    public ResponseEntity update(@RequestBody Cake cake) {
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.update(cake));
     }
 
     @PostMapping("/readByType")
-    public ResponseEntity readByType(@RequestBody CakeType type){
+    public ResponseEntity readByType(@RequestBody CakeType type) {
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.readByType(type));
     }
 
     @GetMapping("/getExpiredCakes")
-    public ResponseEntity getExpiredCakes(){
+    public ResponseEntity getExpiredCakes() {
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getExpiredCakes());
+    }
+
+    @PostMapping("/deleteCake")
+    public void deleteCake(@RequestBody Long id) {
+        cakeServiceImplementation.deleteCake(id);
     }
 }
