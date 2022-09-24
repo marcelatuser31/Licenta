@@ -8,6 +8,7 @@ import Backend.Model.Person;
 import Backend.Model.Role;
 import Backend.Repository.CakeRepository;
 import Backend.Repository.OrderRepository;
+import Backend.Repository.PersonRepository;
 import Backend.Repository.RoleRepository;
 import Backend.Service.RoleService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class RoleServiceImplementation implements RoleService {
     private final RoleRepository roleRepository;
     private final CakeRepository cakeRepository;
     private final OrderRepository orderRepository;
+    private final PersonRepository personRepository;
 
     @Override
     public Role readById(Long id) {
@@ -36,8 +38,12 @@ public class RoleServiceImplementation implements RoleService {
 
     @Override
     public String LogIn(LogInDTO logInDTO) {
-        String password = roleRepository.findFirstByUsername(logInDTO.getUsername()).getPassword();
+        Role role=roleRepository.findFirstByUsername(logInDTO.getUsername());
+        String password = role.getPassword();
+        Person person=personRepository.findFirstByRole(role);
         if (password.equals(logInDTO.getPassword())) {
+            person.setActive(true);
+            personRepository.save(person);
             return logInDTO.getUsername();
         }
         return null;

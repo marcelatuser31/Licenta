@@ -19,5 +19,6 @@ public class Person {
     private String phone;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Role role;
+    private boolean isActive;
 
 }
