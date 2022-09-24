@@ -45,6 +45,9 @@ public class RoleServiceImplementation implements RoleService {
             person.setActive(true);
             personRepository.save(person);
             return logInDTO.getUsername();
+        }else{
+            person.setActive(false);
+            personRepository.save(person);
         }
         return null;
     }
