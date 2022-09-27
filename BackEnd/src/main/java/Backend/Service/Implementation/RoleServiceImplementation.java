@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,17 +38,16 @@ public class RoleServiceImplementation implements RoleService {
     }
 
     @Override
+    @Transactional
     public String LogIn(LogInDTO logInDTO) {
-        Role role=roleRepository.findFirstByUsername(logInDTO.getUsername());
+        Role role = roleRepository.findFirstByUsername(logInDTO.getUsername());
         String password = role.getPassword();
-        Person person=personRepository.findFirstByRole(role);
+        Person person = personRepository.findFirstByRole(role);
         if (password.equals(logInDTO.getPassword())) {
             person.setActive(true);
-            personRepository.save(person);
             return logInDTO.getUsername();
-        }else{
+        } else {
             person.setActive(false);
-            personRepository.save(person);
         }
         return null;
     }
@@ -61,6 +61,13 @@ public class RoleServiceImplementation implements RoleService {
         dbRole.setType(role.getType());
         roleRepository.save(dbRole);
         return dbRole;
+    }
+
+    @Override
+    @Transactional
+    public void LogOut(Long id) {
+        Person person=personRepository.findFirstById(id);
+        person.setActive(false);
     }
 
 }

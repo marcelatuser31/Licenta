@@ -21,4 +21,5 @@ public class Role {
     private String username;
     private String password;
     private RoleType type;
+    private String Email;
 }

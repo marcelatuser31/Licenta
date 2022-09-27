@@ -1,21 +1,14 @@
 package Backend;
 
-import Backend.Model.*;
+import Backend.Model.Role;
 import Backend.Repository.*;
-import Backend.Utils.CakeType;
 import Backend.Utils.RoleType;
-import io.swagger.models.auth.In;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.validation.annotation.Validated;
-import sun.util.resources.cldr.cgg.CalendarData_cgg_UG;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 @Validated
@@ -70,11 +63,14 @@ public class MainClass extends SpringBootServletInitializer {
 //            cakeRepository.save(cake4);
 //            cakeRepository.save(cake5);
 ////
-//            Role role1 = new Role(1L, "Marce", "1234", RoleType.Admin);
-//            Role role2 = new Role(2L, "Ale", "1234", RoleType.Client);
+//            Role role1 = new Role(1L, "Marce", "1234", RoleType.Admin, "tusermarcela@yahoo.com");
+//            Role role2 = new Role(2L, "Ale", "1234", RoleType.Client,"tuseralexia@yahoo.com");
 //
-//            Person person1 = new Person(1L, "Marce", "Zalau", "0757492753", role1);
-//            Person person2 = new Person(2L, "Ale", "Chiesd", "0749473472", role2);
+//            roleRepository.save(role1);
+//            roleRepository.save(role2);
+//
+//          Person person1 = new Person(1L, "Marce", "Zalau", "0757492753", role1, false);
+//          Person person2 = new Person(2L, "Ale", "Chiesd", "0749473472", role2, false);
 //
 //            personRepository.save(person1);
 //            personRepository.save(person2);
@@ -84,7 +80,7 @@ public class MainClass extends SpringBootServletInitializer {
 //
 //            drinkRepository.save(drink1);
 //            drinkRepository.save(drink2);
-
+//
         };
     }
 }

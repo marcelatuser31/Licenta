@@ -3,6 +3,7 @@ package Backend.Controller;
 import Backend.DTO.LogInDTO;
 import Backend.DTO.OrderDTO;
 import Backend.Model.Role;
+import Backend.Service.Implementation.PersonServiceImplementation;
 import Backend.Service.Implementation.RoleServiceImplementation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,5 +34,11 @@ public class RoleController {
     @PostMapping("/update")
     public ResponseEntity update(@RequestBody Role role) {
         return ResponseEntity.status(HttpStatus.OK).body(roleServiceImplementation.update(role));
+    }
+
+    @PostMapping("/LogOut")
+    public void LogOut(@RequestBody Long id){
+        roleServiceImplementation.LogOut(id);
+
     }
 }

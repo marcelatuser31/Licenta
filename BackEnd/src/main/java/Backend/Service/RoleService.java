@@ -11,4 +11,5 @@ public interface RoleService {
     String getPasswordByUsername(String username);
     String LogIn(LogInDTO logInDTO);
     Role update(Role role);
+    void LogOut(Long id);
 }
