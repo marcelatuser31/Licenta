@@ -8,7 +8,6 @@ import Backend.Utils.CakeType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,15 +57,17 @@ public class CakeServiceImplementation implements CakeService {
     }
 
     @Override
-    public Cake update(Cake cake) {
+    public void update(Cake cake) {
         Cake dbCake = cakeRepository.findFirstById(cake.getId());
-        dbCake.setName(cake.getName());
-        dbCake.setPrice(cake.getPrice());
-        dbCake.setWeight(cake.getWeight());
-        dbCake.setAmount(cake.getAmount());
-        dbCake.setIngredients(cake.getIngredients());
-        cakeRepository.save(dbCake);
-        return dbCake;
+        if (dbCake != null) {
+            dbCake.setName(cake.getName());
+            dbCake.setPrice(cake.getPrice());
+            dbCake.setWeight(cake.getWeight());
+            dbCake.setAmount(cake.getAmount());
+            dbCake.setIngredients(cake.getIngredients());
+
+            cakeRepository.save(dbCake);
+        }
     }
 
     @Override

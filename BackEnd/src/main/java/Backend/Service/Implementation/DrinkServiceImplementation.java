@@ -15,4 +15,5 @@ public class DrinkServiceImplementation implements DrinkService {
     public Drink readById(Long id) {
         return drinkRepository.findFirstById(id);
     }
+
 }

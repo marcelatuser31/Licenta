@@ -19,7 +19,7 @@ public interface CakeService {
 
     Float getTotalPrice(List<Long> cakeIds);
 
-    Cake update(Cake cake);
+    void update(Cake cake);
 
     List<Cake> readByType(CakeType type);
 
