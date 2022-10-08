@@ -43,6 +43,10 @@ public class RoleServiceImplementation implements RoleService {
         Role role = roleRepository.findFirstByUsername(logInDTO.getUsername());
         String password = role.getPassword();
         Person person = personRepository.findFirstByRole(role);
+        if (person== null || role == null) {
+            return null;
+        }
+
         if (password.equals(logInDTO.getPassword())) {
             person.setActive(true);
             return logInDTO.getUsername();

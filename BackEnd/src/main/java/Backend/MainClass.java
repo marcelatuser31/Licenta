@@ -1,8 +1,6 @@
 package Backend;
 
-import Backend.Model.Role;
 import Backend.Repository.*;
-import Backend.Utils.RoleType;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
