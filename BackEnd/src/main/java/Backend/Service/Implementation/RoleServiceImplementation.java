@@ -41,9 +41,12 @@ public class RoleServiceImplementation implements RoleService {
     @Transactional
     public String LogIn(LogInDTO logInDTO) {
         Role role = roleRepository.findFirstByUsername(logInDTO.getUsername());
+        if (role == null){
+            return null;
+        }
         String password = role.getPassword();
         Person person = personRepository.findFirstByRole(role);
-        if (person== null || role == null) {
+        if (person== null) {
             return null;
         }
 

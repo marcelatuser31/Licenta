@@ -1,8 +1,9 @@
-import {IRole} from "./IRole";
-export interface IPerson{
-    id:number;
-    name:number;
-    address:string;
-    phone:string;
-    role:IRole;
+import { IRole } from "./IRole";
+export interface IPerson {
+    id?: number;
+    name: string;
+    address: string;
+    phone: string;
+    role: IRole;
+    isActive: boolean;
 } 
