@@ -5,5 +5,4 @@ export const errorMessage = (message: string): void => {
         title: 'Oops...',
         text: message,
     })
-
 }

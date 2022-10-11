@@ -6,5 +6,4 @@ export interface IRole {
     password: string;
     email: string;
     type: RoleType;
-
 }

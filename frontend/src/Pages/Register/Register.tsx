@@ -6,6 +6,7 @@ import { NavigateFunction, useNavigate } from "react-router-dom"
 import { Pages, RoleType } from "../../Utils/enums"
 import { IPerson } from "../../Utils/Models/IPerson"
 import { PersonRoutes } from "../../Utils/Routes/backEndRoutes"
+
 const registerFields: string[] = ["name", "address", "phone", "email", "username", "password"];
 const defaultPErson: IPerson = {
     name: "",
@@ -18,6 +19,7 @@ const defaultPErson: IPerson = {
         type: RoleType.Client
     },
     isActive: false
+
 }
 export const Register = (): JSX.Element => {
     const navigate: NavigateFunction = useNavigate()
@@ -39,7 +41,6 @@ export const Register = (): JSX.Element => {
 
     const onClick = async (event: any): Promise<void> => {
         const response = await axios.post(PersonRoutes.Register, person);
-        console.log(response)
 
         if (response.status == 200) {
             navigate(Pages.LogIn);
@@ -78,13 +79,9 @@ export const Register = (): JSX.Element => {
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
+                        marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center',
                     }}
                 >
-
                     <Typography component="h1" variant="h5">
                         Sign up
                     </Typography>
@@ -99,11 +96,7 @@ export const Register = (): JSX.Element => {
                             </Grid>
                         </Grid>
                         <Button
-                            onClick={onClick}
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 3, mb: 2 }}
+                            onClick={onClick} type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}
                         >
                             Sign Up
                         </Button>

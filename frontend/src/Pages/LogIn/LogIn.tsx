@@ -11,10 +11,6 @@ import { errorMessage } from "../../Utils/methods"
 import { MESSAGE_LOGIN } from "../../Utils/constants"
 import { Pages } from "../../Utils/enums"
 
-
-
-
-
 export const LogIn = (): JSX.Element => {
     const navigate: NavigateFunction = useNavigate()
     const [username, setUsername] = useState<string>('');
@@ -36,17 +32,11 @@ export const LogIn = (): JSX.Element => {
             navigate(Pages.Home);
         }
         else {
-            // Swal.fire({
-            //     icon: 'error',
-            //     title: 'Oops...',
-            //     text: "Username or password didn't match",
-            // })
             errorMessage(MESSAGE_LOGIN)
         }
     }
 
     const onChange = (event: any): void => {
-
         const value: string = event.target.value;
         const name: string = event.target.name;
         if (name == 'Username') {
@@ -57,7 +47,6 @@ export const LogIn = (): JSX.Element => {
     }
 
     return <Fragment>
-
         <ThemeProvider theme={createTheme()}>
             <Grid container component="main" sx={{ height: '100vh' }}>
                 <CssBaseline />
@@ -85,7 +74,6 @@ export const LogIn = (): JSX.Element => {
                             alignItems: 'center',
                         }}
                     >
-
                         <Typography component="h1" variant="h5">
                             Log In
                         </Typography>
@@ -128,8 +116,6 @@ export const LogIn = (): JSX.Element => {
                                 </Grid>
                                 <Grid item>
                                     <Button>Forgot password</Button>
-
-
                                 </Grid>
                             </Grid>
                         </Box>
@@ -137,6 +123,5 @@ export const LogIn = (): JSX.Element => {
                 </Grid>
             </Grid>
         </ThemeProvider>
-
     </Fragment>
 }

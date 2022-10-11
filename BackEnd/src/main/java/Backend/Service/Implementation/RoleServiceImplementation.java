@@ -1,9 +1,6 @@
 package Backend.Service.Implementation;
 
 import Backend.DTO.LogInDTO;
-import Backend.DTO.OrderDTO;
-import Backend.Model.Cake;
-import Backend.Model.Order;
 import Backend.Model.Person;
 import Backend.Model.Role;
 import Backend.Repository.CakeRepository;
@@ -12,12 +9,9 @@ import Backend.Repository.PersonRepository;
 import Backend.Repository.RoleRepository;
 import Backend.Service.RoleService;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -41,12 +35,13 @@ public class RoleServiceImplementation implements RoleService {
     @Transactional
     public String LogIn(LogInDTO logInDTO) {
         Role role = roleRepository.findFirstByUsername(logInDTO.getUsername());
-        if (role == null){
+        if (role == null) {
             return null;
         }
+
         String password = role.getPassword();
         Person person = personRepository.findFirstByRole(role);
-        if (person== null) {
+        if (person == null) {
             return null;
         }
 
@@ -73,7 +68,7 @@ public class RoleServiceImplementation implements RoleService {
     @Override
     @Transactional
     public void LogOut(Long id) {
-        Person person=personRepository.findFirstById(id);
+        Person person = personRepository.findFirstById(id);
         person.setActive(false);
     }
 

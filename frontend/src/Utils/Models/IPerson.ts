@@ -1,4 +1,5 @@
 import { IRole } from "./IRole";
+
 export interface IPerson {
     id?: number;
     name: string;
