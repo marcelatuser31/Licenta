@@ -48,6 +48,7 @@
             font-weight: bold;
             text-decoration: none;
             color: $light;
+            cursor: pointer;
         }
 
         &_nav {
@@ -145,10 +146,15 @@
             }
         }
 
-
     }
 }
 
 .isMenu {
     transform: translate(100%);
+}
+
+.FilterId {
+    &:hover{
+
+    }
 }

@@ -66,4 +66,9 @@ public class CakeController {
     public void deleteCake(@RequestBody Long id) {
         cakeServiceImplementation.deleteCake(id);
     }
+
+    @GetMapping("/getCakeTypes")
+    public ResponseEntity getCakeTypes(){
+        return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getCakeTypes());
+    }
 }

@@ -91,4 +91,15 @@ public class CakeServiceImplementation implements CakeService {
             cakeRepository.delete(cake);
         }
     }
+
+    @Override
+    public List<String> getCakeTypes() {
+        List<String> cakeTypes =  new ArrayList<>();
+
+        for(CakeType type : CakeType.values()){
+            cakeTypes.add(type.name());
+        }
+
+        return cakeTypes;
+    }
 }

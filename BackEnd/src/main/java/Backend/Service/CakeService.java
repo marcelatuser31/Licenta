@@ -26,4 +26,6 @@ public interface CakeService {
     List<Cake> getExpiredCakes();
 
     void deleteCake(Long id);
+
+    List<String> getCakeTypes();
 }

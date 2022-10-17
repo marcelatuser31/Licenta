@@ -1,16 +1,13 @@
-import { Avatar, Box, Button, Checkbox, CssBaseline, FormControlLabel, Grid, Paper, TextField, ThemeProvider, Typography } from "@mui/material"
+import { Box, Button, Checkbox, CssBaseline, FormControlLabel, Grid, Paper, TextField, ThemeProvider, Typography } from "@mui/material"
+import { createTheme } from '@mui/material/styles'
 import axios from "axios"
-import React, { Fragment, useState } from "react"
-import { Link, NavigateFunction, useNavigate } from "react-router-dom"
-import { RoleRoutes } from "../../Utils/Routes/backEndRoutes"
-import { usernameClass } from "./LogIn.styles"
-import { ILogIn } from "./LogIn.types"
-import { createTheme } from '@mui/material/styles';
-import Swal from "sweetalert2";
-import { errorMessage } from "../../Utils/methods"
+import { Fragment, useState } from "react"
+import { NavigateFunction, useNavigate } from "react-router-dom"
 import { MESSAGE_LOGIN } from "../../Utils/constants"
 import { Pages } from "../../Utils/enums"
-import { Layout } from "../../components/Layout/Layout"
+import { errorMessage } from "../../Utils/methods"
+import { RoleRoutes } from "../../Utils/Routes/backEndRoutes"
+import { ILogIn } from "./LogIn.types"
 
 export const LogIn = (): JSX.Element => {
     const navigate: NavigateFunction = useNavigate()

@@ -11,7 +11,7 @@ import { cakesContainerStyles } from "./Home.styles"
 
 
 const getCard = (cake: ICake): JSX.Element => {
-    return <div className={customCardStyle}>
+    return <div className={customCardStyle} key={cake.id}>
         <CustomCard
             title={cake.name}
             expirationDate={cake.expirationDate}
