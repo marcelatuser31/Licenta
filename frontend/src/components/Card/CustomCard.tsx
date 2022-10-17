@@ -10,6 +10,8 @@ import React from "react"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { red } from "@mui/material/colors"
 import { IIngredient } from "../../Utils/Models/IIngredient"
+import { ingredientsNameStyle } from "./Card.styles"
+import { parentPort } from "worker_threads"
 
 export const CustomCard = (props: ICardProps): JSX.Element => {
     const [expanded, setExpanded] = React.useState(false);
@@ -38,7 +40,7 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                        R
+                        {props.title[0]}
                     </Avatar>
                 }
                 action={
@@ -76,6 +78,7 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
+                    <div className={ingredientsNameStyle}>Ingredients</div>
                     {props.ingredients?.map((ingredient: IIngredient) =>
                         <Typography variant="body2" color="text.secondary">
                             {ingredient.name}

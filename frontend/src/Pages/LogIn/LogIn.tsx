@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import { errorMessage } from "../../Utils/methods"
 import { MESSAGE_LOGIN } from "../../Utils/constants"
 import { Pages } from "../../Utils/enums"
+import { Layout } from "../../components/Layout/Layout"
 
 export const LogIn = (): JSX.Element => {
     const navigate: NavigateFunction = useNavigate()
@@ -46,82 +47,85 @@ export const LogIn = (): JSX.Element => {
         }
     }
 
-    return <Fragment>
-        <ThemeProvider theme={createTheme()}>
-            <Grid container component="main" sx={{ height: '100vh' }}>
-                <CssBaseline />
-                <Grid
-                    item
-                    xs={false}
-                    sm={4}
-                    md={7}
-                    sx={{
-                        backgroundImage: 'url(https://source.unsplash.com/random)',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundColor: (t) =>
-                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                    }}
-                />
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                    <Box
+    return <>
+
+        <Fragment>
+            <ThemeProvider theme={createTheme()}>
+                <Grid container component="main" sx={{ height: '100vh' }}>
+                    <CssBaseline />
+                    <Grid
+                        item
+                        xs={false}
+                        sm={4}
+                        md={7}
                         sx={{
-                            my: 8,
-                            mx: 4,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
+                            backgroundImage: 'url(https://www.pralina.ro/ProductContentFileHandler/700/700/tort-de-mere-500.jpg)',
+                            backgroundRepeat: 'no-repeat',
+                            backgroundColor: (t) =>
+                                t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
                         }}
-                    >
-                        <Typography component="h1" variant="h5">
-                            Log In
-                        </Typography>
-                        <Box>
-                            <TextField onChange={onChange}
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Username"
-                                name="Username"
-                                autoComplete="email"
-                                autoFocus
-                            />
-                            <TextField onChange={onChange}
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
-                            />
-                            <Button onClick={onClick}
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                            >
+                    />
+                    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                        <Box
+                            sx={{
+                                my: 8,
+                                mx: 4,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Typography component="h1" variant="h5">
                                 Log In
-                            </Button>
-                            <Grid container>
-                                <Grid item xs>
-                                    <Button onClick={onClickRegister}>Create Account</Button>
+                            </Typography>
+                            <Box>
+                                <TextField onChange={onChange}
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Username"
+                                    name="Username"
+                                    autoComplete="email"
+                                    autoFocus
+                                />
+                                <TextField onChange={onChange}
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                />
+                                <FormControlLabel
+                                    control={<Checkbox value="remember" color="primary" />}
+                                    label="Remember me"
+                                />
+                                <Button onClick={onClick}
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                >
+                                    Log In
+                                </Button>
+                                <Grid container>
+                                    <Grid item xs>
+                                        <Button onClick={onClickRegister}>Create Account</Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button>Forgot password</Button>
+                                    </Grid>
                                 </Grid>
-                                <Grid item>
-                                    <Button>Forgot password</Button>
-                                </Grid>
-                            </Grid>
+                            </Box>
                         </Box>
-                    </Box>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </ThemeProvider>
-    </Fragment>
+            </ThemeProvider>
+        </Fragment>
+    </>
 }

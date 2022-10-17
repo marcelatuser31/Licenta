@@ -1,19 +1,11 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { Button, Checkbox, Stack, styled, TextField } from '@mui/material';
-import { color, fontFamily, style } from '@mui/system';
-import { relative } from 'path';
 import { useRoutes } from 'react-router-dom';
+import './App.css';
+import { Layout } from "./components/Layout/Layout";
+import './styles/variables.scss';
 import { routes } from './Utils/routes';
 
-
- const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
- export const App = () =>{
-      const navBarRoutes=useRoutes(routes)
-
-  
+export const App = (): React.ReactElement<any, string | React.JSXElementConstructor<any>> | null => {
+      const navBarRoutes = useRoutes(routes)
       return navBarRoutes
-
 }
 

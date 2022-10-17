@@ -20,7 +20,6 @@ import java.util.Properties;
 public class PersonServiceImplementation implements PersonService {
     private final PersonRepository personRepository;
 
-
     @Override
     public Person readById(Long id) {
         return personRepository.findFirstById(id);
