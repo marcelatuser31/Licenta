@@ -4,13 +4,15 @@ import Backend.Utils.RoleType;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
 @ToString
 @Data
-public class Person {
+public class Person implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;

@@ -3,13 +3,12 @@ import { relative } from "path";
 import React from "react";
 
 export const buttonStyle: string = mergeStyles({
-    marginLeft: "210px",
     position: "relative",
     marginTop: "12px"
 })
 
 export const menuStyle: string = mergeStyles({
-    right: "600px",
+    // right: "600px",
     position: 'relative',
     top: 1
 })

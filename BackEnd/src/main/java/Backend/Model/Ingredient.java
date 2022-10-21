@@ -3,6 +3,7 @@ package Backend.Model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Builder
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @ToString
 @Data
-public class Ingredient{
+public class Ingredient implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;

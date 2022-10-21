@@ -5,13 +5,10 @@ import Backend.Model.Ingredient;
 import Backend.Repository.CakeRepository;
 import Backend.Service.CakeService;
 import Backend.Utils.CakeType;
-import com.sun.mail.iap.ByteArray;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.Multipart;
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -99,9 +96,9 @@ public class CakeServiceImplementation implements CakeService {
 
     @Override
     public List<String> getCakeTypes() {
-        List<String> cakeTypes =  new ArrayList<>();
+        List<String> cakeTypes = new ArrayList<>();
 
-        for(CakeType type : CakeType.values()){
+        for (CakeType type : CakeType.values()) {
             cakeTypes.add(type.name());
         }
 
@@ -109,20 +106,22 @@ public class CakeServiceImplementation implements CakeService {
     }
 
     @Override
-    @Transactional
     public Cake addCakeImage(Long cakeId, MultipartFile image) {
-        byte []imageCake=null;
-        
-        try{
-            imageCake=image.getBytes();
-        }catch(IOException e){
-            System.out.println(e);
+        byte[] imageCake = null;
+        System.out.println(image);
+        System.out.println(image.getSize());
+        try {
+            imageCake = image.getBytes();
+            System.out.println(imageCake.length);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-        Cake cake=cakeRepository.findFirstById(cakeId);
-        if(cake==null){
+        Cake cake = cakeRepository.findFirstById(cakeId);
+        if (cake == null) {
             return null;
         }
         cake.setImage(imageCake);
+        cakeRepository.save(cake);
         return cake;
     }
 }

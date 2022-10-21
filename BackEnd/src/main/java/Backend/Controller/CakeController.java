@@ -50,11 +50,12 @@ public class CakeController {
     @PostMapping("/update")
     public void update(@RequestBody Cake cake) {
         cakeServiceImplementation.update(cake);
-
     }
 
     @PostMapping("/readByType")
     public ResponseEntity readByType(@RequestBody CakeType type) {
+        if (type.ordinal() == -1)
+            type = CakeType.Car;
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.readByType(type));
     }
 
@@ -72,6 +73,7 @@ public class CakeController {
     public ResponseEntity getCakeTypes(){
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getCakeTypes());
     }
+
     @PostMapping(value="/addImage", consumes={"multipart/form-data"})
     public ResponseEntity addImage(@RequestParam (value="image", required = false) MultipartFile image, @RequestParam(value="cakeId") String cakeId){
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.addCakeImage(Long.parseLong(cakeId), image));

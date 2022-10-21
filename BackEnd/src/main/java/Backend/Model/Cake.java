@@ -4,27 +4,33 @@ import Backend.Utils.CakeType;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.io.Serializable;
+import java.sql.Blob;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
+import org.hibernate.annotations.Type;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @ToString
 @Data
-public class Cake {
+
+public class Cake implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private Float price;
     private Float weight;
     private Integer amount;
-    @OneToMany(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Ingredient> ingredients;
     private CakeType type;
     private LocalDateTime expirationDate;
+    @Lob
+    @Type(type = "org.hibernate.type.ImageType")
+    @Column(length = 2097152)
     private byte[] image;
 }

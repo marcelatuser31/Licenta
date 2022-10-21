@@ -23,7 +23,7 @@ const getCard = (cake: ICake): JSX.Element => {
 export const Home = (): JSX.Element => {
     const [cakes, setCakes] = useState<ICake[]>([])
     const [cakeTypes, setCakeTypes] = useState<string[]>([]);
-    const [selectedType, setSelectedType] = useState<string>('');
+    const [selectedType, setSelectedType] = useState<string>('All');
     const navigate: NavigateFunction = useNavigate()
 
     useEffect(() => {
@@ -58,10 +58,24 @@ export const Home = (): JSX.Element => {
         const formdata: FormData = new FormData()
         formdata.append('image', event.target.files[0])
         formdata.append('cakeId', cakes[0].id.toString())
-        const getData = async (): Promise<void> => {
-            const response = await axios.post(CakeRoutes.AddImage, formdata, { headers: IMAGE_HEADERS })
-        }
-        getData()
+        // const getData = async (): Promise<void> => {
+        //     const response = await axios.post(CakeRoutes.AddImage, formdata, { headers: IMAGE_HEADERS })
+        // }
+        // getData()
+
+        axios.post(CakeRoutes.AddImage, formdata, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                "Access-Control-Allow-Origin": "*"
+            }
+        }).then((data: any) => {
+            console.log(data)
+        }).catch((error: any) => {
+            console.log(error)
+            if (error.response) {
+
+            }
+        })
     }
 
 
@@ -74,6 +88,7 @@ export const Home = (): JSX.Element => {
                     : undefined
             }
         </div>
+
 
         <Button variant="contained" component="label">
             Upload
