@@ -5,9 +5,14 @@ import Backend.Model.Ingredient;
 import Backend.Repository.CakeRepository;
 import Backend.Service.CakeService;
 import Backend.Utils.CakeType;
+import com.sun.mail.iap.ByteArray;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.Multipart;
+import javax.transaction.Transactional;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,5 +106,23 @@ public class CakeServiceImplementation implements CakeService {
         }
 
         return cakeTypes;
+    }
+
+    @Override
+    @Transactional
+    public Cake addCakeImage(Long cakeId, MultipartFile image) {
+        byte []imageCake=null;
+        
+        try{
+            imageCake=image.getBytes();
+        }catch(IOException e){
+            System.out.println(e);
+        }
+        Cake cake=cakeRepository.findFirstById(cakeId);
+        if(cake==null){
+            return null;
+        }
+        cake.setImage(imageCake);
+        return cake;
     }
 }

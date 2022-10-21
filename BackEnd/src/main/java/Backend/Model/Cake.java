@@ -26,4 +26,5 @@ public class Cake {
     private List<Ingredient> ingredients;
     private CakeType type;
     private LocalDateTime expirationDate;
+    private byte[] image;
 }

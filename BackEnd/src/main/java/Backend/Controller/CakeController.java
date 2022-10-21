@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -70,5 +71,9 @@ public class CakeController {
     @GetMapping("/getCakeTypes")
     public ResponseEntity getCakeTypes(){
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getCakeTypes());
+    }
+    @PostMapping(value="/addImage", consumes={"multipart/form-data"})
+    public ResponseEntity addImage(@RequestParam (value="image", required = false) MultipartFile image, @RequestParam(value="cakeId") String cakeId){
+        return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.addCakeImage(Long.parseLong(cakeId), image));
     }
 }
