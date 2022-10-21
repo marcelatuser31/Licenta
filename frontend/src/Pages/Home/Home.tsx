@@ -6,6 +6,7 @@ import { customCardStyle } from "../../components/Card/Card.styles"
 import { CustomCard } from "../../components/Card/CustomCard"
 import { Header } from "../../components/Header/Header"
 import { HEADERS, IMAGE_HEADERS } from "../../Utils/constants"
+import { getImageURLfromByteArray } from "../../Utils/methods"
 import { ICake } from "../../Utils/Models/ICake"
 import { CakeRoutes } from "../../Utils/Routes/backEndRoutes"
 import { cakesContainerStyles } from "./Home.styles"
@@ -14,9 +15,12 @@ const Input = styled('input')({ display: 'none' })
 const getCard = (cake: ICake): JSX.Element => {
     return <div className={customCardStyle} key={cake.id}>
         <CustomCard
+            cakeId={cake.id}
             title={cake.name}
             expirationDate={cake.expirationDate}
-            ingredients={cake.ingredients} />
+            ingredients={cake.ingredients}
+            image={getImageURLfromByteArray(cake.image)}
+        />
     </div>
 }
 
@@ -49,6 +53,7 @@ export const Home = (): JSX.Element => {
     useEffect(() => {
         const getData = async (): Promise<void> => {
             const response = await axios.get(CakeRoutes.GetAll)
+            console.log(response.data)
             setCakes(response.data)
         }
         getData()
@@ -58,10 +63,10 @@ export const Home = (): JSX.Element => {
         const formdata: FormData = new FormData()
         formdata.append('image', event.target.files[0])
         formdata.append('cakeId', cakes[0].id.toString())
-        // const getData = async (): Promise<void> => {
-        //     const response = await axios.post(CakeRoutes.AddImage, formdata, { headers: IMAGE_HEADERS })
-        // }
-        // getData()
+        const getData = async (): Promise<void> => {
+            const response = await axios.post(CakeRoutes.AddImage, formdata, { headers: IMAGE_HEADERS })
+        }
+        getData()
 
         axios.post(CakeRoutes.AddImage, formdata, {
             headers: {
@@ -81,6 +86,7 @@ export const Home = (): JSX.Element => {
 
     return <>
         <Header cakeTypes={cakeTypes} setSelectedType={setSelectedType} />
+        {console.log(cakes)}
         <div className={cakesContainerStyles}>
             {
                 cakes.length > 0 ?

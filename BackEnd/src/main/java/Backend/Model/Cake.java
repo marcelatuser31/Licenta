@@ -31,6 +31,5 @@ public class Cake implements Serializable {
     private LocalDateTime expirationDate;
     @Lob
     @Type(type = "org.hibernate.type.ImageType")
-    @Column(length = 2097152)
     private byte[] image;
 }

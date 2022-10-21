@@ -1,4 +1,3 @@
-
 import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, styled, Typography } from "@mui/material"
 import { Fragment } from "react"
 import { ICardProps } from "./Card.types"
@@ -11,10 +10,13 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { red } from "@mui/material/colors"
 import { IIngredient } from "../../Utils/Models/IIngredient"
 import { ingredientsNameStyle } from "./Card.styles"
+import { NavigateFunction, useNavigate } from "react-router-dom"
+import { Pages } from "../../Utils/enums"
+
 
 export const CustomCard = (props: ICardProps): JSX.Element => {
     const [expanded, setExpanded] = React.useState(false);
-
+    const navigate: NavigateFunction = useNavigate()
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
@@ -34,8 +36,13 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
         }),
     }));
 
-    return <Fragment>
-        <Card sx={{ maxWidth: 345 }}>
+    const onClick = (event: any): void => {
+        navigate(Pages.Cake, { state: { cakeId: props.cakeId, name: "jghj" } })
+    }
+
+    return <Fragment >
+
+        <Card onClick={onClick} sx={{ maxWidth: 345 }}>
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -50,14 +57,10 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
                 title={props.title}
                 subheader={props.expirationDate?.toString()}
             />
-            <CardMedia
-                component="img"
-                height="194"
-                image="/static/images/cards/paella.jpg"
-                alt="Paella dish"
+
+            <img width={200} height={300} alt={'Not found'} src={props.image}
             />
             <CardContent>
-
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton aria-label="add to favorites">
