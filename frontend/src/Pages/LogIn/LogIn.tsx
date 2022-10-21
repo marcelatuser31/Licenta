@@ -45,7 +45,6 @@ export const LogIn = (): JSX.Element => {
     }
 
     return <>
-
         <Fragment>
             <ThemeProvider theme={createTheme()}>
                 <Grid container component="main" sx={{ height: '100vh' }}>
@@ -56,7 +55,7 @@ export const LogIn = (): JSX.Element => {
                         sm={4}
                         md={7}
                         sx={{
-                            backgroundImage: 'url(https://www.pralina.ro/ProductContentFileHandler/700/700/tort-de-mere-500.jpg)',
+                            backgroundImage: 'url(https://media.bakingo.com/sq-snicker-chocolate-cake0028choc-AA.jpg)',
                             backgroundRepeat: 'no-repeat',
                             backgroundColor: (t) =>
                                 t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],

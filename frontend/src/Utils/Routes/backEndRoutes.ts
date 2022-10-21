@@ -5,7 +5,7 @@ export namespace RoleRoutes {
 }
 
 export namespace CakeRoutes {
-    export const ReadAll: string = `${serverURL}/Cake/ReadAll`
+    export const GetAll: string = `${serverURL}/Cake/getAll`
     export const GetTypes: string = `${serverURL}/Cake/getCakeTypes`
     export const GetCakesByType: string = `${serverURL}/Cake/readByType`
 }

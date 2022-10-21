@@ -23,4 +23,3 @@ export const filterButtonStyle: React.CSSProperties = {
     fontWeight: "bolder",
     outline: "none"
 }
-

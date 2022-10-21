@@ -11,7 +11,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { red } from "@mui/material/colors"
 import { IIngredient } from "../../Utils/Models/IIngredient"
 import { ingredientsNameStyle } from "./Card.styles"
-import { parentPort } from "worker_threads"
 
 export const CustomCard = (props: ICardProps): JSX.Element => {
     const [expanded, setExpanded] = React.useState(false);

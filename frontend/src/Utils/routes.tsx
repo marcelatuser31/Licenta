@@ -1,3 +1,4 @@
+import { Cake } from "../Pages/Cake/Cake";
 import { Home } from "../Pages/Home/Home";
 import { LogIn } from "../Pages/LogIn/LogIn";
 import { Register } from "../Pages/Register/Register";
@@ -19,5 +20,9 @@ export const routes: IRoute[] = [
     {
         path: '/Register',
         element: <Register />
+    },
+    {
+        path: '/Cake',
+        element: <Cake />
     }
 ]

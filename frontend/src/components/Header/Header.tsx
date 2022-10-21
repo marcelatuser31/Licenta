@@ -1,6 +1,4 @@
-
 import MenuIcon from '@mui/icons-material/Menu';
-import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { AiOutlineClose } from "react-icons/ai";
 import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
@@ -8,33 +6,27 @@ import classes from './Header.module.scss';
 import { Pages } from '../../Utils/enums';
 import { buttonStyle, filterButtonStyle, menuStyle } from './Header.styles';
 import { DefaultButton, IButtonProps } from '@fluentui/react/lib/Button';
-import { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
-import axios from 'axios';
-import { CakeRoutes } from '../../Utils/Routes/backEndRoutes';
+import { IContextualMenuItem, IContextualMenuProps, ISize } from '@fluentui/react';
+import { IHeaderProps } from './Header.types';
 
-export const Header = (): JSX.Element => {
+export const Header = (props: IHeaderProps): JSX.Element => {
     const [menuOpen, setMenuOpen] = useState<boolean>(true);
-    const navigate: NavigateFunction = useNavigate();
-    const [cakeTypes, setCakeTypes] = useState<string[]>([]);
-    const [size, setSize] = useState({
+    const [size, setSize] = useState<ISize>({
         width: 0,
         height: 0,
     });
-    const [selectedType, setSelectedType] = useState<number>(0);
+    const navigate: NavigateFunction = useNavigate();
 
     useEffect(() => {
-        const handleResize = () => {
+        const handleResize = (): void => {
             setSize({
                 width: window.innerWidth,
                 height: window.innerHeight,
             });
         };
         window.addEventListener("resize", handleResize);
-
         return () => window.removeEventListener("resize", handleResize);
     }, []);
-
-
 
     useEffect(() => {
         if (size.width > 768 && menuOpen) {
@@ -43,21 +35,7 @@ export const Header = (): JSX.Element => {
     }, [size.width, menuOpen]
     )
 
-    useEffect(() => {
-        const getData = async (): Promise<any> => {
-            const response = await axios.get(CakeRoutes.GetTypes);
-            setCakeTypes(response.data)
-        }
-        getData();
-        const getCakesByType = async (): Promise<any> => {
-            const response = await axios.post(CakeRoutes.GetCakesByType, selectedType, { headers: { 'Content-Type': 'application/json' } });
-            console.log(response.data)
-        }
-        getCakesByType()
-
-    }, [selectedType])
-
-    const menuToggleHandler = () => {
+    const menuToggleHandler = (): void => {
         setMenuOpen(!menuOpen);
     }
 
@@ -69,23 +47,21 @@ export const Header = (): JSX.Element => {
         if (item == undefined)
             return;
 
-        setSelectedType(cakeTypes.indexOf(item.key))
+        props.setSelectedType(item.key)
+
     }
 
     const menuProps: IContextualMenuProps = {
         items:
-            cakeTypes.map((type: string) => {
+            props.cakeTypes.map((type: string) => {
                 return {
                     key: type,
                     text: type,
-
                 }
             }
             ),
         onItemClick: onClick
     };
-
-
 
     return (<header className={classes.header}>
         <div className={classes.header_content}>

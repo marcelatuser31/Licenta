@@ -5,5 +5,6 @@ export enum RoleType {
 export enum Pages {
     Home = "/Home",
     LogIn = "/LogIn",
-    Register = "/Register"
+    Register = "/Register",
+    Cake = "/Cake"
 }

@@ -1,5 +1,5 @@
 package Backend.Utils;
 
 public enum CakeType {
-    Torturi, Prajituri, Patiserie
+    Kids, Party, Wedding, Rose, BabyShower, Number, Car, Heart
 }
