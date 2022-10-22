@@ -6,4 +6,6 @@ export interface ICardProps {
     ingredients: IIngredient[];
     image: string;
     cakeId: number;
+    price?: number;
+    weight?: number;
 }

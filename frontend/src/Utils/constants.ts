@@ -4,3 +4,4 @@ export const IMAGE_HEADERS: any = {
   'Content-Type': 'multipart/form-data',
   "Access-Control-Allow-Origin": "*"
 }
+export const DEFAULT_COLOR: string = "rgb(0, 90, 158)"

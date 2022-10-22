@@ -1,4 +1,5 @@
 @import '../../styles/variables.scss';
+
 .header {
     background: $dark;
     // width: 100%;
@@ -8,6 +9,7 @@
     //     padding: 0 3rem;
     // }
     transition: 0.3s ease all;
+
     &_content {
         overflow: auto hidden;
         color: $light;
@@ -19,6 +21,7 @@
         justify-content: flex-start;
         position: relative;
         z-index: 100;
+
         &_toggle {
             cursor: pointer;
             display: flex;
@@ -28,13 +31,16 @@
             position: relative;
             position: relative;
             right: 50px;
+
             &:hover {
                 color: $primary;
             }
+
             @include breakpoint(md) {
                 display: none;
             }
         }
+
         &_logo {
             font-size: 2rem;
             font-weight: bold;
@@ -42,6 +48,7 @@
             color: $light;
             cursor: pointer;
         }
+
         &_nav {
             top: 0;
             right: 100%;
@@ -58,6 +65,7 @@
             backdrop-filter: blur(2px);
             transform: translate(0);
             transition: 0.3s ease transform;
+
             @include breakpoint(md) {
                 transform: none;
                 flex-direction: row;
@@ -66,35 +74,42 @@
                 height: 100%;
                 position: static;
             }
+
             ul {
                 list-style: none;
                 display: flex;
                 flex-direction: column;
                 margin-bottom: $spacing-lg;
                 margin-left: 220;
+
                 @include breakpoint(md) {
                     flex-direction: row;
                     align-items: center;
                     margin-bottom: 0;
                     margin-right: calc(0.5rem+#{$spacing-md});
                 }
+
                 li {
                     &:not(:last-child) {
                         margin-bottom: $spacing-lg;
+
                         @include breakpoint(md) {
                             margin-bottom: 0;
                             margin-right: $spacing-md;
                         }
                     }
+
                     a {
                         text-decoration: none;
                         color: inherit;
                         padding: .75rem 1.25rem;
                         border-radius: $borderRadius;
                         transition: 0.3s ease all;
+
                         &:hover {
                             background: rgba($light, 0.1);
                         }
+
                         &:active {
                             border-radius: calc(#{$borderRadius}+6px);
                             background: linear-gradient(rgba($light, .1), rgba($light, .1), rgba($light, 0.2));
@@ -103,6 +118,7 @@
                 }
             }
         }
+
         button {
             cursor: pointer;
             outline: none;
@@ -110,19 +126,20 @@
             border-radius: $borderRadius;
             font-size: 1rem;
             font-family: inherit;
-            background: $primary;
+            // background: $primary;
             color: $dark;
             border: 1px solid transparent;
             transition: 0.3s ease all;
+
             &:hover {
-                border-color: $primary;
-                background: rgba($primary, 0.1);
-                color: $primary;
+                background: white;
+                color: "white"
             }
+
             &:active {
-                border-color: $primary;
-                background: linear-gradient(rgba($primary, 0.2), rgba($primary, 0.3));
-                color: $primary;
+                border-color: white;
+                background: white;
+                color: white;
             }
         }
     }

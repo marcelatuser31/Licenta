@@ -20,6 +20,8 @@ const getCard = (cake: ICake): JSX.Element => {
             expirationDate={cake.expirationDate}
             ingredients={cake.ingredients}
             image={getImageURLfromByteArray(cake.image)}
+            price={cake.price}
+            weight={cake.weight}
         />
     </div>
 }
