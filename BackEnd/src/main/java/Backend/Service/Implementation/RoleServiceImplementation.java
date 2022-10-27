@@ -33,7 +33,7 @@ public class RoleServiceImplementation implements RoleService {
 
     @Override
     @Transactional
-    public String LogIn(LogInDTO logInDTO) {
+    public Person LogIn(LogInDTO logInDTO) {
         Role role = roleRepository.findFirstByUsername(logInDTO.getUsername());
         if (role == null) {
             return null;
@@ -47,7 +47,7 @@ public class RoleServiceImplementation implements RoleService {
 
         if (password.equals(logInDTO.getPassword())) {
             person.setActive(true);
-            return logInDTO.getUsername();
+            return person;
         } else {
             person.setActive(false);
         }
