@@ -1,5 +1,4 @@
 import { mergeStyles } from "@fluentui/merge-styles";
-import { getAriaDescribedBy, merge } from "@fluentui/react";
 import { DEFAULT_COLOR } from "../../Utils/constants";
 
 export const title: string = mergeStyles({
@@ -10,10 +9,9 @@ export const title: string = mergeStyles({
     position: "relative",
     top: "30px",
     fontFamily: 'Brush Script MT'
-    // textShadow: "3px 3px"
-
 })
-export const price1: string = mergeStyles({
+
+export const valueStyle: string = mergeStyles({
     fontSize: "20px",
     position: "relative",
     top: "30px",
@@ -22,7 +20,7 @@ export const price1: string = mergeStyles({
     left: 30
 })
 
-export const price2: string = mergeStyles({
+export const labelStyle: string = mergeStyles({
     fontSize: "20px",
     position: "relative",
     top: "30px",
@@ -30,7 +28,7 @@ export const price2: string = mergeStyles({
     color: DEFAULT_COLOR
 })
 
-export const image: string = mergeStyles({
+export const imageStyle: string = mergeStyles({
     position: "relative",
     top: "30px",
     left: "30px",
@@ -41,13 +39,8 @@ export const image: string = mergeStyles({
             cursor: 'pointer'
         }
     }
-
-    // transform: "scale(1.3)"
-
 })
 
-export const textField: string = mergeStyles({
+export const textFieldStyle: string = mergeStyles({
     width: '50px'
-
-
 })

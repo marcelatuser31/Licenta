@@ -1,3 +1,5 @@
+import { ICakeOrder } from "../../Pages/Cake/Cake.types"
+
 export interface ISize {
     width: number,
     height: number
@@ -5,5 +7,5 @@ export interface ISize {
 
 export interface IHeaderProps {
     cakeTypes: string[],
-    setSelectedType: (state: string) => void
+    setSelectedType: (state: string) => void,
 }

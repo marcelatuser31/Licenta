@@ -85,10 +85,8 @@ export const Home = (): JSX.Element => {
         })
     }
 
-
     return <>
         <Header cakeTypes={cakeTypes} setSelectedType={setSelectedType} />
-        {console.log(cakes)}
         <div className={cakesContainerStyles}>
             {
                 cakes.length > 0 ?
@@ -96,8 +94,6 @@ export const Home = (): JSX.Element => {
                     : undefined
             }
         </div>
-
-
         <Button variant="contained" component="label">
             Upload
             <Input accept='image/*' id='contained-button-file' multiple type='file' onChange={onChange} />

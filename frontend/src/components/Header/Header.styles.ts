@@ -1,16 +1,24 @@
 import { mergeStyles } from "@fluentui/merge-styles";
-import { relative } from "path";
 import React from "react";
 
-export const buttonStyle: string = mergeStyles({
+export const logOutButtonStyle: string = mergeStyles({
     position: "relative",
-    marginTop: "12px"
+    top: "5px",
+    left: 160
+})
+
+export const myCartButtonStyle: string = mergeStyles({
+    position: "relative",
+    top: "10px",
+    right: 10,
+    cursor: "pointer"
+
 })
 
 export const menuStyle: string = mergeStyles({
-    // right: "600px",
     position: 'relative',
-    top: 1
+    top: 1,
+    left: 60
 })
 
 export const filterButtonStyle: React.CSSProperties = {
@@ -20,5 +28,6 @@ export const filterButtonStyle: React.CSSProperties = {
     backgroundColor: "rgb(29, 29, 29)",
     color: "rgb(240,240,240)",
     fontWeight: "bolder",
-    outline: "none"
+    outline: "none",
+    padding: "0.5rem 1rem"
 }

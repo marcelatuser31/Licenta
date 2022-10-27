@@ -7,12 +7,16 @@ import { MESSAGE_LOGIN } from "../../Utils/constants"
 import { Pages } from "../../Utils/enums"
 import { errorMessage } from "../../Utils/methods"
 import { RoleRoutes } from "../../Utils/Routes/backEndRoutes"
+import { ICakeOrder } from "../Cake/Cake.types"
 import { ILogIn } from "./LogIn.types"
 
 export const LogIn = (): JSX.Element => {
     const navigate: NavigateFunction = useNavigate()
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+
+    const cakeList: ICakeOrder[] = []
+    localStorage.setItem('order', JSON.stringify(cakeList))
 
     const onClickRegister = (event: any): void => {
         navigate(Pages.Register);

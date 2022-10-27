@@ -12,8 +12,6 @@ import { IIngredient } from "../../Utils/Models/IIngredient"
 import { ingredientsNameStyle } from "./Card.styles"
 import { NavigateFunction, useNavigate } from "react-router-dom"
 import { Pages } from "../../Utils/enums"
-import { getImageURLfromByteArray } from "../../Utils/methods"
-
 
 export const CustomCard = (props: ICardProps): JSX.Element => {
     const [expanded, setExpanded] = React.useState(false);
@@ -38,11 +36,20 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
     }));
 
     const onClick = (event: any): void => {
-        navigate(Pages.Cake, { state: { cakeId: props.cakeId, title: props.title, image: props.image, ingredients: props.ingredients, price: props.price, weight: props.weight, expirationDate: props.expirationDate } })
+        navigate(Pages.Cake, {
+            state: {
+                cakeId: props.cakeId,
+                title: props.title,
+                image: props.image,
+                ingredients: props.ingredients,
+                price: props.price,
+                weight: props.weight,
+                expirationDate: props.expirationDate
+            }
+        })
     }
 
     return <Fragment >
-
         <Card sx={{ maxWidth: 345 }}>
             <CardHeader onClick={onClick}
                 avatar={

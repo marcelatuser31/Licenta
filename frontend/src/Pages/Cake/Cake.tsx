@@ -3,10 +3,13 @@ import { Button, TextField, Typography } from "@mui/material"
 import { useLocation } from "react-router-dom"
 import { Header } from "../../components/Header/Header"
 import { IIngredient } from "../../Utils/Models/IIngredient"
-import { image, price1, price2, textField, title } from "./Cake.styles"
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import { imageStyle, labelStyle, textFieldStyle, title, valueStyle } from "./Cake.styles"
+import { useState } from "react"
+import { ICakeOrder } from "./Cake.types"
 
 export const Cake = (): JSX.Element => {
+    const [cakeMessage, setCakeMessage] = useState<string>('');
     const location = useLocation()
     const options: IChoiceGroupOption[] = [
         { key: 'A', text: '0.5kg', styles: { root: { marginLeft: 0 } } },
@@ -15,13 +18,31 @@ export const Cake = (): JSX.Element => {
         { key: 'D', text: '2kg', styles: { root: { marginLeft: 20 } } },
     ];
 
+    const onClick = (event: any): void => {
+        const newCake: ICakeOrder = {
+            cakeId: location.state.cakeId,
+            name: location.state.title,
+            price: location.state.price,
+            cakeMessage: cakeMessage,
+            weight: location.state.weight
+        }
+        const newCakeList: ICakeOrder[] = JSON.parse(localStorage.getItem('order') as string)
+        newCakeList.push(newCake)
+        localStorage.setItem('order', JSON.stringify(newCakeList))
+    }
+
+    const onChange = (event: any): void => {
+        const value: string = event.target.value;
+        setCakeMessage(value);
+    }
+
     return <>
         <Header cakeTypes={[]} setSelectedType={function (state: string): void {
             throw new Error("Function not implemented.")
         }} />
         <Stack horizontal={true} gap='80' >
             <StackItem>
-                <img width={600} height={600} alt={'Not found'} src={location.state.image} className={image} />
+                <img width={600} height={600} alt={'Not found'} src={location.state.image} className={imageStyle} />
             </StackItem>
             <StackItem>
                 <Stack gap='50'>
@@ -30,18 +51,16 @@ export const Cake = (): JSX.Element => {
                     </StackItem>
                     <StackItem >
                         <Stack gap='10'>
-                            <StackItem className={price2}>Price:</StackItem>
-                            <StackItem className={price1}>{location.state.price} RON </StackItem>
+                            <StackItem className={labelStyle}>Price:</StackItem>
+                            <StackItem className={valueStyle}>{location.state.price} RON </StackItem>
                         </Stack>
                     </StackItem>
                     <StackItem>
                         <Stack gap='10'>
-                            <StackItem className={price2}>Weight:</StackItem>
-                            <StackItem className={price1}>
+                            <StackItem className={labelStyle}>Weight:</StackItem>
+                            <StackItem className={valueStyle}>
                                 <ChoiceGroup
                                     styles={{ flexContainer: { display: "flex" } }}
-                                    // This is usually what you should do
-                                    // label="Normal label"
                                     defaultSelectedKey="B"
                                     options={options}
                                 />
@@ -50,8 +69,8 @@ export const Cake = (): JSX.Element => {
                     </StackItem>
                     <StackItem>
                         <Stack >
-                            <StackItem className={price2}>Ingredients:</StackItem>
-                            <StackItem className={price1}>
+                            <StackItem className={labelStyle}>Ingredients:</StackItem>
+                            <StackItem className={valueStyle}>
                                 <Stack horizontal={true} gap='10'>
                                     {location.state.ingredients?.map((ingredient: IIngredient) =>
                                         <Typography>
@@ -63,10 +82,11 @@ export const Cake = (): JSX.Element => {
                     </StackItem>
                     <StackItem>
                         <Stack>
-                            <StackItem className={price2}>Cake Message:
+                            <StackItem className={labelStyle}>Cake Message:
                             </StackItem>
                             <StackItem>
-                                <TextField className={`${price1} ${textField}`}
+                                <TextField className={`${valueStyle} ${textFieldStyle}`}
+                                    onChange={onChange}
                                     style={{ borderColor: "red", width: "25vw" }}
                                     margin="normal"
                                     required
@@ -79,7 +99,7 @@ export const Cake = (): JSX.Element => {
                         </Stack>
                     </StackItem>
                     <StackItem align="center">
-                        <Button variant="contained" className={price1} endIcon={<ShoppingCartCheckoutIcon />}>Add to cart</Button>
+                        <Button variant="contained" className={valueStyle} endIcon={<ShoppingCartCheckoutIcon />} onClick={onClick} >Add to cart</Button>
                     </StackItem>
                 </Stack>
             </StackItem>
