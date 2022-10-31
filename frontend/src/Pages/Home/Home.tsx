@@ -69,20 +69,6 @@ export const Home = (): JSX.Element => {
             const response = await axios.post(CakeRoutes.AddImage, formdata, { headers: IMAGE_HEADERS })
         }
         getData()
-
-        axios.post(CakeRoutes.AddImage, formdata, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                "Access-Control-Allow-Origin": "*"
-            }
-        }).then((data: any) => {
-            console.log(data)
-        }).catch((error: any) => {
-            console.log(error)
-            if (error.response) {
-
-            }
-        })
     }
 
     return <>

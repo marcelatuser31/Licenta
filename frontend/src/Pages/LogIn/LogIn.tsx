@@ -3,11 +3,10 @@ import { createTheme } from '@mui/material/styles'
 import axios from "axios"
 import { Fragment, useState } from "react"
 import { NavigateFunction, useNavigate } from "react-router-dom"
-import { MESSAGE_LOGIN } from "../../Utils/constants"
+import { MESSAGE_LOGIN, ORDER_LIST_KEY } from "../../Utils/constants"
 import { Pages } from "../../Utils/enums"
 import { errorMessage } from "../../Utils/methods"
 import { RoleRoutes } from "../../Utils/Routes/backEndRoutes"
-import { ICakeOrder } from "../Cake/Cake.types"
 import { ILogIn } from "./LogIn.types"
 
 export const LogIn = (): JSX.Element => {
@@ -15,8 +14,7 @@ export const LogIn = (): JSX.Element => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    const cakeList: ICakeOrder[] = []
-    localStorage.setItem('order', JSON.stringify(cakeList))
+    localStorage.setItem(ORDER_LIST_KEY, JSON.stringify([]))
 
     const onClickRegister = (event: any): void => {
         navigate(Pages.Register);
@@ -30,6 +28,7 @@ export const LogIn = (): JSX.Element => {
 
         const response = await axios.post(RoleRoutes.LogIn, loginData);
 
+        localStorage.setItem('person', JSON.stringify(response.data))
         if (response.data != null && response.data != "") {
             navigate(Pages.Home);
         }

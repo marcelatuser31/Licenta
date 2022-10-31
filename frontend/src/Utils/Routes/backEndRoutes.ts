@@ -15,3 +15,6 @@ export namespace PersonRoutes {
     export const Register: string = `${serverURL}/Person/register`
 }
 
+export namespace OrderRoutes {
+    export const AddOrder: string = `${serverURL}/Order/addOrder`
+}

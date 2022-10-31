@@ -6,6 +6,6 @@ export interface ISize {
 }
 
 export interface IHeaderProps {
-    cakeTypes: string[],
-    setSelectedType: (state: string) => void,
+    cakeTypes?: string[],
+    setSelectedType?: (state: string) => void,
 }

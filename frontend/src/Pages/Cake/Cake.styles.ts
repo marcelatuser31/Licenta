@@ -1,4 +1,5 @@
-import { mergeStyles } from "@fluentui/merge-styles";
+import { IStyleFunctionOrObject, mergeStyles } from "@fluentui/merge-styles";
+import { IChoiceGroupStyleProps, IChoiceGroupStyles } from "@fluentui/react";
 import { DEFAULT_COLOR } from "../../Utils/constants";
 
 export const title: string = mergeStyles({
@@ -44,3 +45,9 @@ export const imageStyle: string = mergeStyles({
 export const textFieldStyle: string = mergeStyles({
     width: '50px'
 })
+
+export const choiceGroupStyle: IStyleFunctionOrObject<IChoiceGroupStyleProps, IChoiceGroupStyles> = {
+    flexContainer:
+        { display: "flex" }
+}
+

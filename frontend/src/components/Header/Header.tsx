@@ -12,16 +12,14 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Badge, Button, ButtonProps, styled } from '@mui/material';
 import { purple } from '@mui/material/colors';
 import { ICakeOrder } from '../../Pages/Cake/Cake.types';
+import { ORDER_LIST_KEY } from '../../Utils/constants';
 
 export const Header = (props: IHeaderProps): JSX.Element => {
     const [menuOpen, setMenuOpen] = useState<boolean>(true);
     const [cakeListLength, setCakeListLength] = useState<number>(0);
-
-    const [size, setSize] = useState<ISize>({
-        width: 0,
-        height: 0,
-    });
-
+    const cakeTypes: string[] = props.cakeTypes as string[]
+    const setSelectedType: (state: string) => void = props.setSelectedType as (state: string) => void
+    const [size, setSize] = useState<ISize>({ width: 0, height: 0, });
     const navigate: NavigateFunction = useNavigate();
 
     useEffect(() => {
@@ -53,13 +51,12 @@ export const Header = (props: IHeaderProps): JSX.Element => {
     const onClick = (event: any, item?: IContextualMenuItem): void => {
         if (item == undefined)
             return;
-
-        props.setSelectedType(item.key)
+        setSelectedType(item.key)
     }
 
     const menuProps: IContextualMenuProps = {
         items:
-            props.cakeTypes.map((type: string) => {
+            cakeTypes?.map((type: string) => {
                 return {
                     key: type,
                     text: type,
@@ -74,7 +71,7 @@ export const Header = (props: IHeaderProps): JSX.Element => {
         backgroundColor: 'white',
     }));
 
-    const newCakeList: ICakeOrder[] = JSON.parse(localStorage.getItem('order') as string)
+    const newCakeList: ICakeOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
     useEffect(() => {
         const length: number = newCakeList.length
         setCakeListLength(length)

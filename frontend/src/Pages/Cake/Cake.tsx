@@ -4,9 +4,10 @@ import { useLocation } from "react-router-dom"
 import { Header } from "../../components/Header/Header"
 import { IIngredient } from "../../Utils/Models/IIngredient"
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import { imageStyle, labelStyle, textFieldStyle, title, valueStyle } from "./Cake.styles"
+import { choiceGroupStyle, imageStyle, labelStyle, textFieldStyle, title, valueStyle } from "./Cake.styles"
 import { useState } from "react"
 import { ICakeOrder } from "./Cake.types"
+import { ORDER_LIST_KEY } from "../../Utils/constants"
 
 export const Cake = (): JSX.Element => {
     const [cakeMessage, setCakeMessage] = useState<string>('');
@@ -26,9 +27,9 @@ export const Cake = (): JSX.Element => {
             cakeMessage: cakeMessage,
             weight: location.state.weight
         }
-        const newCakeList: ICakeOrder[] = JSON.parse(localStorage.getItem('order') as string)
-        newCakeList.push(newCake)
-        localStorage.setItem('order', JSON.stringify(newCakeList))
+        const cakeList: ICakeOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
+        cakeList.push(newCake)
+        localStorage.setItem('order', JSON.stringify(cakeList))
     }
 
     const onChange = (event: any): void => {
@@ -37,9 +38,7 @@ export const Cake = (): JSX.Element => {
     }
 
     return <>
-        <Header cakeTypes={[]} setSelectedType={function (state: string): void {
-            throw new Error("Function not implemented.")
-        }} />
+        <Header />
         <Stack horizontal={true} gap='80' >
             <StackItem>
                 <img width={600} height={600} alt={'Not found'} src={location.state.image} className={imageStyle} />
@@ -60,7 +59,7 @@ export const Cake = (): JSX.Element => {
                             <StackItem className={labelStyle}>Weight:</StackItem>
                             <StackItem className={valueStyle}>
                                 <ChoiceGroup
-                                    styles={{ flexContainer: { display: "flex" } }}
+                                    styles={choiceGroupStyle}
                                     defaultSelectedKey="B"
                                     options={options}
                                 />

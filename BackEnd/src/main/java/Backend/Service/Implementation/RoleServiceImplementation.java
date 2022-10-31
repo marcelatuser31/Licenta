@@ -50,8 +50,8 @@ public class RoleServiceImplementation implements RoleService {
             return person;
         } else {
             person.setActive(false);
+            return null;
         }
-        return null;
     }
 
     @Override

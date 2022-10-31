@@ -97,8 +97,6 @@ public class OrderServiceImplementation implements OrderService {
             sumaDrink = sumaDrink + DrinkPrice;
         }
         suma = sumaCake + sumaDrink;
-
-
         return new OrderResponseDTO(suma, errorMessages);
     }
 
@@ -120,6 +118,5 @@ public class OrderServiceImplementation implements OrderService {
         if (order.getDate().getYear() == currentDate.getYear() && order.getDate().getMonth() == currentDate.getMonth() && order.getDate().getDayOfMonth() == currentDate.getDayOfMonth()) {
             orderRepository.delete(order);
         }
-
     }
 }
