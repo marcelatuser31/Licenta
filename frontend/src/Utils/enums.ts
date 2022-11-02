@@ -1,5 +1,5 @@
 export enum RoleType {
-    Client, Admin
+    Client = 'Client', Admin = 'Admin'
 }
 
 export enum Pages {

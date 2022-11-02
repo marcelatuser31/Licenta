@@ -50,7 +50,7 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
     }
 
     return <Fragment >
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ maxWidth: 345, minHeight: 500 }}>
             <CardHeader onClick={onClick}
                 avatar={
                     <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">

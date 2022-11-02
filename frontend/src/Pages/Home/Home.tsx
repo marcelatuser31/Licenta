@@ -1,17 +1,18 @@
+import { ChoiceGroup, IChoiceGroupOption, Stack, StackItem } from "@fluentui/react"
 import { Button, styled } from "@mui/material"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { NavigateFunction, useNavigate } from "react-router-dom"
 import { customCardStyle } from "../../components/Card/Card.styles"
 import { CustomCard } from "../../components/Card/CustomCard"
-import { Header } from "../../components/Header/Header"
+import { Navbar } from "../../components/Navbar/Navbar"
 import { HEADERS, IMAGE_HEADERS } from "../../Utils/constants"
-import { getImageURLfromByteArray } from "../../Utils/methods"
+import { getImageURLfromByteArray, onUploadPhoto } from "../../Utils/methods"
 import { ICake } from "../../Utils/Models/ICake"
 import { CakeRoutes } from "../../Utils/Routes/backEndRoutes"
-import { cakesContainerStyles } from "./Home.styles"
+import { cakesContainerStyles, choiceGroupStyle } from "./Home.styles"
 
-const Input = styled('input')({ display: 'none' })
+export const Input = styled('input')({ display: 'none' })
 const getCard = (cake: ICake): JSX.Element => {
     return <div className={customCardStyle} key={cake.id}>
         <CustomCard
@@ -32,11 +33,25 @@ export const Home = (): JSX.Element => {
     const [selectedType, setSelectedType] = useState<string>('All');
     const navigate: NavigateFunction = useNavigate()
 
+    const options: IChoiceGroupOption[] =
+        cakeTypes.map((type: string) => {
+            return {
+                key: type,
+                text: type
+            }
+        })
+
+    const onChoiceGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
+        if (option === undefined)
+            return
+        setSelectedType(option.text)
+    }
+
     useEffect(() => {
         const getData = async (): Promise<any> => {
             const response = await axios.get(CakeRoutes.GetTypes);
             const types: string[] = response.data
-            types.unshift('All');
+            types.push('All');
             setCakeTypes(types)
         }
         getData();
@@ -61,28 +76,25 @@ export const Home = (): JSX.Element => {
         getData()
     }, [])
 
-    const onChange = (event: any): void => {
-        const formdata: FormData = new FormData()
-        formdata.append('image', event.target.files[0])
-        formdata.append('cakeId', cakes[0].id.toString())
-        const getData = async (): Promise<void> => {
-            const response = await axios.post(CakeRoutes.AddImage, formdata, { headers: IMAGE_HEADERS })
-        }
-        getData()
-    }
-
     return <>
-        <Header cakeTypes={cakeTypes} setSelectedType={setSelectedType} />
-        <div className={cakesContainerStyles}>
-            {
-                cakes.length > 0 ?
-                    cakes.map((cake: ICake) => getCard(cake))
-                    : undefined
-            }
-        </div>
-        <Button variant="contained" component="label">
-            Upload
-            <Input accept='image/*' id='contained-button-file' multiple type='file' onChange={onChange} />
-        </Button>
+        <Navbar />
+        <Stack horizontal={true} gap='80'>
+            <StackItem>
+                <ChoiceGroup
+                    onChange={onChoiceGroupChange}
+                    styles={choiceGroupStyle}
+                    defaultSelectedKey="B"
+                    options={options}
+                />
+            </StackItem>
+            <StackItem className={cakesContainerStyles}>
+                {
+                    cakes.length > 0 ?
+                        cakes.map((cake: ICake) => getCard(cake))
+                        : undefined
+                }
+            </StackItem>
+
+        </Stack>
     </>
 }

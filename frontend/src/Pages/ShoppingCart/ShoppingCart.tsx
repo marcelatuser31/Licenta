@@ -1,41 +1,43 @@
+import { Stack, StackItem } from "@fluentui/react";
 import { Box, Button } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import axios from "axios";
-import { Header } from "../../components/Header/Header";
+import { Navbar } from "../../components/Navbar/Navbar";
+import { ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants";
 import { IPerson } from "../../Utils/Models/IPerson";
 import { OrderRoutes } from "../../Utils/Routes/backEndRoutes";
 import { valueStyle } from "../Cake/Cake.styles";
 import { ICakeOrder } from "../Cake/Cake.types";
-import { boxStyle, listStyle } from "./ShoppingCart.Styles";
+import { boxStyle, innerDiv, listStyle, outerDiv } from "./ShoppingCart.Styles";
 import { ICakeDTO, IOrderData } from "./ShoppingCart.types";
 
 export const ShoppingCart = (): JSX.Element => {
-    const newCakeList: ICakeOrder[] = JSON.parse(localStorage.getItem('order') as string)
-    const person: IPerson = JSON.parse(localStorage.getItem('person') as string)
-    const personId: number = person.id as number;
+    const newCakeList: ICakeOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
+    const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
 
-    const cakeDTO: ICakeDTO[] =
-        newCakeList.map((cake: ICakeOrder) => {
-            return {
-                id: cake.cakeId,
-                amount: 1
-            }
-        })
+    const cakeDTO: ICakeDTO[] = newCakeList.map((cake: ICakeOrder) => {
+        return {
+            id: cake.cakeId,
+            amount: 1
+        }
+    })
 
-    const rows: any =
-        newCakeList.map((cake: ICakeOrder) => {
-            return {
-                id: cake.cakeId,
-                price: cake.price,
-                name: cake.name,
-                cakeMessage: cake.cakeMessage,
-                weight: cake.weight
-            }
-        })
+    const rows: any = newCakeList.map((cake: ICakeOrder) => {
+        return {
+            id: cake.cakeId,
+            price: cake.price,
+            name: cake.name,
+            cakeMessage: cake.cakeMessage,
+            weight: cake.weight
+        }
+    })
 
     const onClick = async (event: any): Promise<void> => {
+        if (person.id === undefined)
+            return
+
         const orderData: IOrderData = {
-            id: personId,
+            id: parseInt(person.id?.toString()),
             cakes: cakeDTO,
             drinks: [{
                 id: 1,
@@ -53,19 +55,27 @@ export const ShoppingCart = (): JSX.Element => {
         { field: 'weight', headerName: 'Weight', width: 150, type: 'number' },
     ];
 
-    return <>
-        <Header />
-        <Box className={listStyle} sx={boxStyle}>
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={10}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
-                disableSelectionOnClick
-                experimentalFeatures={{ newEditingApi: true }}
-            />
-        </Box>
-        <Button variant="contained" className={valueStyle} onClick={onClick} >Add to cart</Button>
-    </>
+    return <Stack>
+        <StackItem>
+            <Navbar />
+        </StackItem>
+        <StackItem>
+            <div className={outerDiv}>
+                <div className={innerDiv}>
+                    <Box className={`${listStyle} ${innerDiv}`} sx={boxStyle}>
+                        <DataGrid
+                            rows={rows}
+                            columns={columns}
+                            pageSize={10}
+                            rowsPerPageOptions={[5]}
+                            checkboxSelection
+                            disableSelectionOnClick
+                            experimentalFeatures={{ newEditingApi: true }}
+                        />
+                    </Box>
+                </div>
+            </div>
+        </StackItem>
+        <Button variant="contained" className={valueStyle} onClick={onClick} >Add Order</Button>
+    </Stack >
 }

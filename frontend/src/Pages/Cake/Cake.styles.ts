@@ -12,13 +12,20 @@ export const title: string = mergeStyles({
     fontFamily: 'Brush Script MT'
 })
 
+export const addToCartStyle: string = mergeStyles({
+    width: 200,
+    height: 50,
+    left: 100
+})
+
 export const valueStyle: string = mergeStyles({
     fontSize: "20px",
     position: "relative",
     top: "30px",
     fontWeight: 600,
     color: "Black",
-    left: 30
+    left: 30,
+    width: 100
 })
 
 export const labelStyle: string = mergeStyles({

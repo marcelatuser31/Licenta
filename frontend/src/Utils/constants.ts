@@ -6,3 +6,4 @@ export const IMAGE_HEADERS: any = {
 }
 export const DEFAULT_COLOR: string = "rgb(0, 90, 158)"
 export const ORDER_LIST_KEY: string = 'order'
+export const PERSON_KEY: string = 'person'

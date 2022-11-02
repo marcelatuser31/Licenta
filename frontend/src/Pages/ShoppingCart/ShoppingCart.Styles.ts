@@ -6,9 +6,20 @@ export const listStyle: string = mergeStyles({
     left: 50,
     top: 50,
     width: 600
+
 })
 
 export const boxStyle: CSSProperties = {
     height: '700px',
     width: '65%'
 }
+
+export const outerDiv: string = mergeStyles({
+    width: '100%',
+    textAlign: 'center'
+})
+
+export const innerDiv: string = mergeStyles({
+    dispaly: "inline-block",
+    margin: "0 auto"
+})
