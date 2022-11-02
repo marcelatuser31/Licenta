@@ -9,10 +9,9 @@ export const logOutButtonStyle: string = mergeStyles({
 
 export const myCartButtonStyle: string = mergeStyles({
     position: "relative",
-    top: "20px",
-    left: 30,
+    top: 5,
+    left: -20,
     cursor: "pointer"
-
 })
 
 export const menuStyle: string = mergeStyles({

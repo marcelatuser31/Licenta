@@ -15,6 +15,11 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Pages } from '../../Utils/enums';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import CakeIcon from '@mui/icons-material/Cake';
+import { Badge } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { myCartButtonStyle } from './Navbar.styles';
+import { ICakeOrder } from '../../Pages/Cake/Cake.types';
+import { ORDER_LIST_KEY } from '../../Utils/constants';
 
 const pages = [Pages.Home, Pages.LogIn];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -23,6 +28,7 @@ export const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const navigate: NavigateFunction = useNavigate();
+    const newCakeList: ICakeOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -127,8 +133,10 @@ export const Navbar = () => {
                             </Button>
                         ))}
                     </Box>
-
                     <Box sx={{ flexGrow: 0 }}>
+                        <Badge color="primary" badgeContent={newCakeList.length} className={myCartButtonStyle} onClick={() => navigate(Pages.ShoppingCart)}>
+                            <ShoppingCartIcon />
+                        </Badge>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
@@ -155,7 +163,11 @@ export const Navbar = () => {
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
+
+
+
                         </Menu>
+
                     </Box>
                 </Toolbar>
             </Container>
