@@ -67,7 +67,6 @@ export const Navbar = () => {
                     >
                         SWEET
                     </Typography>
-
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -99,7 +98,7 @@ export const Navbar = () => {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                    <Typography textAlign="center">{page.substring(1)}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -163,11 +162,7 @@ export const Navbar = () => {
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
-
-
-
                         </Menu>
-
                     </Box>
                 </Toolbar>
             </Container>
