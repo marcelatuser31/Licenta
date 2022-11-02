@@ -7,7 +7,7 @@ import ShareIcon from '@mui/icons-material/Share'
 import { IconButtonProps } from '@mui/material/IconButton';
 import React from "react"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { red } from "@mui/material/colors"
+import { blue, red } from "@mui/material/colors"
 import { IIngredient } from "../../Utils/Models/IIngredient"
 import { ingredientsNameStyle } from "./Card.styles"
 import { NavigateFunction, useNavigate } from "react-router-dom"
@@ -53,7 +53,7 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
         <Card sx={{ maxWidth: 345, minHeight: 500 }}>
             <CardHeader onClick={onClick}
                 avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                    <Avatar sx={{ bgcolor: '#1976d2' }} aria-label="recipe">
                         {props.title[0]}
                     </Avatar>
                 }

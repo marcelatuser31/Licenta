@@ -39,8 +39,6 @@ export const Navbar = () => {
         setAnchorElUser(null);
     };
 
-
-
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
