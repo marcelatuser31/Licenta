@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Pages } from '../../Utils/enums';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
+import CakeIcon from '@mui/icons-material/Cake';
 
 const pages = [Pages.Home, Pages.LogIn];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -43,12 +44,11 @@ export const Navbar = () => {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                    <CakeIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -59,7 +59,7 @@ export const Navbar = () => {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        SWEET
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -98,12 +98,11 @@ export const Navbar = () => {
                             ))}
                         </Menu>
                     </Box>
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                    <CakeIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                     <Typography
                         variant="h5"
                         noWrap
                         component="a"
-                        href=""
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -115,7 +114,7 @@ export const Navbar = () => {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        SWEET
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
