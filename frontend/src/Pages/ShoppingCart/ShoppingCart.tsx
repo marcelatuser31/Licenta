@@ -51,8 +51,8 @@ export const ShoppingCart = (): JSX.Element => {
         { field: 'id', headerName: 'ID', width: 90 },
         { field: 'name', headerName: 'Name', width: 150, },
         { field: 'price', headerName: 'Price', type: 'number', width: 110 },
-        { field: 'cakeMessage', headerName: 'Cake Message', width: 180, editable: true },
         { field: 'weight', headerName: 'Weight', width: 150, type: 'number' },
+        { field: 'cakeMessage', headerName: 'Cake Message', width: 180, editable: true }
     ];
 
     return <Stack>
