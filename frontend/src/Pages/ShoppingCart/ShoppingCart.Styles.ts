@@ -1,5 +1,6 @@
 import { mergeStyles } from "@fluentui/merge-styles";
 import { CSSProperties } from "@mui/styled-engine";
+import { relative } from "path";
 
 export const listStyle: string = mergeStyles({
     position: 'relative',
@@ -22,4 +23,10 @@ export const outerDiv: string = mergeStyles({
 export const innerDiv: string = mergeStyles({
     dispaly: "inline-block",
     margin: "0 auto"
+})
+
+export const addOrderButtonStyle: string = mergeStyles({
+    position: 'relative',
+    width: 200,
+    top: 60
 })

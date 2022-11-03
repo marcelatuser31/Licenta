@@ -8,7 +8,7 @@ import { IPerson } from "../../Utils/Models/IPerson";
 import { OrderRoutes } from "../../Utils/Routes/backEndRoutes";
 import { valueStyle } from "../Cake/Cake.styles";
 import { ICakeOrder } from "../Cake/Cake.types";
-import { boxStyle, innerDiv, listStyle, outerDiv } from "./ShoppingCart.Styles";
+import { addOrderButtonStyle, boxStyle, innerDiv, listStyle, outerDiv } from "./ShoppingCart.Styles";
 import { ICakeDTO, IOrderData } from "./ShoppingCart.types";
 
 export const ShoppingCart = (): JSX.Element => {
@@ -74,8 +74,9 @@ export const ShoppingCart = (): JSX.Element => {
                         />
                     </Box>
                 </div>
+                <Button variant="contained" className={`${addOrderButtonStyle} ${innerDiv}`} onClick={onClick} >Add Order</Button>
             </div>
         </StackItem>
-        <Button variant="contained" className={valueStyle} onClick={onClick} >Add Order</Button>
+
     </Stack >
 }
