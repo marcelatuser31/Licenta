@@ -11,7 +11,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { Pages } from '../../Utils/enums';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import CakeIcon from '@mui/icons-material/Cake';
@@ -19,16 +18,26 @@ import { Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { myCartButtonStyle } from './Navbar.styles';
 import { ICakeOrder } from '../../Pages/Cake/Cake.types';
-import { ORDER_LIST_KEY } from '../../Utils/constants';
+import { HEADERS, ORDER_LIST_KEY, PERSON_KEY } from '../../Utils/constants';
+import axios from 'axios';
+import { RoleRoutes } from '../../Utils/Routes/backEndRoutes';
+import { IPerson } from '../../Utils/Models/IPerson';
 
 const pages = [Pages.Home, Pages.LogIn];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Account', 'Dashboard'];
 
 export const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const navigate: NavigateFunction = useNavigate();
     const newCakeList: ICakeOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
+    const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
+
+    const onLogoutClick = async (event: any): Promise<void> => {
+        const response = await axios.post(RoleRoutes.Logout, person.id, { headers: HEADERS });
+        navigate(Pages.LogIn)
+        localStorage.setItem(PERSON_KEY, JSON.stringify(null))
+    }
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -162,6 +171,7 @@ export const Navbar = () => {
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
+                            <MenuItem onClick={onLogoutClick}>Logout</MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>

@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles'
 import axios from "axios"
 import { Fragment, useState } from "react"
 import { NavigateFunction, useNavigate } from "react-router-dom"
-import { MESSAGE_LOGIN, ORDER_LIST_KEY } from "../../Utils/constants"
+import { MESSAGE_LOGIN, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
 import { Pages } from "../../Utils/enums"
 import { errorMessage } from "../../Utils/methods"
 import { RoleRoutes } from "../../Utils/Routes/backEndRoutes"
@@ -28,7 +28,7 @@ export const LogIn = (): JSX.Element => {
 
         const response = await axios.post(RoleRoutes.LogIn, loginData);
 
-        localStorage.setItem('person', JSON.stringify(response.data))
+        localStorage.setItem(PERSON_KEY, JSON.stringify(response.data))
         if (response.data != null && response.data != "") {
             navigate(Pages.Home);
         }
