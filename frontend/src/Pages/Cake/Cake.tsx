@@ -13,6 +13,7 @@ import { RoleType } from "../../Utils/enums"
 import { Input } from "../Home/Home"
 import { onUploadPhoto } from "../../Utils/methods"
 import { Section } from "../../components/Section/Section"
+import { SelectedMenu } from "../../components/SelectedMenu/SelectedMenu"
 
 const options: IChoiceGroupOption[] = [
     { key: 'A', text: '0.5kg', styles: { root: { marginLeft: 0 } } },

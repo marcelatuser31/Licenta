@@ -77,6 +77,5 @@ export const ShoppingCart = (): JSX.Element => {
                 <Button variant="contained" className={`${addOrderButtonStyle} ${innerDiv}`} onClick={onClick} >Add Order</Button>
             </div>
         </StackItem>
-
     </Stack >
 }

@@ -10,11 +10,13 @@ export const cakesContainerStyles: string = mergeStyles({
     top: 30
 })
 
-export const choiceGroupStyle: IStyleFunctionOrObject<IChoiceGroupStyleProps, IChoiceGroupStyles> = {
-    flexContainer: {
-        position: 'relative',
-        left: 60,
-        top: 100
-    }
+export const choiceGroupStyle: string = mergeStyles({
+    position: 'relative',
+    left: 60,
+    top: 50
+})
 
-}
+export const selectedMenuStyle: string = mergeStyles({
+    position: 'relative',
+    top: 150
+})

@@ -142,7 +142,7 @@ export const Navbar = () => {
                         ))}
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
-                        <Badge color="primary" badgeContent={newCakeList.length} className={myCartButtonStyle} onClick={() => navigate(Pages.ShoppingCart)}>
+                        <Badge color="error" badgeContent={newCakeList.length} className={myCartButtonStyle} onClick={() => navigate(Pages.ShoppingCart)}>
                             <ShoppingCartIcon />
                         </Badge>
                         <Tooltip title="Open settings">
