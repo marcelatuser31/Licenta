@@ -50,7 +50,10 @@ export const imageStyle: string = mergeStyles({
 })
 
 export const textFieldStyle: string = mergeStyles({
-    width: '50px'
+    width: '50px',
+    position: 'relative',
+    top: -5
+
 })
 
 export const choiceGroupStyle: IStyleFunctionOrObject<IChoiceGroupStyleProps, IChoiceGroupStyles> = {
