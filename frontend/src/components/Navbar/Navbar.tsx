@@ -16,7 +16,7 @@ import { NavigateFunction, useNavigate } from 'react-router-dom';
 import CakeIcon from '@mui/icons-material/Cake';
 import { Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { myCartButtonStyle } from './Navbar.styles';
+import { imageStyle, myCartButtonStyle } from './Navbar.styles';
 import { ICakeOrder } from '../../Pages/Cake/Cake.types';
 import { HEADERS, ORDER_LIST_KEY, PERSON_KEY } from '../../Utils/constants';
 import axios from 'axios';
@@ -148,7 +148,7 @@ export const Navbar = () => {
                         </Badge>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <img width={80} height={100} alt={'Not found'} src={getImageURLfromByteArray(person.image)}></img>
+                                <img width={70} height={70} alt={'Not found'} src={getImageURLfromByteArray(person.image)} className={imageStyle}></img>
                             </IconButton>
                         </Tooltip>
                         <Menu

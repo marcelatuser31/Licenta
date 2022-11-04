@@ -30,3 +30,7 @@ export const filterButtonStyle: React.CSSProperties = {
     outline: "none",
     padding: "0.5rem 1rem"
 }
+
+export const imageStyle: string = mergeStyles({
+    borderRadius: "50%"
+})
