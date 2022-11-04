@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Buffer } from 'buffer';
 import Swal from "sweetalert2";
 import { IMAGE_HEADERS } from './constants';
-import { CakeRoutes } from './Routes/backEndRoutes';
+import { CakeRoutes, PersonRoutes } from './Routes/backEndRoutes';
 
 export const errorMessage = (message: string): void => {
     Swal.fire({
@@ -34,6 +34,16 @@ export const onUploadPhoto = (event: any, cakeId: string): void => {
     formdata.append('cakeId', cakeId)
     const getData = async (): Promise<void> => {
         const response = await axios.post(CakeRoutes.AddImage, formdata, { headers: IMAGE_HEADERS })
+    }
+    getData()
+}
+
+export const onUploadProfilePhoto = (event: any, personId: string): void => {
+    const formdata: FormData = new FormData()
+    formdata.append('image', event.target.files[0])
+    formdata.append('personId', personId)
+    const getData = async (): Promise<void> => {
+        const response = await axios.post(PersonRoutes.AddImage, formdata, { headers: IMAGE_HEADERS })
     }
     getData()
 }

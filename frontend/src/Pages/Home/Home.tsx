@@ -8,7 +8,7 @@ import { CustomCard } from "../../components/Card/CustomCard"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { SelectedMenu } from "../../components/SelectedMenu/SelectedMenu"
 import { HEADERS, IMAGE_HEADERS } from "../../Utils/constants"
-import { getImageURLfromByteArray, onUploadPhoto } from "../../Utils/methods"
+import { getImageURLfromByteArray, onUploadPhoto, onUploadProfilePhoto } from "../../Utils/methods"
 import { ICake } from "../../Utils/Models/ICake"
 import { CakeRoutes } from "../../Utils/Routes/backEndRoutes"
 import { cakesContainerStyles, choiceGroupStyle } from "./Home.styles"
@@ -43,9 +43,6 @@ export const Home = (): JSX.Element => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [selectedIndex, setSelectedIndex] = React.useState(1);
     const open = Boolean(anchorEl);
-
-
-
 
     const option = [
         'Ascending',
@@ -185,7 +182,10 @@ export const Home = (): JSX.Element => {
                         : undefined
                 }
             </StackItem>
+            <Button variant="contained" component="label">
+                Upload
+                <Input accept='image/*' id='contained-button-file' multiple type='file' onChange={(event: any) => onUploadProfilePhoto(event, '13')} />
+            </Button>
         </Stack>
-
     </>
 }
