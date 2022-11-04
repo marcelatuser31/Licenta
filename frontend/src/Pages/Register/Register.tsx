@@ -19,7 +19,6 @@ const defaultPErson: IPerson = {
         type: RoleType.Client
     },
     isActive: false
-
 }
 export const Register = (): JSX.Element => {
     const navigate: NavigateFunction = useNavigate()

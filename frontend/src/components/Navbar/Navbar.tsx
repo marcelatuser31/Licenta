@@ -22,6 +22,7 @@ import { HEADERS, ORDER_LIST_KEY, PERSON_KEY } from '../../Utils/constants';
 import axios from 'axios';
 import { RoleRoutes } from '../../Utils/Routes/backEndRoutes';
 import { IPerson } from '../../Utils/Models/IPerson';
+import { getImageURLfromByteArray } from '../../Utils/methods';
 
 const pages = [Pages.Home, Pages.LogIn];
 const settings = ['Profile', 'Account', 'Dashboard'];
@@ -147,7 +148,7 @@ export const Navbar = () => {
                         </Badge>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <img width={80} height={100} alt={'Not found'} src={getImageURLfromByteArray(person.image)}></img>
                             </IconButton>
                         </Tooltip>
                         <Menu
