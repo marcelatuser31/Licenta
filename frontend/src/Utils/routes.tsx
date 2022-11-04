@@ -1,6 +1,7 @@
 import { Cake } from "../Pages/Cake/Cake";
 import { Home } from "../Pages/Home/Home";
 import { LogIn } from "../Pages/LogIn/LogIn";
+import { Profile } from "../Pages/Profile/Profile";
 import { Register } from "../Pages/Register/Register";
 import { ShoppingCart } from "../Pages/ShoppingCart/ShoppingCart";
 
@@ -29,5 +30,9 @@ export const routes: IRoute[] = [
     {
         path: '/ShoppingCart',
         element: <ShoppingCart />
+    },
+    {
+        path: '/Profile',
+        element: <Profile />
     }
 ]

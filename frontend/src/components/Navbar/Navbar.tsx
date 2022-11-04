@@ -23,9 +23,10 @@ import axios from 'axios';
 import { RoleRoutes } from '../../Utils/Routes/backEndRoutes';
 import { IPerson } from '../../Utils/Models/IPerson';
 import { getImageURLfromByteArray } from '../../Utils/methods';
+import { Profile } from '../../Pages/Profile/Profile';
 
 const pages = [Pages.Home, Pages.LogIn];
-const settings = ['Profile', 'Account', 'Dashboard'];
+const settings = [Pages.Profile];
 
 export const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -168,8 +169,8 @@ export const Navbar = () => {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
+                                <MenuItem key={setting} onClick={() => navigate(setting)}>
+                                    <Typography textAlign="center">{setting.substring(1)}</Typography>
                                 </MenuItem>
                             ))}
                             <MenuItem onClick={onLogoutClick}>Logout</MenuItem>
