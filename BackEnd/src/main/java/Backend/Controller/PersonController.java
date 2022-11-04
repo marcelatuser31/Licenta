@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
 @RestController
@@ -34,5 +35,10 @@ public class PersonController {
     @PostMapping("/update")
     public ResponseEntity update(@RequestBody Person person){
         return ResponseEntity.status(HttpStatus.OK).body(personServiceImplementation.update(person));
+    }
+
+    @PostMapping(value="/addImage", consumes={"multipart/form-data"})
+    public ResponseEntity addImage(@RequestParam (value="image", required = false) MultipartFile image, @RequestParam(value="personId") String personId){
+        return ResponseEntity.status(HttpStatus.OK).body(personServiceImplementation.addPersonImage(Long.parseLong(personId), image));
     }
 }

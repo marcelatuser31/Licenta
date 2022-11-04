@@ -1,17 +1,20 @@
 package Backend.Service.Implementation;
 
 import Backend.Methods;
+import Backend.Model.Cake;
 import Backend.Model.Person;
 import Backend.Repository.PersonRepository;
 import Backend.Service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
@@ -85,6 +88,26 @@ public class PersonServiceImplementation implements PersonService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Person addPersonImage(Long personId, MultipartFile image) {
+        byte[] imagePerson = null;
+        System.out.println(image);
+        System.out.println(image.getSize());
+        try {
+            imagePerson = image.getBytes();
+            System.out.println(imagePerson.length);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        Person person = personRepository.findFirstById(personId);
+        if (person == null) {
+            return null;
+        }
+        person.setImage(imagePerson);
+        personRepository.save(person);
+        return person;
     }
 }
 

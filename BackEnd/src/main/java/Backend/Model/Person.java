@@ -2,6 +2,7 @@ package Backend.Model;
 
 import Backend.Utils.RoleType;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,5 +23,7 @@ public class Person implements Serializable {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Role role;
     private boolean isActive;
-
+    @Lob
+    @Type(type = "org.hibernate.type.ImageType")
+    private byte[] image;
 }

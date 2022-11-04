@@ -2,10 +2,8 @@ package Backend.Model;
 
 import Backend.Utils.CakeType;
 import lombok.*;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.hibernate.annotations.Type;
@@ -16,7 +14,6 @@ import org.hibernate.annotations.Type;
 @Builder
 @ToString
 @Data
-
 public class Cake implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

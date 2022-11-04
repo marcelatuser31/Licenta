@@ -4,9 +4,7 @@ import Backend.Model.Cake;
 import Backend.Utils.CakeType;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Repository

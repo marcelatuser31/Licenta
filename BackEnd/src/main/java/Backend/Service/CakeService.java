@@ -13,22 +13,13 @@ import java.util.List;
 @Component
 public interface CakeService {
     Cake readById(Long id);
-
     List<Ingredient> getIngredientsByCakeId(Long id);
-
     List<Cake> getAll();
-
     Float getTotalPrice(List<Long> cakeIds);
-
     void update(Cake cake);
-
     List<Cake> readByType(CakeType type);
-
     List<Cake> getExpiredCakes();
-
     void deleteCake(Long id);
-
     List<String> getCakeTypes();
-
     Cake addCakeImage(Long cakeId, MultipartFile image);
 }
