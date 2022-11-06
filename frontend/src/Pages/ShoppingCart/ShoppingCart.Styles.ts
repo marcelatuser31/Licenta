@@ -1,13 +1,11 @@
 import { mergeStyles } from "@fluentui/merge-styles";
 import { CSSProperties } from "@mui/styled-engine";
-import { relative } from "path";
 
 export const listStyle: string = mergeStyles({
     position: 'relative',
     left: 50,
     top: 50,
     width: 600
-
 })
 
 export const boxStyle: CSSProperties = {

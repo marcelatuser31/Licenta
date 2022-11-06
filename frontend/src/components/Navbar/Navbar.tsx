@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
@@ -16,14 +15,13 @@ import { NavigateFunction, useNavigate } from 'react-router-dom';
 import CakeIcon from '@mui/icons-material/Cake';
 import { Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { imageStyle, myCartButtonStyle } from './Navbar.styles';
+import { cakeIconStyle, expandedCakeIconStyle, expandedLogoStyle, expandedMenuBoxStyle, imageStyle, logoStyle, menuBoxStyle, myCartButtonStyle, settingsBoxStyle } from './Navbar.styles';
 import { ICakeOrder } from '../../Pages/Cake/Cake.types';
 import { HEADERS, ORDER_LIST_KEY, PERSON_KEY } from '../../Utils/constants';
 import axios from 'axios';
 import { RoleRoutes } from '../../Utils/Routes/backEndRoutes';
 import { IPerson } from '../../Utils/Models/IPerson';
 import { getImageURLfromByteArray } from '../../Utils/methods';
-import { Profile } from '../../Pages/Profile/Profile';
 
 const pages = [Pages.Home, Pages.LogIn];
 const settings = [Pages.Profile];
@@ -35,7 +33,7 @@ export const Navbar = () => {
     const newCakeList: ICakeOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
 
-    const onLogoutClick = async (event: any): Promise<void> => {
+    const onLogout = async (event: any): Promise<void> => {
         const response = await axios.post(RoleRoutes.Logout, person.id, { headers: HEADERS });
         navigate(Pages.LogIn)
         localStorage.setItem(PERSON_KEY, JSON.stringify(null))
@@ -61,24 +59,16 @@ export const Navbar = () => {
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <CakeIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+                    <CakeIcon sx={expandedCakeIconStyle} />
                     <Typography
                         variant="h6"
                         noWrap
                         component="a"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
+                        sx={expandedLogoStyle}
                     >
                         SWEET
                     </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    <Box sx={expandedMenuBoxStyle}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -114,25 +104,16 @@ export const Navbar = () => {
                             ))}
                         </Menu>
                     </Box>
-                    <CakeIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+                    <CakeIcon sx={cakeIconStyle} />
                     <Typography
                         variant="h5"
                         noWrap
                         component="a"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
+                        sx={logoStyle}
                     >
                         SWEET
                     </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    <Box sx={menuBoxStyle}>
                         {pages.map((page) => (
                             <Button
                                 key={page}
@@ -143,42 +124,43 @@ export const Navbar = () => {
                             </Button>
                         ))}
                     </Box>
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Badge color="error" badgeContent={newCakeList.length} className={myCartButtonStyle} onClick={() => navigate(Pages.ShoppingCart)}>
-                            <ShoppingCartIcon />
-                        </Badge>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <img width={70} height={70} alt={'Not found'} src={getImageURLfromByteArray(person.image)} className={imageStyle}></img>
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={() => navigate(setting)}>
-                                    <Typography textAlign="center">{setting.substring(1)}</Typography>
-                                </MenuItem>
-                            ))}
-                            <MenuItem onClick={onLogoutClick}>Logout</MenuItem>
-                        </Menu>
-                    </Box>
+                    <div>
+                        <Box sx={settingsBoxStyle}>
+                            <Badge color="error" badgeContent={newCakeList.length} className={myCartButtonStyle} onClick={() => navigate(Pages.ShoppingCart)}>
+                                <ShoppingCartIcon />
+                            </Badge>
+                            <Tooltip title="Open settings">
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                    <img width={55} height={55} alt={'Not found'} src={getImageURLfromByteArray(person.image)} className={imageStyle}></img>
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                                sx={{ mt: '45px' }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                            >
+                                {settings.map((setting) => (
+                                    <MenuItem key={setting} onClick={() => navigate(setting)}>
+                                        <Typography textAlign="center">{setting.substring(1)}</Typography>
+                                    </MenuItem>
+                                ))}
+                                <MenuItem onClick={onLogout}>Logout</MenuItem>
+                            </Menu>
+                        </Box>
+                    </div>
                 </Toolbar>
             </Container>
         </AppBar>
     );
 }
-

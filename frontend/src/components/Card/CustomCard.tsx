@@ -71,7 +71,7 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
             <CardContent>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
+                <IconButton color={"error"} aria-label="add to favorites">
                     <FavoriteIcon />
                 </IconButton>
                 <IconButton aria-label="share">

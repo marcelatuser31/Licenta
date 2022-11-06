@@ -17,10 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class PersonController {
     private final PersonServiceImplementation personServiceImplementation;
 
-    @GetMapping("/getName")
-    public String getName() {
-        return "gfvd";
-    }
+ @PostMapping("/readById")
+ public ResponseEntity readbyId(@RequestBody Long id){
+     return ResponseEntity.status(HttpStatus.OK).body(personServiceImplementation.readById(id));
+ }
 
     @GetMapping("/getAll")
     public ResponseEntity getAll() {

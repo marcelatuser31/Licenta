@@ -1,34 +1,36 @@
 import { Stack, StackItem } from "@fluentui/react";
 import { Box, Button } from "@mui/material";
-import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
+import { DataGrid, GridCallbackDetails, GridColDef, GridEditRowsModel, GridEventListener, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton } from "@mui/x-data-grid";
 import axios from "axios";
+import { useState } from "react";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants";
 import { IPerson } from "../../Utils/Models/IPerson";
 import { OrderRoutes } from "../../Utils/Routes/backEndRoutes";
-import { valueStyle } from "../Cake/Cake.styles";
 import { ICakeOrder } from "../Cake/Cake.types";
 import { addOrderButtonStyle, boxStyle, innerDiv, listStyle, outerDiv } from "./ShoppingCart.Styles";
 import { ICakeDTO, IOrderData } from "./ShoppingCart.types";
 
 export const ShoppingCart = (): JSX.Element => {
-    const newCakeList: ICakeOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
+    const orderList: ICakeOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
-
-    const cakeDTO: ICakeDTO[] = newCakeList.map((cake: ICakeOrder) => {
+    const [items, setItems] = useState<ICakeOrder[]>(JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string))
+    const [selectedItems, setSelectedItems] = useState<number[]>([])
+    const cakeDTO: ICakeDTO[] = orderList.map((cake: ICakeOrder) => {
         return {
             id: cake.cakeId,
             amount: 1
         }
     })
 
-    const rows: any = newCakeList.map((cake: ICakeOrder) => {
+    const rows: any = items.map((cake: ICakeOrder) => {
         return {
             id: cake.cakeId,
             price: cake.price,
             name: cake.name,
             cakeMessage: cake.cakeMessage,
-            weight: cake.weight
+            weight: cake.weight,
+            amount: cake.amount
         }
     })
 
@@ -47,13 +49,36 @@ export const ShoppingCart = (): JSX.Element => {
         const response = await axios.post(OrderRoutes.AddOrder, orderData);
     }
 
+    const onSelectionModelChange = (selectedItems: any): void => {
+        setSelectedItems(selectedItems)
+    }
+
+    const onDeleteItems = (): void => {
+        const newItems: ICakeOrder[] = items.filter((item: ICakeOrder) => !selectedItems.includes(item.cakeId))
+        setItems(newItems)
+        localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(newItems))
+    }
+
     const columns: GridColDef[] = [
-        { field: 'id', headerName: 'ID', width: 90 },
+        { field: 'id', headerName: 'ID', resizable: true },
         { field: 'name', headerName: 'Name', width: 150, },
         { field: 'price', headerName: 'Price', type: 'number', width: 110 },
         { field: 'weight', headerName: 'Weight', width: 150, type: 'number' },
+        { field: 'amount', headerName: 'Amount', type: 'number' },
         { field: 'cakeMessage', headerName: 'Cake Message', width: 180, editable: true }
     ];
+
+    const CustomToolbar = (): JSX.Element => {
+        return (
+            <GridToolbarContainer>
+                <GridToolbarColumnsButton />
+                <GridToolbarFilterButton />
+                <GridToolbarDensitySelector />
+                <GridToolbarExport />
+                <Button variant="text" onClick={onDeleteItems}>Delete</Button>
+            </GridToolbarContainer>
+        );
+    }
 
     return <Stack>
         <StackItem>
@@ -64,13 +89,15 @@ export const ShoppingCart = (): JSX.Element => {
                 <div className={innerDiv}>
                     <Box className={`${listStyle} ${innerDiv}`} sx={boxStyle}>
                         <DataGrid
+                            components={{ Toolbar: CustomToolbar }}
+                            componentsProps={{ toolbar: { left: 2 } }}
                             rows={rows}
                             columns={columns}
                             pageSize={10}
                             rowsPerPageOptions={[5]}
                             checkboxSelection
-                            disableSelectionOnClick
                             experimentalFeatures={{ newEditingApi: true }}
+                            onSelectionModelChange={onSelectionModelChange}
                         />
                     </Box>
                 </div>

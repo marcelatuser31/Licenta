@@ -53,11 +53,9 @@ export const textFieldStyle: string = mergeStyles({
     width: '50px',
     position: 'relative',
     top: -5
-
 })
 
 export const choiceGroupStyle: IStyleFunctionOrObject<IChoiceGroupStyleProps, IChoiceGroupStyles> = {
     flexContainer:
         { display: "flex" }
 }
-

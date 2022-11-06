@@ -1,9 +1,8 @@
-import { IStyleFunctionOrObject, mergeStyles } from "@fluentui/merge-styles";
-import { IChoiceGroupStyleProps, IChoiceGroupStyles } from "@fluentui/react";
+import { mergeStyles } from "@fluentui/merge-styles";
 
 export const cakesContainerStyles: string = mergeStyles({
     display: "grid",
-    gap: "5px",
+    gap: "100px",
     gridTemplateColumns: "repeat(4, 1fr)",
     position: 'relative',
     left: 60,

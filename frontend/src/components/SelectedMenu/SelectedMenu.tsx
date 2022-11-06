@@ -7,25 +7,18 @@ import Menu from '@mui/material/Menu';
 import { selectedMenuStyle } from '../../Pages/Home/Home.styles';
 import { ISelectedMenuProps } from './SelectedMenu.types';
 
-const options = [
-    'Ascending',
-    'Descending',
-];
-
 export const SelectedMenu = (props: ISelectedMenuProps): JSX.Element => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const [selectedIndex, setSelectedIndex] = React.useState(1);
+
     const open = Boolean(anchorEl);
+
     const handleClickListItem = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
-    console.log(props.cakeList)
 
-    const handleMenuItemClick = (
-        event: React.MouseEvent<HTMLElement>,
-        index: number,
-    ) => {
-        setSelectedIndex(index);
+    const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>, index: number) => {
+        props.setSelectedPriceSortOption(props.options[index]);
+        props.onSelectItem()
         setAnchorEl(null);
     };
 
@@ -51,7 +44,7 @@ export const SelectedMenu = (props: ISelectedMenuProps): JSX.Element => {
                 >
                     <ListItemText
                         primary="Sort by price"
-                        secondary={options[selectedIndex]}
+                        secondary={props.selectedSortPriceOption}
                     />
                 </ListItem>
             </List>
@@ -65,10 +58,9 @@ export const SelectedMenu = (props: ISelectedMenuProps): JSX.Element => {
                     role: 'listbox',
                 }}
             >
-                {options.map((option, index) => (
+                {props.options.map((option: string, index: number) => (
                     <MenuItem
                         key={option}
-                        selected={index === selectedIndex}
                         onClick={(event) => handleMenuItemClick(event, index)}
                     >
                         {option}

@@ -1,8 +1,8 @@
-import { getPropsWithDefaults, Stack, StackItem } from "@fluentui/react"
+import { Stack, StackItem } from "@fluentui/react"
 import { labelStyle, valueStyle } from "../../Pages/Cake/Cake.styles"
-import { ISectionProps } from "./Section.types"
+import { ICakeSectionProps } from "./CakeSection.types"
 
-export const Section = (props: ISectionProps): JSX.Element => {
+export const CakeSection = (props: ICakeSectionProps): JSX.Element => {
     return <StackItem>
         <Stack gap='10'>
             <StackItem className={labelStyle}>

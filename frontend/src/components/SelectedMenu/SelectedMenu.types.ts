@@ -1,5 +1,8 @@
 import { ICake } from "../../Utils/Models/ICake";
 
 export interface ISelectedMenuProps {
-    cakeList: ICake[]
+    options: string[],
+    setSelectedPriceSortOption: (event: string) => void,
+    selectedSortPriceOption: string,
+    onSelectItem: () => void
 }

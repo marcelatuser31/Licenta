@@ -1,4 +1,5 @@
 import { mergeStyles } from "@fluentui/merge-styles";
+import { SxProps, Theme } from "@mui/material";
 import React from "react";
 
 export const logOutButtonStyle: string = mergeStyles({
@@ -34,3 +35,45 @@ export const filterButtonStyle: React.CSSProperties = {
 export const imageStyle: string = mergeStyles({
     borderRadius: "50%"
 })
+
+export const expandedCakeIconStyle: SxProps<Theme> = {
+    display: { xs: 'none', md: 'flex' }, mr: 1
+}
+
+export const expandedLogoStyle: SxProps<Theme> = {
+    mr: 2,
+    display: { xs: 'none', md: 'flex' },
+    fontFamily: 'monospace',
+    fontWeight: 700,
+    letterSpacing: '.3rem',
+    color: 'inherit',
+    textDecoration: 'none',
+}
+
+export const cakeIconStyle: SxProps<Theme> = {
+    display: { xs: 'flex', md: 'none' }, mr: 1
+}
+
+export const logoStyle: SxProps<Theme> = {
+    mr: 2,
+    display: { xs: 'flex', md: 'none' },
+    flexGrow: 1,
+    fontFamily: 'monospace',
+    fontWeight: 700,
+    letterSpacing: '.3rem',
+    color: 'inherit',
+    textDecoration: 'none',
+}
+
+export const expandedMenuBoxStyle: SxProps<Theme> = {
+    flexGrow: 1, display: { xs: 'flex', md: 'none' }
+}
+
+export const menuBoxStyle: SxProps<Theme> = {
+    flexGrow: 1, display: {
+        xs: 'none', md: 'flex'
+    }
+}
+
+export const settingsBoxStyle: SxProps<Theme> =
+    { flexGrow: 0, float: "right" }

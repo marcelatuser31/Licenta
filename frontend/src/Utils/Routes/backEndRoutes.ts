@@ -15,6 +15,7 @@ export namespace CakeRoutes {
 export namespace PersonRoutes {
     export const Register: string = `${serverURL}/Person/register`
     export const AddImage: string = `${serverURL}/Person/addImage`
+    export const ReadById: string = `${serverURL}/Person/readById`
 }
 
 export namespace OrderRoutes {

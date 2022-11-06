@@ -3,5 +3,6 @@ export interface ICakeOrder {
     name: string,
     price: number,
     cakeMessage: string,
-    weight: number
+    weight: number,
+    amount: number
 }

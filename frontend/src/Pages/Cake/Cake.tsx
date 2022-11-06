@@ -12,7 +12,7 @@ import { IPerson } from "../../Utils/Models/IPerson"
 import { RoleType } from "../../Utils/enums"
 import { Input } from "../Home/Home"
 import { onUploadPhoto } from "../../Utils/methods"
-import { Section } from "../../components/Section/Section"
+import { CakeSection } from "../../components/CakeSection/CakeSection"
 import { SelectedMenu } from "../../components/SelectedMenu/SelectedMenu"
 
 const options: IChoiceGroupOption[] = [
@@ -32,17 +32,31 @@ export const Cake = (): JSX.Element => {
         setSelectedWeight(Number(option?.text.substring(0, option.text.length - 2)))
     }
 
-    const onClick = (event: any): void => {
-        const newCake: ICakeOrder = {
-            cakeId: location.state.cakeId,
-            name: location.state.title,
-            price: location.state.price * selectedWeight,
-            cakeMessage: cakeMessage,
-            weight: selectedWeight
-        }
+    const onAddToCart = (event: any): void => {
         const cakeList: ICakeOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
-        cakeList.push(newCake)
-        localStorage.setItem('order', JSON.stringify(cakeList))
+        const cake: ICakeOrder | undefined = cakeList.find((a: ICakeOrder) => a.cakeId === location.state.cakeId)
+        if (cake === undefined) {
+            const newCake: ICakeOrder = {
+                cakeId: location.state.cakeId,
+                name: location.state.title,
+                price: location.state.price * selectedWeight,
+                cakeMessage: cakeMessage,
+                weight: selectedWeight,
+                amount: 1
+            }
+            cakeList.push(newCake)
+            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(cakeList))
+        }
+        else {
+            const cakeList2: ICakeOrder[] = cakeList.map((cake) => {
+                if (cake.cakeId === location.state.cakeId) {
+                    cake.amount = cake.amount + 1
+
+                }
+                return cake;
+            })
+            localStorage.setItem('order', JSON.stringify(cakeList2))
+        }
     }
 
     const onChange = (event: any): void => {
@@ -98,19 +112,17 @@ export const Cake = (): JSX.Element => {
                     <StackItem className={title}>
                         {location.state.title}
                     </StackItem>
-                    <Section name={"Price:"} contentValue={(location.state.price * selectedWeight).toString() + ' RON'} />
-                    <Section name={"Weight:"} contentValue={getWeightContent()} />
-                    <Section name={"Ingredients:"} contentValue={getIngredientsContent()} />
-                    <Section name={"Cake Message:"} contentValue={getMessageContent()}></Section>
+                    <CakeSection name={"Price:"} contentValue={(location.state.price * selectedWeight).toString() + ' RON'} />
+                    <CakeSection name={"Weight:"} contentValue={getWeightContent()} />
+                    <CakeSection name={"Ingredients:"} contentValue={getIngredientsContent()} />
+                    <CakeSection name={"Cake Message:"} contentValue={getMessageContent()}></CakeSection>
                     {person.role.type == RoleType.Admin
-                        ? <Section name={"Upload Photo:"} contentValue={getUploadContent()}></Section>
+                        ? <CakeSection name={"Upload Photo:"} contentValue={getUploadContent()}></CakeSection>
                         : undefined}
-
                 </Stack>
-
             </StackItem>
             <StackItem align="center">
-                <Button variant="contained" className={addToCartStyle} endIcon={<ShoppingCartCheckoutIcon />} onClick={onClick} >Add to cart</Button>
+                <Button variant="contained" className={addToCartStyle} endIcon={<ShoppingCartCheckoutIcon />} onClick={onAddToCart} >Add to cart</Button>
             </StackItem>
         </Stack >
     </>
