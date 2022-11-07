@@ -96,4 +96,4 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
             </Collapse>
         </Card>
     </Fragment>
-}
+}    
