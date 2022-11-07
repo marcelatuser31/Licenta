@@ -7,7 +7,6 @@ import ShareIcon from '@mui/icons-material/Share'
 import { IconButtonProps } from '@mui/material/IconButton';
 import React from "react"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { blue, red } from "@mui/material/colors"
 import { IIngredient } from "../../Utils/Models/IIngredient"
 import { ingredientsNameStyle } from "./Card.styles"
 import { NavigateFunction, useNavigate } from "react-router-dom"
@@ -63,9 +62,8 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
                     </IconButton>
                 }
                 title={props.title}
-                subheader={props.expirationDate?.toString()}
+                subheader={props.price?.toString() + ' RON/KG'}
             />
-
             <img width={300} height={300} alt={'Not found'} src={props.image} onClick={onClick}
             />
             <CardContent>
