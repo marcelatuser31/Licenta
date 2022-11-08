@@ -10,6 +10,7 @@ import { OrderRoutes } from "../../Utils/Routes/backEndRoutes";
 import { ICakeOrder } from "../Cake/Cake.types";
 import { addOrderButtonStyle, boxStyle, innerDiv, listStyle, outerDiv } from "./ShoppingCart.Styles";
 import { ICakeDTO, IOrderData } from "./ShoppingCart.types";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export const ShoppingCart = (): JSX.Element => {
     const orderList: ICakeOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
@@ -75,7 +76,7 @@ export const ShoppingCart = (): JSX.Element => {
                 <GridToolbarFilterButton />
                 <GridToolbarDensitySelector />
                 <GridToolbarExport />
-                <Button variant="text" onClick={onDeleteItems}>Delete</Button>
+                <Button variant="text" onClick={onDeleteItems} startIcon={<DeleteIcon />} style={{ fontSize: "0.8125rem" }}>Delete</Button>
             </GridToolbarContainer>
         );
     }
