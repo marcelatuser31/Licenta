@@ -56,9 +56,9 @@ export const Navbar = () => {
     };
 
     return (
-        <AppBar position="static">
-            <Container maxWidth="xl">
-                <Toolbar disableGutters>
+        <AppBar position="static" >
+            <Container maxWidth="xl" style={{ marginLeft: 0, maxWidth: 1800 }}>
+                <Toolbar disableGutters >
                     <CakeIcon sx={expandedCakeIconStyle} />
                     <Typography
                         variant="h6"
@@ -131,7 +131,7 @@ export const Navbar = () => {
                             </Badge>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <img width={55} height={55} alt={'Not found'} src={getImageURLfromByteArray(person.image)} className={imageStyle}></img>
+                                    <img width={48} height={48} alt={'Not found'} src={getImageURLfromByteArray(person.image)} className={imageStyle}></img>
                                 </IconButton>
                             </Tooltip>
                             <Menu
