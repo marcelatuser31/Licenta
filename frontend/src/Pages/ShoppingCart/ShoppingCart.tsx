@@ -7,24 +7,24 @@ import { Navbar } from "../../components/Navbar/Navbar";
 import { ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants";
 import { IPerson } from "../../Utils/Models/IPerson";
 import { OrderRoutes } from "../../Utils/Routes/backEndRoutes";
-import { ICakeOrder } from "../Cake/Cake.types";
+import { IItemOrder } from "../Cake/Cake.types";
 import { addOrderButtonStyle, boxStyle, innerDiv, listStyle, outerDiv } from "./ShoppingCart.Styles";
-import { ICakeDTO, IOrderData } from "./ShoppingCart.types";
+import { IItemDTO, IOrderData } from "./ShoppingCart.types";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 export const ShoppingCart = (): JSX.Element => {
-    const orderList: ICakeOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
+    const orderList: IItemOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
-    const [items, setItems] = useState<ICakeOrder[]>(JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string))
+    const [items, setItems] = useState<IItemOrder[]>(JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string))
     const [selectedItems, setSelectedItems] = useState<number[]>([])
-    const cakeDTO: ICakeDTO[] = orderList.map((cake: ICakeOrder) => {
+    const cakeDTO: IItemDTO[] = orderList.map((cake: IItemOrder) => {
         return {
             id: cake.cakeId,
             amount: 1
         }
     })
 
-    const rows: any = items.map((cake: ICakeOrder) => {
+    const rows: any = items.map((cake: IItemOrder) => {
         return {
             id: cake.cakeId,
             price: cake.price,
@@ -55,7 +55,7 @@ export const ShoppingCart = (): JSX.Element => {
     }
 
     const onDeleteItems = (): void => {
-        const newItems: ICakeOrder[] = items.filter((item: ICakeOrder) => !selectedItems.includes(item.cakeId))
+        const newItems: IItemOrder[] = items.filter((item: IItemOrder) => !selectedItems.includes(item.cakeId))
         setItems(newItems)
         localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(newItems))
     }

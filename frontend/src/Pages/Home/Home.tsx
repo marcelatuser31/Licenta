@@ -5,10 +5,10 @@ import * as React from 'react'
 import { useEffect, useState } from "react"
 import { customCardStyle } from "../../components/Card/Card.styles"
 import { CustomCard } from "../../components/Card/CustomCard"
+import { CustomDropdown } from "../../components/CustomDropdown/CustomDropdown"
 import { Navbar } from "../../components/Navbar/Navbar"
-import { SelectedMenu } from "../../components/SelectedMenu/SelectedMenu"
 import { selectedMenuStyle } from '../../Pages/Home/Home.styles'
-import { HEADERS } from "../../Utils/constants"
+import { ASCENDING, DESCENDING, HEADERS } from "../../Utils/constants"
 import { getImageURLfromByteArray } from "../../Utils/methods"
 import { ICake } from "../../Utils/Models/ICake"
 import { CakeRoutes } from "../../Utils/Routes/backEndRoutes"
@@ -36,13 +36,15 @@ export const Home = (): JSX.Element => {
     const [selectedSortPriceOption, setSelectedSortPriceOption] = useState<string>("");
 
     const sortByPrice = (): void => {
-        if (selectedSortPriceOption === 'Ascending') {
+        let sortCakeList: ICake[] = []
+        if (selectedSortPriceOption === ASCENDING) {
             const ascendingCakeList: ICake[] = cakes.sort((a: ICake, b: ICake) => b.price - a.price)
-            setCakes(ascendingCakeList)
+            sortCakeList = ascendingCakeList
         } else {
             const descendingCakeList: ICake[] = cakes.sort((a: ICake, b: ICake) => a.price - b.price)
-            setCakes(descendingCakeList)
+            sortCakeList = descendingCakeList
         }
+        setCakes(sortCakeList)
     }
 
     useEffect(() => {
@@ -84,13 +86,14 @@ export const Home = (): JSX.Element => {
     const onChoiceGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
         if (option === undefined)
             return
+
         setSelectedType(option.text)
     }
 
     const onPriceSortChange = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number): void => {
-        if (option === undefined) {
+        if (option === undefined)
             return
-        }
+
         setSelectedSortPriceOption(option?.text)
     }
 
@@ -109,10 +112,10 @@ export const Home = (): JSX.Element => {
                     </StackItem>
                     <StackItem>
                         <div className={selectedMenuStyle}>
-                            <SelectedMenu
-                                options={["Ascending", "Descending"]}
-                                setSelectedPriceSortOption={setSelectedSortPriceOption}
-                                selectedSortPriceOption={selectedSortPriceOption}
+                            <CustomDropdown
+                                options={[ASCENDING, DESCENDING]}
+                                setDefaultValue={setSelectedSortPriceOption}
+                                defaultValue={selectedSortPriceOption}
                                 onSelectItem={sortByPrice}
                             />
                         </div>

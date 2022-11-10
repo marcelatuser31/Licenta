@@ -16,7 +16,7 @@ import CakeIcon from '@mui/icons-material/Cake';
 import { Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { cakeIconStyle, expandedCakeIconStyle, expandedLogoStyle, expandedMenuBoxStyle, imageStyle, logoStyle, menuBoxStyle, myCartButtonStyle, settingsBoxStyle } from './Navbar.styles';
-import { ICakeOrder } from '../../Pages/Cake/Cake.types';
+import { IItemOrder } from '../../Pages/Cake/Cake.types';
 import { HEADERS, ORDER_LIST_KEY, PERSON_KEY } from '../../Utils/constants';
 import axios from 'axios';
 import { RoleRoutes } from '../../Utils/Routes/backEndRoutes';
@@ -30,13 +30,13 @@ export const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const navigate: NavigateFunction = useNavigate();
-    const newCakeList: ICakeOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
+    const newCakeList: IItemOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
 
     const onLogout = async (event: any): Promise<void> => {
         const response = await axios.post(RoleRoutes.Logout, person.id, { headers: HEADERS });
         navigate(Pages.LogIn)
-        localStorage.setItem(PERSON_KEY, JSON.stringify(null))
+        localStorage.removeItem(PERSON_KEY)
     }
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {

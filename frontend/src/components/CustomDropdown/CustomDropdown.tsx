@@ -5,11 +5,10 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { selectedMenuStyle } from '../../Pages/Home/Home.styles';
-import { ISelectedMenuProps } from './SelectedMenu.types';
+import { ISelectedMenuProps } from './CustomDropdown.types';
 
-export const SelectedMenu = (props: ISelectedMenuProps): JSX.Element => {
+export const CustomDropdown = (props: ISelectedMenuProps): JSX.Element => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
     const open = Boolean(anchorEl);
 
     const handleClickListItem = (event: React.MouseEvent<HTMLElement>) => {
@@ -17,7 +16,7 @@ export const SelectedMenu = (props: ISelectedMenuProps): JSX.Element => {
     };
 
     const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>, index: number) => {
-        props.setSelectedPriceSortOption(props.options[index]);
+        props.setDefaultValue(props.options[index]);
         props.onSelectItem()
         setAnchorEl(null);
     };
@@ -31,7 +30,7 @@ export const SelectedMenu = (props: ISelectedMenuProps): JSX.Element => {
             <List
                 component="nav"
                 aria-label="Device settings"
-                sx={{ bgcolor: 'background.paper' }}
+                sx={{ bgcolor: 'background.paper', width: '130%' }}
             >
                 <ListItem
                     button
@@ -44,7 +43,7 @@ export const SelectedMenu = (props: ISelectedMenuProps): JSX.Element => {
                 >
                     <ListItemText
                         primary="Sort by price"
-                        secondary={props.selectedSortPriceOption}
+                        secondary={props.defaultValue}
                     />
                 </ListItem>
             </List>

@@ -17,5 +17,6 @@ export const choiceGroupStyle: string = mergeStyles({
 
 export const selectedMenuStyle: string = mergeStyles({
     position: 'relative',
-    top: 150
+    top: 150,
+    width: "100%"
 })

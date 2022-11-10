@@ -6,14 +6,13 @@ import { IIngredient } from "../../Utils/Models/IIngredient"
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { addToCartStyle, choiceGroupStyle, imageStyle, labelStyle, textFieldStyle, title, valueStyle } from "./Cake.styles"
 import { useState } from "react"
-import { ICakeOrder } from "./Cake.types"
+import { IItemOrder } from "./Cake.types"
 import { ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
 import { IPerson } from "../../Utils/Models/IPerson"
 import { RoleType } from "../../Utils/enums"
 import { Input } from "../Home/Home"
 import { onUploadPhoto } from "../../Utils/methods"
-import { CakeSection } from "../../components/CakeSection/CakeSection"
-import { SelectedMenu } from "../../components/SelectedMenu/SelectedMenu"
+import { Section } from "../../components/Section/Section"
 
 const options: IChoiceGroupOption[] = [
     { key: 'A', text: '0.5kg', styles: { root: { marginLeft: 0 } } },
@@ -33,10 +32,10 @@ export const Cake = (): JSX.Element => {
     }
 
     const onAddToCart = (event: any): void => {
-        const cakeList: ICakeOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
-        const cake: ICakeOrder | undefined = cakeList.find((a: ICakeOrder) => a.cakeId === location.state.cakeId)
+        const cakeList: IItemOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
+        const cake: IItemOrder | undefined = cakeList.find((a: IItemOrder) => a.cakeId === location.state.cakeId)
         if (cake === undefined) {
-            const newCake: ICakeOrder = {
+            const newCake: IItemOrder = {
                 cakeId: location.state.cakeId,
                 name: location.state.title,
                 price: location.state.price * selectedWeight,
@@ -48,14 +47,13 @@ export const Cake = (): JSX.Element => {
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(cakeList))
         }
         else {
-            const cakeList2: ICakeOrder[] = cakeList.map((cake) => {
+            const cakeList2: IItemOrder[] = cakeList.map((cake) => {
                 if (cake.cakeId === location.state.cakeId) {
                     cake.amount = cake.amount + 1
-
                 }
                 return cake;
             })
-            localStorage.setItem('order', JSON.stringify(cakeList2))
+            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(cakeList2))
         }
     }
 
@@ -112,12 +110,12 @@ export const Cake = (): JSX.Element => {
                     <StackItem className={title}>
                         {location.state.title}
                     </StackItem>
-                    <CakeSection name={"Price:"} contentValue={(location.state.price * selectedWeight).toString() + ' RON'} />
-                    <CakeSection name={"Weight:"} contentValue={getWeightContent()} />
-                    <CakeSection name={"Ingredients:"} contentValue={getIngredientsContent()} />
-                    <CakeSection name={"Cake Message:"} contentValue={getMessageContent()}></CakeSection>
+                    <Section name={"Price:"} contentValue={(location.state.price * selectedWeight).toString() + ' RON'} gap={10} />
+                    <Section name={"Weight:"} contentValue={getWeightContent()} gap={10} />
+                    <Section name={"Ingredients:"} contentValue={getIngredientsContent()} />
+                    <Section name={"Cake Message:"} contentValue={getMessageContent()} gap={10} />
                     {person.role.type == RoleType.Admin
-                        ? <CakeSection name={"Upload Photo:"} contentValue={getUploadContent()}></CakeSection>
+                        ? <Section name={"Upload Photo:"} contentValue={getUploadContent()} gap={10} />
                         : undefined}
                 </Stack>
             </StackItem>

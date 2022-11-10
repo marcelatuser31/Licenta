@@ -1,16 +1,12 @@
-import { ICakeOrder } from "../Cake/Cake.types";
+import { IItemOrder } from "../Cake/Cake.types";
 
-export interface IDrinkDTO {
-    id: number,
-    amount: number
-}
-export interface ICakeDTO {
+export interface IItemDTO {
     id: number,
     amount: number
 }
 
 export interface IOrderData {
-    cakes?: ICakeDTO[],
+    cakes?: IItemDTO[],
     id: number,
-    drinks?: IDrinkDTO[]
+    drinks?: IItemDTO[]
 }
