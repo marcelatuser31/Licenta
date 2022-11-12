@@ -5,9 +5,9 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { selectedMenuStyle } from '../../Pages/Home/Home.styles';
-import { ISelectedMenuProps } from './CustomDropdown.types';
+import { ICustomDropdownProps } from './CustomDropdown.types';
 
-export const CustomDropdown = (props: ISelectedMenuProps): JSX.Element => {
+export const CustomDropdown = (props: ICustomDropdownProps): JSX.Element => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 

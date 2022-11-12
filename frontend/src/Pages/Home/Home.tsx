@@ -38,11 +38,9 @@ export const Home = (): JSX.Element => {
     const sortByPrice = (): void => {
         let sortCakeList: ICake[] = []
         if (selectedSortPriceOption === ASCENDING) {
-            const ascendingCakeList: ICake[] = cakes.sort((a: ICake, b: ICake) => b.price - a.price)
-            sortCakeList = ascendingCakeList
+            sortCakeList = cakes.sort((a: ICake, b: ICake) => b.price - a.price)
         } else {
-            const descendingCakeList: ICake[] = cakes.sort((a: ICake, b: ICake) => a.price - b.price)
-            sortCakeList = descendingCakeList
+            sortCakeList = cakes.sort((a: ICake, b: ICake) => a.price - b.price)
         }
         setCakes(sortCakeList)
     }

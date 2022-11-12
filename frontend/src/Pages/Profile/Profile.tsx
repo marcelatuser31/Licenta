@@ -26,6 +26,16 @@ export const Profile = (): JSX.Element => {
         setPerson(response.data)
     }
 
+    const getSection = (name: string, textFieldValue: string): JSX.Element => {
+        return <Section name={name}
+            contentValue={<TextField value={textFieldValue} className={textFieldStyles} style={{ height: 100 }}></TextField>}
+            isHorizontal={true}
+            labelStyle={labelStyle}
+            valueStyle={valueStyle}
+            gap={20}
+        />
+    }
+
     return <div>
         <Navbar />
         <Stack horizontal={true} gap='120'>
@@ -47,16 +57,16 @@ export const Profile = (): JSX.Element => {
                 </Stack>
             </StackItem>
             <StackItem className={informationStackStyle}>
-                <Stack gap="10" >
+                <Stack gap="5" >
                     <StackItem className={sectionTitle}>
                         General Information
                     </StackItem>
-                    <Section name="Name:" contentValue={<TextField value={person?.name} className={textFieldStyles} style={{ height: 100 }}></TextField>} isHorizontal={true} labelStyle={labelStyle} valueStyle={valueStyle} gap={20} />
-                    <Section name="Address:" contentValue={<TextField value={person?.address} className={textFieldStyles} style={{ height: 100 }}></TextField>} isHorizontal={true} labelStyle={labelStyle} valueStyle={valueStyle} gap={20} />
-                    <Section name="Phone:" contentValue={<TextField value={person?.phone} className={textFieldStyles} style={{ height: 100 }}></TextField>} isHorizontal={true} labelStyle={labelStyle} valueStyle={valueStyle} gap={20} />
-                    <Section name="Email:" contentValue={<TextField value={person?.role.email} className={textFieldStyles} style={{ height: 100 }}></TextField>} isHorizontal={true} labelStyle={labelStyle} valueStyle={valueStyle} gap={20} />
-                    <Section name="Username:" contentValue={<TextField value={person?.role.username} className={textFieldStyles} style={{ height: 100 }}></TextField>} isHorizontal={true} labelStyle={labelStyle} valueStyle={valueStyle} gap={20} />
-                    <Section name="Password:" contentValue={<TextField value={person?.role.password} className={textFieldStyles} style={{ height: 100 }}></TextField>} isHorizontal={true} labelStyle={labelStyle} valueStyle={valueStyle} gap={20} />
+                    {getSection("Name:", person.name)}
+                    {getSection("Address:", person.address)}
+                    {getSection("Phone:", person.phone)}
+                    {getSection("Email:", person.role.email)}
+                    {getSection("Username:", person.role.username)}
+                    {getSection("Password:", person.role.password)}
                 </Stack>
             </StackItem>
         </Stack >
