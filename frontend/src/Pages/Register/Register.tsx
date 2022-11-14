@@ -8,7 +8,7 @@ import { IPerson } from "../../Utils/Models/IPerson"
 import { PersonRoutes } from "../../Utils/Routes/backEndRoutes"
 
 const registerFields: string[] = ["name", "address", "phone", "email", "username", "password"];
-const defaultPErson: IPerson = {
+const defaultPerson: IPerson = {
     name: "",
     address: "",
     phone: "",
@@ -22,7 +22,7 @@ const defaultPErson: IPerson = {
 }
 export const Register = (): JSX.Element => {
     const navigate: NavigateFunction = useNavigate()
-    const [person, setPerson] = useState<IPerson>(defaultPErson);
+    const [person, setPerson] = useState<IPerson>(defaultPerson);
 
     const getTextField = (name: string): JSX.Element => {
         return <Grid item xs={12} key={name}>
@@ -68,7 +68,6 @@ export const Register = (): JSX.Element => {
             case "email":
                 setPerson({ ...person, role: { ...person.role, email: value } })
                 break
-
         }
     }
 
@@ -105,7 +104,6 @@ export const Register = (): JSX.Element => {
                         </Grid>
                     </Box>
                 </Box>
-
             </Container>
         </ThemeProvider></>
 }

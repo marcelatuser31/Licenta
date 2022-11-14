@@ -1,4 +1,4 @@
-package Backend;
+package Backend.Utils;
 
 import javax.mail.Multipart;
 

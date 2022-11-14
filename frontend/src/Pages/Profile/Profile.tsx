@@ -28,12 +28,46 @@ export const Profile = (): JSX.Element => {
 
     const getSection = (name: string, textFieldValue: string): JSX.Element => {
         return <Section name={name}
-            contentValue={<TextField value={textFieldValue} className={textFieldStyles} style={{ height: 100 }}></TextField>}
+            contentValue={<TextField name={name} defaultValue={textFieldValue} className={textFieldStyles} style={{ height: 100 }} onChange={onChange} id={name}></TextField>}
             isHorizontal={true}
             labelStyle={labelStyle}
             valueStyle={valueStyle}
             gap={20}
         />
+    }
+
+    const onChange = (event: any): void => {
+        const value: string = event.target.value;
+        const name: string = event.target.name;
+        switch (name) {
+            case "Name:":
+                setPerson({ ...person, name: value })
+                break
+            case "Address:":
+                setPerson({ ...person, address: value })
+                break
+            case "Phone:":
+                setPerson({ ...person, phone: value })
+                break
+            case "Username:":
+                setPerson({ ...person, role: { ...person.role, username: value } })
+                break;
+            case "Password:":
+                setPerson({ ...person, role: { ...person.role, password: value } })
+                break
+            case "Email:":
+                setPerson({ ...person, role: { ...person.role, email: value } })
+                break
+        }
+    }
+    console.log(person)
+    const onEditProfile = (event: any): void => {
+        const getData = async (): Promise<void> => {
+            const response = await axios.post(PersonRoutes.Update, person)
+            console.log(response.data)
+            localStorage.setItem(PERSON_KEY, JSON.stringify(response.data))
+        }
+        getData()
     }
 
     return <div>
@@ -68,6 +102,13 @@ export const Profile = (): JSX.Element => {
                     {getSection("Username:", person.role.username)}
                     {getSection("Password:", person.role.password)}
                 </Stack>
+            </StackItem>
+            <StackItem>
+                <Button
+                    onClick={onEditProfile} type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}
+                >
+                    Edit Profile
+                </Button>
             </StackItem>
         </Stack >
     </div >

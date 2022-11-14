@@ -1,7 +1,6 @@
 package Backend.Service.Implementation;
 
-import Backend.Methods;
-import Backend.Model.Cake;
+import Backend.Utils.Methods;
 import Backend.Model.Person;
 import Backend.Repository.PersonRepository;
 import Backend.Service.PersonService;
@@ -41,6 +40,7 @@ public class PersonServiceImplementation implements PersonService {
     }
 
     @Override
+
     public Person update(Person person) {
         Person dbPerson = personRepository.findFirstById(person.getId());
 
