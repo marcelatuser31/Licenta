@@ -1,6 +1,6 @@
 import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, styled, Typography } from "@mui/material"
-import { Fragment } from "react"
-import { ICardProps } from "./Card.types"
+import { Fragment, useState } from "react"
+import { ICardProps, IFavoriteItems } from "./Card.types"
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
@@ -11,10 +11,14 @@ import { IIngredient } from "../../Utils/Models/IIngredient"
 import { ingredientsNameStyle } from "./Card.styles"
 import { NavigateFunction, useNavigate } from "react-router-dom"
 import { Pages } from "../../Utils/enums"
+import { FAVORITE_ITEMS_LIST_KEY } from "../../Utils/constants"
+import { Stack } from "@fluentui/react"
 
 export const CustomCard = (props: ICardProps): JSX.Element => {
     const [expanded, setExpanded] = React.useState(false);
     const navigate: NavigateFunction = useNavigate()
+    const [isAdded, setIsAdded] = useState<Boolean>(false)
+
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
@@ -34,10 +38,10 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
         }),
     }));
 
-    const onClick = (event: any): void => {
+    const onCardClick = (event: any): void => {
         navigate(Pages.Cake, {
             state: {
-                cakeId: props.cakeId,
+                cakeId: props.id,
                 title: props.title,
                 image: props.image,
                 ingredients: props.ingredients,
@@ -48,52 +52,76 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
         })
     }
 
+    const onFavoriteIcon = (event: any): void => {
+        const favoriteList: IFavoriteItems[] = JSON.parse(localStorage.getItem(FAVORITE_ITEMS_LIST_KEY) as string)
+
+        if (!isAdded) {
+            const newItem: IFavoriteItems = {
+                id: props.id,
+                name: props.title,
+                price: props.price
+            }
+            favoriteList.push(newItem)
+            localStorage.setItem(FAVORITE_ITEMS_LIST_KEY, JSON.stringify(favoriteList))
+        }
+        else {
+            const removeList: IFavoriteItems[] = favoriteList.filter(i => i.id != props.id)
+            localStorage.setItem(FAVORITE_ITEMS_LIST_KEY, JSON.stringify(removeList))
+        }
+        setIsAdded(!isAdded)
+    }
+
     return <Fragment >
         <Card sx={{ maxWidth: 345, minHeight: 500 }}>
-            <CardHeader onClick={onClick}
-                avatar={
-                    <Avatar sx={{ bgcolor: '#1976d2' }} aria-label="recipe">
-                        {props.title[0]}
-                    </Avatar>
-                }
-                action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon />
-                    </IconButton>
-                }
-                title={props.title}
-                subheader={props.price?.toString() + ' RON/KG'}
-            />
-            <img width={300} height={300} alt={'Not found'} src={props.image} onClick={onClick}
-            />
-            <CardContent>
-            </CardContent>
-            <CardActions disableSpacing>
-                <IconButton color={"error"} aria-label="add to favorites">
-                    <FavoriteIcon />
-                </IconButton>
-                <IconButton aria-label="share">
-                    <ShareIcon />
-                </IconButton>
-                <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                >
-                    <ExpandMoreIcon />
-                </ExpandMore>
-            </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <Stack>
+                <span title={props.title}>
+                    <CardHeader onClick={onCardClick}
+                        avatar={
+                            <Avatar sx={{ bgcolor: '#1976d2' }} aria-label="recipe">
+                                {props.title[0]}
+                            </Avatar>
+                        }
+                        action={
+                            <IconButton aria-label="settings">
+                                <MoreVertIcon />
+                            </IconButton>
+                        }
+                        title={props.title}
+                        style={{ textOverflow: 'elipsis', overflow: 'hidden', whiteSpace: 'nowrap', width: 270 }}
+                        subheader={props.price?.toString() + ' RON/KG'}
+                    />
+                </span>
+                <img width={300} height={300} alt={'Not found'} src={props.image} onClick={onCardClick}
+                />
                 <CardContent>
-                    <div className={ingredientsNameStyle}>Ingredients</div>
-                    {props.ingredients?.map((ingredient: IIngredient) =>
-                        <Typography variant="body2" color="text.secondary">
-                            {ingredient.name}
-                        </Typography>
-                    )}
                 </CardContent>
-            </Collapse>
+                <CardActions disableSpacing>
+                    <IconButton aria-label="add to favorites">
+                        <FavoriteIcon color={isAdded ? "error" : "inherit"} onClick={onFavoriteIcon} />
+                    </IconButton>
+                    <IconButton aria-label="share">
+                        <ShareIcon />
+                    </IconButton>
+                    <ExpandMore
+                        expand={expanded}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="show more"
+                    >
+                        <ExpandMoreIcon />
+                    </ExpandMore>
+                </CardActions>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                        <div className={ingredientsNameStyle}>Ingredients</div>
+                        {props.ingredients?.map((ingredient: IIngredient) =>
+                            <Typography variant="body2" color="text.secondary">
+                                {ingredient.name}
+                            </Typography>
+                        )}
+                    </CardContent>
+                </Collapse>
+            </Stack>
         </Card>
     </Fragment>
 }    

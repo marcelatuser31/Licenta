@@ -36,3 +36,8 @@ export const valueStyle: string = mergeStyles({
 export const textFieldStyles: string = mergeStyles({
     height: 10
 })
+
+export const favoriteListStyle: string = mergeStyles({
+    maxWidth: 1000,
+    maxHeight: 1000
+})

@@ -5,7 +5,13 @@ export interface ICardProps {
     expirationDate: Date;
     ingredients: IIngredient[];
     image: string;
-    cakeId: number;
-    price?: number;
+    id: number;
+    price: number;
     weight?: number;
+}
+
+export interface IFavoriteItems {
+    id: number,
+    name: string,
+    price: number
 }

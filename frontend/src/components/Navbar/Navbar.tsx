@@ -57,7 +57,7 @@ export const Navbar = () => {
 
     return (
         <AppBar position="static" >
-            <Container maxWidth="xl" style={{ marginLeft: 0, maxWidth: 1800 }}>
+            <Container maxWidth="xl" style={{ marginLeft: 0, maxWidth: 2000 }}>
                 <Toolbar disableGutters >
                     <CakeIcon sx={expandedCakeIconStyle} />
                     <Typography

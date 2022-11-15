@@ -18,7 +18,7 @@ export const Input = styled('input')({ display: 'none' })
 const getCard = (cake: ICake, index: number): JSX.Element => {
     return <div className={customCardStyle} key={index}>
         <CustomCard
-            cakeId={cake.id}
+            id={cake.id}
             title={cake.name}
             expirationDate={cake.expirationDate}
             ingredients={cake.ingredients}
