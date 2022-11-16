@@ -1,4 +1,5 @@
 import { mergeStyles } from "@fluentui/merge-styles";
+import { DEFAULT_COLOR } from "../../Utils/constants";
 
 export const cakesContainerStyles: string = mergeStyles({
     display: "grid",
@@ -12,11 +13,19 @@ export const cakesContainerStyles: string = mergeStyles({
 export const choiceGroupStyle: string = mergeStyles({
     position: 'relative',
     left: 60,
-    top: 50
+    top: 20
 })
 
 export const selectedMenuStyle: string = mergeStyles({
     position: 'relative',
-    top: 150,
     width: "100%"
+})
+
+export const labelStyle: string = mergeStyles({
+    position: 'relative',
+    left: 30,
+    fontSize: "20px",
+    top: 30,
+    fontWeight: 600,
+    color: DEFAULT_COLOR
 })

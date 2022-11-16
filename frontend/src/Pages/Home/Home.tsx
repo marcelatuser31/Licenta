@@ -7,7 +7,8 @@ import { customCardStyle } from "../../components/Card/Card.styles"
 import { CustomCard } from "../../components/Card/CustomCard"
 import { CustomDropdown } from "../../components/CustomDropdown/CustomDropdown"
 import { Navbar } from "../../components/Navbar/Navbar"
-import { selectedMenuStyle } from '../../Pages/Home/Home.styles'
+import { Section } from "../../components/Section/Section"
+import { labelStyle, selectedMenuStyle } from '../../Pages/Home/Home.styles'
 import { ASCENDING, DESCENDING, HEADERS } from "../../Utils/constants"
 import { getImageURLfromByteArray } from "../../Utils/methods"
 import { ICake } from "../../Utils/Models/ICake"
@@ -95,29 +96,33 @@ export const Home = (): JSX.Element => {
         setSelectedSortPriceOption(option?.text)
     }
 
+    const getFilterContent = (): JSX.Element => {
+        return <ChoiceGroup
+            onChange={onChoiceGroupChange}
+            className={choiceGroupStyle}
+            defaultSelectedKey="B"
+            options={options}
+        />
+    }
+
+    const getSortByPriceContent = (): JSX.Element => {
+        return <div className={selectedMenuStyle}>
+            <CustomDropdown
+                options={[ASCENDING, DESCENDING]}
+                setDefaultValue={setSelectedSortPriceOption}
+                defaultValue={selectedSortPriceOption}
+                onSelectItem={sortByPrice}
+            />
+        </div>
+    }
+
     return <>
         <Navbar />
         <Stack horizontal={true} gap='80'>
-            <StackItem>
-                <Stack>
-                    <StackItem>
-                        <ChoiceGroup
-                            onChange={onChoiceGroupChange}
-                            className={choiceGroupStyle}
-                            defaultSelectedKey="B"
-                            options={options}
-                        />
-                    </StackItem>
-                    <StackItem>
-                        <div className={selectedMenuStyle}>
-                            <CustomDropdown
-                                options={[ASCENDING, DESCENDING]}
-                                setDefaultValue={setSelectedSortPriceOption}
-                                defaultValue={selectedSortPriceOption}
-                                onSelectItem={sortByPrice}
-                            />
-                        </div>
-                    </StackItem>
+            <StackItem >
+                <Stack gap='80'>
+                    <Section name='Filter By Type' labelStyle={labelStyle} contentValue={getFilterContent()}></Section>
+                    <Section name='Sort by Price' labelStyle={labelStyle} contentValue={getSortByPriceContent()}></Section>
                 </Stack>
             </StackItem>
             <StackItem className={cakesContainerStyles}>
@@ -125,6 +130,6 @@ export const Home = (): JSX.Element => {
                     cakes.length > 0 && cakes.map((cake: ICake, index: number) => getCard(cake, index))
                 }
             </StackItem>
-        </Stack>
+        </Stack >
     </>
 }
