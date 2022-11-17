@@ -10,7 +10,7 @@ export interface ICardProps {
     weight?: number;
 }
 
-export interface IFavoriteItems {
+export interface IFavoriteItem {
     id: number,
     name: string,
     price: number

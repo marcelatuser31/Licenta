@@ -8,7 +8,7 @@ import { ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants";
 import { IPerson } from "../../Utils/Models/IPerson";
 import { OrderRoutes } from "../../Utils/Routes/backEndRoutes";
 import { IItemOrder } from "../Cake/Cake.types";
-import { addOrderButtonStyle, boxStyle, innerDiv, listStyle, outerDiv } from "./ShoppingCart.Styles";
+import { addOrderButtonStyle, boxStyle, deleteButtonStyles, innerDiv, listStyle, outerDiv } from "./ShoppingCart.Styles";
 import { IItemDTO, IOrderData } from "./ShoppingCart.types";
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -76,7 +76,7 @@ export const ShoppingCart = (): JSX.Element => {
                 <GridToolbarFilterButton />
                 <GridToolbarDensitySelector />
                 <GridToolbarExport />
-                <Button variant="text" onClick={onDeleteItems} startIcon={<DeleteIcon />} style={{ fontSize: "0.8125rem" }}>Delete</Button>
+                <Button variant="text" onClick={onDeleteItems} startIcon={<DeleteIcon />} style={deleteButtonStyles}>Delete</Button>
             </GridToolbarContainer>
         );
     }

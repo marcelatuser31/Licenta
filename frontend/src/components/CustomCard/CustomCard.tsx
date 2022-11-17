@@ -1,6 +1,6 @@
 import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, styled, Typography } from "@mui/material"
 import { Fragment, useState } from "react"
-import { ICardProps, IFavoriteItems } from "./Card.types"
+import { ICardProps, IFavoriteItem } from "./CustomCard.types"
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
@@ -8,7 +8,7 @@ import { IconButtonProps } from '@mui/material/IconButton';
 import React from "react"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IIngredient } from "../../Utils/Models/IIngredient"
-import { ingredientsNameStyle } from "./Card.styles"
+import { cardStyles, ingredientsNameStyles } from "./CustomCard.styles"
 import { NavigateFunction, useNavigate } from "react-router-dom"
 import { Pages } from "../../Utils/enums"
 import { FAVORITE_ITEMS_LIST_KEY } from "../../Utils/constants"
@@ -17,7 +17,7 @@ import { Stack } from "@fluentui/react"
 export const CustomCard = (props: ICardProps): JSX.Element => {
     const [expanded, setExpanded] = React.useState(false);
     const navigate: NavigateFunction = useNavigate()
-    const [isAdded, setIsAdded] = useState<Boolean>(false)
+    const [isFavorite, setIsFavorite] = useState<Boolean>(false)
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -53,10 +53,10 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
     }
 
     const onFavoriteIcon = (event: any): void => {
-        const favoriteList: IFavoriteItems[] = JSON.parse(localStorage.getItem(FAVORITE_ITEMS_LIST_KEY) as string)
+        const favoriteList: IFavoriteItem[] = JSON.parse(localStorage.getItem(FAVORITE_ITEMS_LIST_KEY) as string)
 
-        if (!isAdded) {
-            const newItem: IFavoriteItems = {
+        if (!isFavorite) {
+            const newItem: IFavoriteItem = {
                 id: props.id,
                 name: props.title,
                 price: props.price
@@ -65,14 +65,14 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
             localStorage.setItem(FAVORITE_ITEMS_LIST_KEY, JSON.stringify(favoriteList))
         }
         else {
-            const removeList: IFavoriteItems[] = favoriteList.filter(i => i.id != props.id)
+            const removeList: IFavoriteItem[] = favoriteList.filter(i => i.id != props.id)
             localStorage.setItem(FAVORITE_ITEMS_LIST_KEY, JSON.stringify(removeList))
         }
-        setIsAdded(!isAdded)
+        setIsFavorite(!isFavorite)
     }
 
     return <Fragment >
-        <Card sx={{ maxWidth: 345, minHeight: 500 }}>
+        <Card sx={cardStyles}>
             <Stack>
                 <span title={props.title}>
                     <CardHeader onClick={onCardClick}
@@ -97,7 +97,7 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
                 </CardContent>
                 <CardActions disableSpacing>
                     <IconButton aria-label="add to favorites">
-                        <FavoriteIcon color={isAdded ? "error" : "inherit"} onClick={onFavoriteIcon} />
+                        <FavoriteIcon color={isFavorite ? "error" : "inherit"} onClick={onFavoriteIcon} />
                     </IconButton>
                     <IconButton aria-label="share">
                         <ShareIcon />
@@ -113,7 +113,7 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
-                        <div className={ingredientsNameStyle}>Ingredients</div>
+                        <div className={ingredientsNameStyles}>Ingredients</div>
                         {props.ingredients?.map((ingredient: IIngredient) =>
                             <Typography variant="body2" color="text.secondary">
                                 {ingredient.name}

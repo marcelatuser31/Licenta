@@ -3,7 +3,7 @@ import { Button, TextField } from "@mui/material"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { IFavoriteItems } from "../../components/Card/Card.types"
+import { IFavoriteItem } from "../../components/CustomCard/CustomCard.types"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { Section } from "../../components/Section/Section"
 import { FAVORITE_ITEMS_LIST_KEY, HEADERS, PERSON_KEY } from "../../Utils/constants"
@@ -12,17 +12,17 @@ import { IPerson } from "../../Utils/Models/IPerson"
 import { PersonRoutes } from "../../Utils/Routes/backEndRoutes"
 import { Input } from "../Home/Home"
 import { innerDiv, outerDiv } from "../ShoppingCart/ShoppingCart.Styles"
-import { favoriteListStyle, informationStackStyle, labelStyle, photoStackStyle, sectionTitle, textFieldStyles, valueStyle } from "./Profile.styles"
+import { editProfileButtonStyles, informationStackStyles, labelStyles, photoStackStyles, sectionTitleStyles, textFieldStyles, valueStyles } from "./Profile.styles"
 
 export const Profile = (): JSX.Element => {
     const [person, setPerson] = useState<IPerson>(JSON.parse(localStorage.getItem(PERSON_KEY) as string));
-    const [items, setItems] = useState<IFavoriteItems[]>(JSON.parse(localStorage.getItem(FAVORITE_ITEMS_LIST_KEY) as string))
+    const [items, setItems] = useState<IFavoriteItem[]>(JSON.parse(localStorage.getItem(FAVORITE_ITEMS_LIST_KEY) as string))
 
     useEffect(() => {
         setPerson(JSON.parse(localStorage.getItem(PERSON_KEY) as string))
     }, [])
 
-    const rows: any = items.map((item: IFavoriteItems) => {
+    const rows: any = items.map((item: IFavoriteItem) => {
         return {
             id: item.id,
             price: item.price,
@@ -42,13 +42,21 @@ export const Profile = (): JSX.Element => {
         const response: any = await axios.post(PersonRoutes.ReadById, id, { headers: HEADERS })
         setPerson(response.data)
     }
+    const getTextField = (name: string, textFieldValue: string): JSX.Element => {
+        return <TextField name={name}
+            defaultValue={textFieldValue}
+            className={textFieldStyles}
+            style={{ height: 100, maxWidth: 250 }}
+            onChange={onChange}
+            id={name}></TextField>
+    }
 
     const getSection = (name: string, textFieldValue: string): JSX.Element => {
         return <Section name={name}
-            contentValue={<TextField name={name} defaultValue={textFieldValue} className={textFieldStyles} style={{ height: 100, maxWidth: 250 }} onChange={onChange} id={name}></TextField>}
+            contentValue={getTextField(name, textFieldValue)}
             isHorizontal={true}
-            labelStyle={labelStyle}
-            valueStyle={valueStyle}
+            labelStyle={labelStyles}
+            valueStyle={valueStyles}
             gap={20}
         />
     }
@@ -81,7 +89,6 @@ export const Profile = (): JSX.Element => {
     const onEditProfile = (event: any): void => {
         const getData = async (): Promise<void> => {
             const response = await axios.post(PersonRoutes.Update, person)
-            console.log(response.data)
             localStorage.setItem(PERSON_KEY, JSON.stringify(response.data))
         }
         getData()
@@ -90,7 +97,7 @@ export const Profile = (): JSX.Element => {
     return <div>
         <Navbar />
         <Stack horizontal={true} gap='120'>
-            <StackItem className={photoStackStyle}>
+            <StackItem className={photoStackStyles}>
                 <Stack gap="20">
                     <StackItem>
                         <img width={260} height={300} alt={'Not found'} src={getImageURLfromByteArray(person?.image)}></img>
@@ -107,9 +114,9 @@ export const Profile = (): JSX.Element => {
                     </StackItem>
                 </Stack>
             </StackItem>
-            <StackItem className={informationStackStyle}>
+            <StackItem className={informationStackStyles}>
                 <Stack gap="5" >
-                    <StackItem className={sectionTitle}>
+                    <StackItem className={sectionTitleStyles}>
                         General Information
                     </StackItem>
                     {getSection("Name:", person.name)}
@@ -120,7 +127,7 @@ export const Profile = (): JSX.Element => {
                     {getSection("Password:", person.role.password)}
                     <StackItem>
                         <Button
-                            onClick={onEditProfile} type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}
+                            onClick={onEditProfile} type="submit" fullWidth variant="contained" sx={editProfileButtonStyles}
                         >
                             Edit Profile
                         </Button>
@@ -129,12 +136,11 @@ export const Profile = (): JSX.Element => {
             </StackItem>
             <StackItem style={{ position: 'relative', top: 32, maxWidth: 800, }}>
                 <Stack>
-                    <StackItem className={sectionTitle}>
+                    <StackItem className={sectionTitleStyles}>
                         Favorite List
                     </StackItem>
                 </Stack>
                 <DataGrid
-                    //  components={{ Toolbar: CustomToolbar }}
                     style={{ width: 1000, height: 695, }}
                     componentsProps={{ toolbar: { left: 2 } }}
                     rows={rows}
@@ -143,7 +149,6 @@ export const Profile = (): JSX.Element => {
                     rowsPerPageOptions={[5]}
                     checkboxSelection
                     experimentalFeatures={{ newEditingApi: true }}
-                // onSelectionModelChange={onSelectionModelChange}
                 />
             </StackItem>
         </Stack >

@@ -28,3 +28,7 @@ export const addOrderButtonStyle: string = mergeStyles({
     width: 200,
     top: 60
 })
+
+export const deleteButtonStyles: React.CSSProperties = {
+    fontSize: "0.8125rem"
+}

@@ -10,18 +10,18 @@ export const cakesContainerStyles: string = mergeStyles({
     top: 30
 })
 
-export const choiceGroupStyle: string = mergeStyles({
+export const choiceGroupStyles: string = mergeStyles({
     position: 'relative',
     left: 60,
     top: 20
 })
 
-export const selectedMenuStyle: string = mergeStyles({
+export const selectedMenuStyles: string = mergeStyles({
     position: 'relative',
     width: "100%"
 })
 
-export const labelStyle: string = mergeStyles({
+export const labelSectionStyles: string = mergeStyles({
     position: 'relative',
     left: 30,
     fontSize: "20px",
