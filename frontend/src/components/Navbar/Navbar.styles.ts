@@ -65,19 +65,21 @@ export const logoStyle: SxProps<Theme> = {
     textDecoration: 'none',
 }
 
-export const expandedMenuBoxStyles: SxProps<Theme> = {
+export const expandedMenuBoxStyle: SxProps<Theme> = {
     flexGrow: 1, display: { xs: 'flex', md: 'none' }
 }
 
-export const menuBoxStyles: SxProps<Theme> = {
-    flexGrow: 1, display: {
-        xs: 'none', md: 'flex'
-    }
+export const menuBoxStyle: SxProps<Theme> = {
+    flexGrow: 1,
+    display: { xs: 'none', md: 'flex' }
 }
 
-export const settingsBoxStyles: SxProps<Theme> =
-    { flexGrow: 0, float: "right" }
+export const settingsBoxStyle: SxProps<Theme> = {
+    flexGrow: 0,
+    float: "right"
+}
 
-export const containerStyles: React.CSSProperties = {
-    marginLeft: 0, maxWidth: 2000
+export const containerStyle: React.CSSProperties = {
+    marginLeft: 0,
+    maxWidth: 2000
 }

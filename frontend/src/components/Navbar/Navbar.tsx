@@ -15,7 +15,7 @@ import { NavigateFunction, useNavigate } from 'react-router-dom';
 import CakeIcon from '@mui/icons-material/Cake';
 import { Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { cakeIconStyle, containerStyles, expandedCakeIconStyle, expandedLogoStyle, expandedMenuBoxStyles, imageStyle, logoStyle, menuBoxStyles, myCartButtonStyle, settingsBoxStyles } from './Navbar.styles';
+import { cakeIconStyle, containerStyle, expandedCakeIconStyle, expandedLogoStyle, expandedMenuBoxStyle, imageStyle, logoStyle, menuBoxStyle, myCartButtonStyle, settingsBoxStyle } from './Navbar.styles';
 import { IItemOrder } from '../../Pages/Cake/Cake.types';
 import { HEADERS, ORDER_LIST_KEY, PERSON_KEY } from '../../Utils/constants';
 import axios from 'axios';
@@ -57,7 +57,7 @@ export const Navbar = () => {
 
     return (
         <AppBar position="static" >
-            <Container maxWidth="xl" style={containerStyles}>
+            <Container maxWidth="xl" style={containerStyle}>
                 <Toolbar disableGutters >
                     <CakeIcon sx={expandedCakeIconStyle} />
                     <Typography
@@ -68,7 +68,7 @@ export const Navbar = () => {
                     >
                         SWEET
                     </Typography>
-                    <Box sx={expandedMenuBoxStyles}>
+                    <Box sx={expandedMenuBoxStyle}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -113,7 +113,7 @@ export const Navbar = () => {
                     >
                         SWEET
                     </Typography>
-                    <Box sx={menuBoxStyles}>
+                    <Box sx={menuBoxStyle}>
                         {pages.map((page) => (
                             <Button
                                 key={page}
@@ -125,7 +125,7 @@ export const Navbar = () => {
                         ))}
                     </Box>
                     <div>
-                        <Box sx={settingsBoxStyles}>
+                        <Box sx={settingsBoxStyle}>
                             <Badge color="error" badgeContent={newCakeList.length} className={myCartButtonStyle} onClick={() => navigate(Pages.ShoppingCart)}>
                                 <ShoppingCartIcon />
                             </Badge>

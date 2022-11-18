@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { IIngredient } from "../../Utils/Models/IIngredient"
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import { addToCartStyle, choiceGroupStyle, imageStyle, labelStyle, textFieldStyle, title, valueStyle } from "./Cake.styles"
+import { addToCartStyle, choiceGroupStyle, imageStyle, labelStyle, textFieldStyle, titleStyle, valueStyle } from "./Cake.styles"
 import { useState } from "react"
 import { IItemOrder } from "./Cake.types"
 import { ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
@@ -107,7 +107,7 @@ export const Cake = (): JSX.Element => {
             </StackItem>
             <StackItem>
                 <Stack gap='30'>
-                    <StackItem className={title}>
+                    <StackItem className={titleStyle}>
                         {location.state.title}
                     </StackItem>
                     <Section name={"Price:"} contentValue={(location.state.price * selectedWeight).toString() + ' RON'} gap={10} />

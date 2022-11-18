@@ -8,7 +8,7 @@ import { IconButtonProps } from '@mui/material/IconButton';
 import React from "react"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IIngredient } from "../../Utils/Models/IIngredient"
-import { cardStyles, ingredientsNameStyles } from "./CustomCard.styles"
+import { cardStyle, ingredientsNameStyle } from "./CustomCard.styles"
 import { NavigateFunction, useNavigate } from "react-router-dom"
 import { Pages } from "../../Utils/enums"
 import { FAVORITE_ITEMS_LIST_KEY } from "../../Utils/constants"
@@ -72,7 +72,7 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
     }
 
     return <Fragment >
-        <Card sx={cardStyles}>
+        <Card sx={cardStyle}>
             <Stack>
                 <span title={props.title}>
                     <CardHeader onClick={onCardClick}
@@ -113,7 +113,7 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
-                        <div className={ingredientsNameStyles}>Ingredients</div>
+                        <div className={ingredientsNameStyle}>Ingredients</div>
                         {props.ingredients?.map((ingredient: IIngredient) =>
                             <Typography variant="body2" color="text.secondary">
                                 {ingredient.name}

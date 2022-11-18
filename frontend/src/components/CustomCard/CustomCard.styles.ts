@@ -1,16 +1,16 @@
 import { mergeStyles } from "@fluentui/merge-styles";
 import { SxProps, Theme } from "@mui/material";
 
-export const ingredientsNameStyles: string = mergeStyles({
+export const ingredientsNameStyle: string = mergeStyles({
     fontWeight: 'bold'
 });
 
-export const customCardStyles: string = mergeStyles({
+export const customCardStyle: string = mergeStyles({
     margin: "15px",
     width: "300px"
 })
 
-export const cardStyles: SxProps<Theme> = {
+export const cardStyle: SxProps<Theme> = {
     maxWidth: 345,
     minHeight: 500
 }

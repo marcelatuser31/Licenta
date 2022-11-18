@@ -12,7 +12,7 @@ import { IPerson } from "../../Utils/Models/IPerson"
 import { PersonRoutes } from "../../Utils/Routes/backEndRoutes"
 import { Input } from "../Home/Home"
 import { innerDiv, outerDiv } from "../ShoppingCart/ShoppingCart.Styles"
-import { editProfileButtonStyles, informationStackStyles, labelStyles, photoStackStyles, sectionTitleStyles, textFieldStyles, valueStyles } from "./Profile.styles"
+import { editProfileButtonStyle, informationStackStyle, labelStyle, photoStackStyle, sectionTitleStyle, textFieldStyle, valueStyle } from "./Profile.styles"
 
 export const Profile = (): JSX.Element => {
     const [person, setPerson] = useState<IPerson>(JSON.parse(localStorage.getItem(PERSON_KEY) as string));
@@ -45,7 +45,7 @@ export const Profile = (): JSX.Element => {
     const getTextField = (name: string, textFieldValue: string): JSX.Element => {
         return <TextField name={name}
             defaultValue={textFieldValue}
-            className={textFieldStyles}
+            className={textFieldStyle}
             style={{ height: 100, maxWidth: 250 }}
             onChange={onChange}
             id={name}></TextField>
@@ -55,8 +55,8 @@ export const Profile = (): JSX.Element => {
         return <Section name={name}
             contentValue={getTextField(name, textFieldValue)}
             isHorizontal={true}
-            labelStyle={labelStyles}
-            valueStyle={valueStyles}
+            labelStyle={labelStyle}
+            valueStyle={valueStyle}
             gap={20}
         />
     }
@@ -97,7 +97,7 @@ export const Profile = (): JSX.Element => {
     return <div>
         <Navbar />
         <Stack horizontal={true} gap='120'>
-            <StackItem className={photoStackStyles}>
+            <StackItem className={photoStackStyle}>
                 <Stack gap="20">
                     <StackItem>
                         <img width={260} height={300} alt={'Not found'} src={getImageURLfromByteArray(person?.image)}></img>
@@ -114,9 +114,9 @@ export const Profile = (): JSX.Element => {
                     </StackItem>
                 </Stack>
             </StackItem>
-            <StackItem className={informationStackStyles}>
+            <StackItem className={informationStackStyle}>
                 <Stack gap="5" >
-                    <StackItem className={sectionTitleStyles}>
+                    <StackItem className={sectionTitleStyle}>
                         General Information
                     </StackItem>
                     {getSection("Name:", person.name)}
@@ -127,7 +127,7 @@ export const Profile = (): JSX.Element => {
                     {getSection("Password:", person.role.password)}
                     <StackItem>
                         <Button
-                            onClick={onEditProfile} type="submit" fullWidth variant="contained" sx={editProfileButtonStyles}
+                            onClick={onEditProfile} type="submit" fullWidth variant="contained" sx={editProfileButtonStyle}
                         >
                             Edit Profile
                         </Button>
@@ -136,7 +136,7 @@ export const Profile = (): JSX.Element => {
             </StackItem>
             <StackItem style={{ position: 'relative', top: 32, maxWidth: 800, }}>
                 <Stack>
-                    <StackItem className={sectionTitleStyles}>
+                    <StackItem className={sectionTitleStyle}>
                         Favorite List
                     </StackItem>
                 </Stack>

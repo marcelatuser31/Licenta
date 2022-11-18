@@ -3,21 +3,21 @@ import { styled } from "@mui/material"
 import axios from "axios"
 import * as React from 'react'
 import { useEffect, useState } from "react"
-import { customCardStyles } from "../../components/CustomCard/CustomCard.styles"
+import { customCardStyle } from "../../components/CustomCard/CustomCard.styles"
 import { CustomCard } from "../../components/CustomCard/CustomCard"
 import { CustomDropdown } from "../../components/CustomDropdown/CustomDropdown"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { Section } from "../../components/Section/Section"
-import { labelSectionStyles, selectedMenuStyles } from '../../Pages/Home/Home.styles'
+import { labelSectionStyle, selectedMenuStyle } from '../../Pages/Home/Home.styles'
 import { ASCENDING, DESCENDING, HEADERS } from "../../Utils/constants"
 import { getImageURLfromByteArray } from "../../Utils/methods"
 import { ICake } from "../../Utils/Models/ICake"
 import { CakeRoutes } from "../../Utils/Routes/backEndRoutes"
-import { cakesContainerStyles, choiceGroupStyles } from "./Home.styles"
+import { cakesContainerStyle, choiceGroupStyle } from "./Home.styles"
 
 export const Input = styled('input')({ display: 'none' })
 const getCard = (cake: ICake, index: number): JSX.Element => {
-    return <div className={customCardStyles} key={index}>
+    return <div className={customCardStyle} key={index}>
         <CustomCard
             id={cake.id}
             title={cake.name}
@@ -99,14 +99,14 @@ export const Home = (): JSX.Element => {
     const getFilterContent = (): JSX.Element => {
         return <ChoiceGroup
             onChange={onChoiceGroupChange}
-            className={choiceGroupStyles}
+            className={choiceGroupStyle}
             defaultSelectedKey="B"
             options={options}
         />
     }
 
     const getSortByPriceContent = (): JSX.Element => {
-        return <div className={selectedMenuStyles}>
+        return <div className={selectedMenuStyle}>
             <CustomDropdown
                 options={[ASCENDING, DESCENDING]}
                 setDefaultValue={setSelectedSortPriceOption}
@@ -121,11 +121,11 @@ export const Home = (): JSX.Element => {
         <Stack horizontal={true} gap='80'>
             <StackItem >
                 <Stack gap='80'>
-                    <Section name='Filter By Type' labelStyle={labelSectionStyles} contentValue={getFilterContent()}></Section>
-                    <Section name='Sort by Price' labelStyle={labelSectionStyles} contentValue={getSortByPriceContent()}></Section>
+                    <Section name='Filter By Type' labelStyle={labelSectionStyle} contentValue={getFilterContent()}></Section>
+                    <Section name='Sort by Price' labelStyle={labelSectionStyle} contentValue={getSortByPriceContent()}></Section>
                 </Stack>
             </StackItem>
-            <StackItem className={cakesContainerStyles}>
+            <StackItem className={cakesContainerStyle}>
                 {
                     cakes.length > 0 && cakes.map((cake: ICake, index: number) => getCard(cake, index))
                 }

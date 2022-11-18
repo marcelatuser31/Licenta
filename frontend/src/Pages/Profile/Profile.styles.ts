@@ -2,13 +2,13 @@ import { mergeStyles } from "@fluentui/merge-styles";
 import { SxProps, Theme } from "@mui/material";
 import { DEFAULT_COLOR } from "../../Utils/constants";
 
-export const photoStackStyles: string = mergeStyles({
+export const photoStackStyle: string = mergeStyles({
     position: "relative",
     top: "50px",
     left: "50px",
 })
 
-export const sectionTitleStyles: string = mergeStyles({
+export const sectionTitleStyle: string = mergeStyles({
     fontSize: "50px",
     fontWeight: 800,
     textalign: 'left',
@@ -17,28 +17,28 @@ export const sectionTitleStyles: string = mergeStyles({
     fontFamily: 'Brush Script MT'
 })
 
-export const informationStackStyles: string = mergeStyles({
+export const informationStackStyle: string = mergeStyles({
     position: 'relative',
     top: "30px"
 })
 
-export const labelStyles: string = mergeStyles({
+export const labelStyle: string = mergeStyles({
     fontFamily: 'Brush Script MT',
     fontSize: "30px",
     color: DEFAULT_COLOR
 })
 
-export const valueStyles: string = mergeStyles({
+export const valueStyle: string = mergeStyles({
     fontFamily: 'Comic Sans MS',
     fontSize: "25px",
     fontWeight: 800
 })
 
-export const textFieldStyles: string = mergeStyles({
+export const textFieldStyle: string = mergeStyles({
     height: 10
 })
 
-export const editProfileButtonStyles: SxProps<Theme> = {
+export const editProfileButtonStyle: SxProps<Theme> = {
     mt: 3,
     mb: 2
 }
