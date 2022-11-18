@@ -35,6 +35,7 @@ export const Home = (): JSX.Element => {
     const [cakeTypes, setCakeTypes] = useState<string[]>([]);
     const [selectedType, setSelectedType] = useState<string>('All');
     const [selectedSortPriceOption, setSelectedSortPriceOption] = useState<string>("");
+    const [selectedSortNameOption, setSelectedSortNameOption] = useState<string>("");
 
     const sortByPrice = (): void => {
         let sortCakeList: ICake[] = []
@@ -42,6 +43,16 @@ export const Home = (): JSX.Element => {
             sortCakeList = cakes.sort((a: ICake, b: ICake) => b.price - a.price)
         } else {
             sortCakeList = cakes.sort((a: ICake, b: ICake) => a.price - b.price)
+        }
+        setCakes(sortCakeList)
+    }
+
+    const sortByName = (): void => {
+        let sortCakeList: ICake[] = []
+        if (selectedSortNameOption === ASCENDING) {
+            sortCakeList = cakes.sort((a: ICake, b: ICake) => b.name > a.name ? 1 : -1)
+        } else {
+            sortCakeList = cakes.sort((a: ICake, b: ICake) => a.name > b.name ? 1 : -1)
         }
         setCakes(sortCakeList)
     }
@@ -96,6 +107,13 @@ export const Home = (): JSX.Element => {
         setSelectedSortPriceOption(option?.text)
     }
 
+    const onNameSortChange = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption, index?: number): void => {
+        if (option === undefined)
+            return
+
+        setSelectedSortNameOption(option?.text)
+    }
+
     const getFilterContent = (): JSX.Element => {
         return <ChoiceGroup
             onChange={onChoiceGroupChange}
@@ -103,6 +121,17 @@ export const Home = (): JSX.Element => {
             defaultSelectedKey="B"
             options={options}
         />
+    }
+
+    const getSortByNameContent = (): JSX.Element => {
+        return <div className={selectedMenuStyle}>
+            <CustomDropdown
+                options={[ASCENDING, DESCENDING]}
+                setDefaultValue={setSelectedSortNameOption}
+                defaultValue={selectedSortNameOption}
+                onSelectItem={sortByName}
+            />
+        </div>
     }
 
     const getSortByPriceContent = (): JSX.Element => {
@@ -123,6 +152,7 @@ export const Home = (): JSX.Element => {
                 <Stack gap='80'>
                     <Section name='Filter By Type' labelStyle={labelSectionStyle} contentValue={getFilterContent()}></Section>
                     <Section name='Sort by Price' labelStyle={labelSectionStyle} contentValue={getSortByPriceContent()}></Section>
+                    <Section name='Sort by Name' labelStyle={labelSectionStyle} contentValue={getSortByNameContent()}></Section>
                 </Stack>
             </StackItem>
             <StackItem className={cakesContainerStyle}>
