@@ -5,7 +5,7 @@ export const IMAGE_HEADERS: any = {
   "Access-Control-Allow-Origin": "*"
 }
 export const DEFAULT_COLOR: string = "rgb(0, 90, 158)"
-export const ORDER_LIST_KEY: string = 'order'
+export const ORDER_LIST_KEY: string = 'shoppingList'
 export const PERSON_KEY: string = 'person'
 export const FAVORITE_ITEMS_LIST_KEY: string = 'favorite'
 export const ASCENDING: string = 'Ascending'

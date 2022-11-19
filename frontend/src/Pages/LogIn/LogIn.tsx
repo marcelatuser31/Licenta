@@ -7,14 +7,16 @@ import { FAVORITE_ITEMS_LIST_KEY, MESSAGE_LOGIN, ORDER_LIST_KEY, PERSON_KEY } fr
 import { Pages } from "../../Utils/enums"
 import { errorMessage } from "../../Utils/methods"
 import { RoleRoutes } from "../../Utils/Routes/backEndRoutes"
+import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
 import { ILogIn } from "./LogIn.types"
 
+const orderList: IShoppingList = { cakes: [], drinks: [] };
 export const LogIn = (): JSX.Element => {
     const navigate: NavigateFunction = useNavigate()
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    localStorage.setItem(ORDER_LIST_KEY, JSON.stringify([]))
+    localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(orderList))
     localStorage.setItem(FAVORITE_ITEMS_LIST_KEY, JSON.stringify([]))
 
     const onClickRegister = (event: any): void => {

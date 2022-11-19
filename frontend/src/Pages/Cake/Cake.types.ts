@@ -1,4 +1,4 @@
-export interface IItemOrder {
+export interface IItem {
     cakeId: number,
     name: string,
     price: number,

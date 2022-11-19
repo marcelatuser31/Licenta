@@ -6,13 +6,14 @@ import { IIngredient } from "../../Utils/Models/IIngredient"
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { addToCartStyle, choiceGroupStyle, imageStyle, labelStyle, textFieldStyle, titleStyle, valueStyle } from "./Cake.styles"
 import { useState } from "react"
-import { IItemOrder } from "./Cake.types"
+import { IItem } from "./Cake.types"
 import { ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
 import { IPerson } from "../../Utils/Models/IPerson"
 import { RoleType } from "../../Utils/enums"
 import { Input } from "../Home/Home"
 import { onUploadPhoto } from "../../Utils/methods"
 import { Section } from "../../components/Section/Section"
+import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
 
 const options: IChoiceGroupOption[] = [
     { key: 'A', text: '0.5kg', styles: { root: { marginLeft: 0 } } },
@@ -32,10 +33,11 @@ export const Cake = (): JSX.Element => {
     }
 
     const onAddToCart = (event: any): void => {
-        const cakeList: IItemOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
-        const cake: IItemOrder | undefined = cakeList.find((a: IItemOrder) => a.cakeId === location.state.cakeId)
+        const shoppingList: IShoppingList = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
+
+        const cake: IItem | undefined = shoppingList.cakes.find((a: IItem) => a.cakeId === location.state.cakeId)
         if (cake === undefined) {
-            const newCake: IItemOrder = {
+            const newCake: IItem = {
                 cakeId: location.state.cakeId,
                 name: location.state.title,
                 price: location.state.price * selectedWeight,
@@ -43,17 +45,16 @@ export const Cake = (): JSX.Element => {
                 weight: selectedWeight,
                 amount: 1
             }
-            cakeList.push(newCake)
-            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(cakeList))
+            shoppingList.cakes.push(newCake)
+            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
         }
         else {
-            const cakeList2: IItemOrder[] = cakeList.map((cake) => {
+              shoppingList.cakes.forEach((cake) => {
                 if (cake.cakeId === location.state.cakeId) {
                     cake.amount = cake.amount + 1
                 }
-                return cake;
             })
-            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(cakeList2))
+            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
         }
     }
 

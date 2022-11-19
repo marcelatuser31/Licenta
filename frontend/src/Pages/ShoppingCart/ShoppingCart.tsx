@@ -1,30 +1,26 @@
 import { Stack, StackItem } from "@fluentui/react";
 import { Box, Button } from "@mui/material";
-import { DataGrid, GridCallbackDetails, GridColDef, GridEditRowsModel, GridEventListener, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton } from "@mui/x-data-grid";
+import { GridColDef } from "@mui/x-data-grid";
 import axios from "axios";
 import { useState } from "react";
+import { CustomList } from "../../components/CustomList/CustomList";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants";
 import { IPerson } from "../../Utils/Models/IPerson";
 import { OrderRoutes } from "../../Utils/Routes/backEndRoutes";
-import { IItemOrder } from "../Cake/Cake.types";
-import { addOrderButtonStyle, boxStyle, deleteButtonStyle, innerDiv, listStyle, outerDiv } from "./ShoppingCart.Styles";
-import { IItemDTO, IOrderData } from "./ShoppingCart.types";
-import DeleteIcon from '@mui/icons-material/Delete';
+import { IItem } from "../Cake/Cake.types";
+import { addOrderButtonStyle, boxStyle, innerDiv, listStyle, outerDiv } from "./ShoppingCart.Styles";
+import { IItemDTO, IOrderData, IShoppingList } from "./ShoppingCart.types";
 
 export const ShoppingCart = (): JSX.Element => {
-    const orderList: IItemOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
+    const shoppingList: IShoppingList = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
-    const [items, setItems] = useState<IItemOrder[]>(JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string))
-    const [selectedItems, setSelectedItems] = useState<number[]>([])
-    const cakeDTO: IItemDTO[] = orderList.map((cake: IItemOrder) => {
-        return {
-            id: cake.cakeId,
-            amount: 1
-        }
-    })
 
-    const rows: any = items.map((cake: IItemOrder) => {
+    const mapToIItemDTO = (items: IItem[]): IItemDTO[] => {
+        return items.map((order: IItem) => { return { id: order.cakeId, amount: order.amount } })
+    }
+
+    const rows: any = shoppingList?.cakes?.map((cake: IItem) => {
         return {
             id: cake.cakeId,
             price: cake.price,
@@ -41,45 +37,24 @@ export const ShoppingCart = (): JSX.Element => {
 
         const orderData: IOrderData = {
             id: parseInt(person.id?.toString()),
-            cakes: cakeDTO,
-            drinks: [{
-                id: 1,
-                amount: 1
-            }]
+            cakes: mapToIItemDTO(shoppingList.cakes),
+            drinks: mapToIItemDTO(shoppingList.cakes),
         };
-        const response = await axios.post(OrderRoutes.AddOrder, orderData);
+        await axios.post(OrderRoutes.AddOrder, orderData);
     }
 
-    const onSelectionModelChange = (selectedItems: any): void => {
-        setSelectedItems(selectedItems)
-    }
-
-    const onDeleteItems = (): void => {
-        const newItems: IItemOrder[] = items.filter((item: IItemOrder) => !selectedItems.includes(item.cakeId))
-        setItems(newItems)
-        localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(newItems))
+    const onDeleteItems = (items: any[]): void => {
+        localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(items))
     }
 
     const columns: GridColDef[] = [
-        { field: 'id', headerName: 'ID', resizable: true },
+        { field: 'id', headerName: 'ID' },
         { field: 'name', headerName: 'Name', width: 150, },
         { field: 'price', headerName: 'Price', type: 'number', width: 110 },
         { field: 'weight', headerName: 'Weight', width: 150, type: 'number' },
         { field: 'amount', headerName: 'Amount', type: 'number' },
         { field: 'cakeMessage', headerName: 'Cake Message', width: 180, editable: true }
     ];
-
-    const CustomToolbar = (): JSX.Element => {
-        return (
-            <GridToolbarContainer>
-                <GridToolbarColumnsButton />
-                <GridToolbarFilterButton />
-                <GridToolbarDensitySelector />
-                <GridToolbarExport />
-                <Button variant="text" onClick={onDeleteItems} startIcon={<DeleteIcon />} style={deleteButtonStyle}>Delete</Button>
-            </GridToolbarContainer>
-        );
-    }
 
     return <Stack>
         <StackItem>
@@ -89,17 +64,7 @@ export const ShoppingCart = (): JSX.Element => {
             <div className={outerDiv}>
                 <div className={innerDiv}>
                     <Box className={`${listStyle} ${innerDiv}`} sx={boxStyle}>
-                        <DataGrid
-                            components={{ Toolbar: CustomToolbar }}
-                            componentsProps={{ toolbar: { left: 2 } }}
-                            rows={rows}
-                            columns={columns}
-                            pageSize={10}
-                            rowsPerPageOptions={[5]}
-                            checkboxSelection
-                            experimentalFeatures={{ newEditingApi: true }}
-                            onSelectionModelChange={onSelectionModelChange}
-                        />
+                        <CustomList groupByColumn={"name"} items={rows} columns={columns} onDeleteItems={onDeleteItems} />
                     </Box>
                 </div>
                 <Button variant="contained" className={`${addOrderButtonStyle} ${innerDiv}`} onClick={onClick} >Add Order</Button>
