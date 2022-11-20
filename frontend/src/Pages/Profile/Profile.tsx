@@ -4,6 +4,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { IFavoriteItem } from "../../components/CustomCard/CustomCard.types"
+import { CustomList } from "../../components/CustomList/CustomList"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { Section } from "../../components/Section/Section"
 import { FAVORITE_ITEMS_LIST_KEY, HEADERS, PERSON_KEY } from "../../Utils/constants"
@@ -35,6 +36,9 @@ export const Profile = (): JSX.Element => {
         { field: 'name', headerName: 'Name', width: 150, },
         { field: 'price', headerName: 'Price', type: 'number', width: 110 },
     ];
+
+    console.log(rows)
+    console.log(columns)
 
     const onUploadPhoto = async (event: any): Promise<void> => {
         const id: number = JSON.parse(localStorage.getItem(PERSON_KEY) as string)?.id.toString();
@@ -140,7 +144,8 @@ export const Profile = (): JSX.Element => {
                         Favorite List
                     </StackItem>
                 </Stack>
-                <DataGrid
+                <CustomList items={rows} columns={columns}></CustomList>
+                {/* <DataGrid
                     style={{ width: 1000, height: 695, }}
                     componentsProps={{ toolbar: { left: 2 } }}
                     rows={rows}
@@ -149,7 +154,7 @@ export const Profile = (): JSX.Element => {
                     rowsPerPageOptions={[5]}
                     checkboxSelection
                     experimentalFeatures={{ newEditingApi: true }}
-                />
+                /> */}
             </StackItem>
         </Stack >
     </div >

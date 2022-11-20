@@ -1,7 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button } from '@mui/material';
 import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton } from '@mui/x-data-grid';
-import { DataGridPremium, useGridApiRef, useKeepGroupedColumnsHidden } from '@mui/x-data-grid-premium';
+import { DataGridPremium, DataGridPremiumProps, useGridApiRef, useKeepGroupedColumnsHidden } from '@mui/x-data-grid-premium';
 import { GridApiPremium } from '@mui/x-data-grid-premium/models/gridApiPremium';
 import { MutableRefObject, useState } from "react";
 import { deleteButtonStyle } from './CustomList.styles';
@@ -21,6 +21,7 @@ export const CustomList = (props: ICustomListProps): JSX.Element => {
             props.onDeleteItems(newItems);
 
     }
+
     const CustomToolbar = (): JSX.Element => {
         return (
             <GridToolbarContainer>
@@ -37,42 +38,49 @@ export const CustomList = (props: ICustomListProps): JSX.Element => {
         setSelectedItems(selectedItems)
     }
 
-    const apiRef: MutableRefObject<GridApiPremium> = useGridApiRef();
-
-    const initialState = useKeepGroupedColumnsHidden({
-        apiRef,
-        initialState: {
-            rowGrouping: {
-                model: [props.groupByColumn || ""],
-            },
-            sorting: {
-                sortModel: [{ field: '__row_group_by_columns_group__', sort: 'asc' }],
-            },
-        },
-    });
-
     const getGroupedData = (): any => {
         return {
-            columns: props.columns,
+            columns: props.columns || [],
             initialState: {},
-            rows: items
+            rows: items || []
         };
     };
 
+    const getDataGridPremiumProps = (): any => {
+        if (!props.groupByColumn) {
+            return { rows: [], columns: [] }
+        }
+        const apiRef = useGridApiRef();
+        const initialState = useKeepGroupedColumnsHidden({
+            apiRef,
+            initialState: {
+                rowGrouping: {
+                    model: [props.groupByColumn || ""],
+                },
+                sorting: {
+                    sortModel: [{ field: '__row_group_by_columns_group__', sort: 'asc' }],
+                },
+            },
+        }) || null;
+
+        return {
+            style: { height: props.heigth || 700 },
+            components: { Toolbar: CustomToolbar },
+            apiRef: apiRef,
+            pageSize: 10,
+            rowsPerPageOptions: [5],
+            checkboxSelection: true,
+            initialState: initialState,
+            experimentalFeatures: { newEditingApi: true },
+            onSelectionModelChange: onSelectionModelChange,
+            ...getGroupedData()
+        }
+    }
     return (
         <div>
-            {props.groupByColumn
+            {props.groupByColumn !== undefined
                 ? <DataGridPremium
-                    style={{ height: props.heigth || 700 }}
-                    components={{ Toolbar: CustomToolbar }}
-                    {...getGroupedData()}
-                    apiRef={apiRef}
-                    pageSize={10}
-                    rowsPerPageOptions={[5]}
-                    checkboxSelection
-                    initialState={initialState}
-                    experimentalFeatures={{ newEditingApi: true }}
-                    onSelectionModelChange={onSelectionModelChange}
+                    {...getDataGridPremiumProps()}
                 />
                 : <DataGrid
                     style={{ height: props.heigth || 700 }}

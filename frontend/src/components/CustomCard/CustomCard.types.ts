@@ -8,6 +8,7 @@ export interface ICardProps {
     id: number;
     price: number;
     weight?: number;
+    isFavorite: boolean;
 }
 
 export interface IFavoriteItem {

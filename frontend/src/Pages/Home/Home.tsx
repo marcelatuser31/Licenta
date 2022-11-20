@@ -9,14 +9,17 @@ import { CustomDropdown } from "../../components/CustomDropdown/CustomDropdown"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { Section } from "../../components/Section/Section"
 import { labelSectionStyle, selectedMenuStyle } from '../../Pages/Home/Home.styles'
-import { ASCENDING, DESCENDING, HEADERS } from "../../Utils/constants"
+import { ASCENDING, DESCENDING, FAVORITE_ITEMS_LIST_KEY, HEADERS } from "../../Utils/constants"
 import { getImageURLfromByteArray } from "../../Utils/methods"
 import { ICake } from "../../Utils/Models/ICake"
 import { CakeRoutes } from "../../Utils/Routes/backEndRoutes"
 import { cakesContainerStyle, choiceGroupStyle } from "./Home.styles"
+import { IFavoriteItem } from "../../components/CustomCard/CustomCard.types"
 
 export const Input = styled('input')({ display: 'none' })
 const getCard = (cake: ICake, index: number): JSX.Element => {
+    const favoriteList: IFavoriteItem[] = JSON.parse(localStorage.getItem(FAVORITE_ITEMS_LIST_KEY) as string)
+    const favoriteItem = favoriteList.find((item: IFavoriteItem) => item.id === cake.id);
     return <div className={customCardStyle} key={index}>
         <CustomCard
             id={cake.id}
@@ -26,6 +29,7 @@ const getCard = (cake: ICake, index: number): JSX.Element => {
             image={getImageURLfromByteArray(cake.image)}
             price={cake.price}
             weight={cake.weight}
+            isFavorite={favoriteItem === undefined ? false : true}
         />
     </div>
 }

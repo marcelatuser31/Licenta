@@ -17,7 +17,7 @@ import { Stack } from "@fluentui/react"
 export const CustomCard = (props: ICardProps): JSX.Element => {
     const [expanded, setExpanded] = React.useState(false);
     const navigate: NavigateFunction = useNavigate()
-    const [isFavorite, setIsFavorite] = useState<Boolean>(false)
+    const [isFavorite, setIsFavorite] = useState<Boolean>(props.isFavorite)
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
