@@ -19,7 +19,8 @@ export const choiceGroupStyle: string = mergeStyles({
 
 export const selectedMenuStyle: string = mergeStyles({
     position: 'relative',
-    width: "100%"
+    width: "100%",
+    top: 5
 })
 
 export const labelSectionStyle: string = mergeStyles({

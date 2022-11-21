@@ -134,7 +134,7 @@ export const Home = (): JSX.Element => {
                 setDefaultValue={setSelectedSortNameOption}
                 defaultValue={selectedSortNameOption}
                 onSelectItem={sortByName}
-            />
+                listItemText='Sort by name' />
         </div>
     }
 
@@ -145,7 +145,7 @@ export const Home = (): JSX.Element => {
                 setDefaultValue={setSelectedSortPriceOption}
                 defaultValue={selectedSortPriceOption}
                 onSelectItem={sortByPrice}
-            />
+                listItemText='Sort by price' />
         </div>
     }
 
@@ -153,7 +153,7 @@ export const Home = (): JSX.Element => {
         <Navbar />
         <Stack horizontal={true} gap='80'>
             <StackItem >
-                <Stack gap='80'>
+                <Stack gap='60'>
                     <Section name='Filter By Type' labelStyle={labelSectionStyle} contentValue={getFilterContent()}></Section>
                     <Section name='Sort by Price' labelStyle={labelSectionStyle} contentValue={getSortByPriceContent()}></Section>
                     <Section name='Sort by Name' labelStyle={labelSectionStyle} contentValue={getSortByNameContent()}></Section>

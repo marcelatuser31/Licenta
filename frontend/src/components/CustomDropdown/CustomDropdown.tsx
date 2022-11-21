@@ -30,7 +30,7 @@ export const CustomDropdown = (props: ICustomDropdownProps): JSX.Element => {
             <List
                 component="nav"
                 aria-label="Device settings"
-                sx={{ bgcolor: 'background.paper', width: '130%' }}
+                sx={{ bgcolor: 'background.paper', width: '130%', paddingBottom: 0, paddingTop: 0 }}
             >
                 <ListItem
                     button
@@ -40,10 +40,12 @@ export const CustomDropdown = (props: ICustomDropdownProps): JSX.Element => {
                     aria-label="when device is locked"
                     aria-expanded={open ? 'true' : undefined}
                     onClick={handleClickListItem}
+
                 >
                     <ListItemText
-                        primary="Sort by price"
+                        primary={props.listItemText}
                         secondary={props.defaultValue}
+
                     />
                 </ListItem>
             </List>

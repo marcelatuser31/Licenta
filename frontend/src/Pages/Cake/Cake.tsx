@@ -120,10 +120,8 @@ export const Cake = (): JSX.Element => {
                         : <StackItem align="center">
                             <Button variant="contained" className={addToCartStyle} endIcon={<ShoppingCartCheckoutIcon />} onClick={onAddToCart} >Add to cart</Button>
                         </StackItem>}
-
                 </Stack>
             </StackItem>
-
         </Stack >
     </>
 }

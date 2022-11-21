@@ -13,7 +13,7 @@ import { IPerson } from "../../Utils/Models/IPerson"
 import { PersonRoutes } from "../../Utils/Routes/backEndRoutes"
 import { Input } from "../Home/Home"
 import { innerDiv, outerDiv } from "../ShoppingCart/ShoppingCart.Styles"
-import { editProfileButtonStyle, informationStackStyle, labelStyle, photoStackStyle, sectionTitleStyle, textFieldStyle, valueStyle } from "./Profile.styles"
+import { saveButtonStyle, informationStackStyle, labelStyle, photoStackStyle, sectionTitleStyle, textFieldStyle, valueStyle } from "./Profile.styles"
 
 export const Profile = (): JSX.Element => {
     const [person, setPerson] = useState<IPerson>(JSON.parse(localStorage.getItem(PERSON_KEY) as string));
@@ -129,11 +129,11 @@ export const Profile = (): JSX.Element => {
                     {getSection("Email:", person.role.email)}
                     {getSection("Username:", person.role.username)}
                     {getSection("Password:", person.role.password)}
-                    <StackItem>
+                    <StackItem align="center">
                         <Button
-                            onClick={onEditProfile} type="submit" fullWidth variant="contained" sx={editProfileButtonStyle}
+                            onClick={onEditProfile} type="submit" fullWidth variant="contained" sx={saveButtonStyle}
                         >
-                            Edit Profile
+                            Save
                         </Button>
                     </StackItem>
                 </Stack>
