@@ -49,7 +49,7 @@ export const Cake = (): JSX.Element => {
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
         }
         else {
-              shoppingList.cakes.forEach((cake) => {
+            shoppingList.cakes.forEach((cake) => {
                 if (cake.cakeId === location.state.cakeId) {
                     cake.amount = cake.amount + 1
                 }
@@ -117,12 +117,13 @@ export const Cake = (): JSX.Element => {
                     <Section name={"Cake Message:"} contentValue={getMessageContent()} gap={10} />
                     {person.role.type == RoleType.Admin
                         ? <Section name={"Upload Photo:"} contentValue={getUploadContent()} gap={10} />
-                        : undefined}
+                        : <StackItem align="center">
+                            <Button variant="contained" className={addToCartStyle} endIcon={<ShoppingCartCheckoutIcon />} onClick={onAddToCart} >Add to cart</Button>
+                        </StackItem>}
+
                 </Stack>
             </StackItem>
-            <StackItem align="center">
-                <Button variant="contained" className={addToCartStyle} endIcon={<ShoppingCartCheckoutIcon />} onClick={onAddToCart} >Add to cart</Button>
-            </StackItem>
+
         </Stack >
     </>
 }
