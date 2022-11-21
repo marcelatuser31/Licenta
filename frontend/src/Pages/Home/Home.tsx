@@ -1,4 +1,4 @@
-import { ChoiceGroup, Dropdown, IChoiceGroupOption, IDropdownOption, Stack, StackItem } from "@fluentui/react"
+import { ChoiceGroup, IChoiceGroupOption, IDropdownOption, Stack, StackItem } from "@fluentui/react"
 import { styled } from "@mui/material"
 import axios from "axios"
 import * as React from 'react'
@@ -8,7 +8,7 @@ import { CustomCard } from "../../components/CustomCard/CustomCard"
 import { CustomDropdown } from "../../components/CustomDropdown/CustomDropdown"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { Section } from "../../components/Section/Section"
-import { labelSectionStyle, selectedMenuStyle } from '../../Pages/Home/Home.styles'
+import { divider, labelSectionStyle, selectedMenuStyle } from '../../Pages/Home/Home.styles'
 import { ASCENDING, DESCENDING, FAVORITE_ITEMS_LIST_KEY, HEADERS } from "../../Utils/constants"
 import { getImageURLfromByteArray } from "../../Utils/methods"
 import { ICake } from "../../Utils/Models/ICake"
@@ -159,6 +159,7 @@ export const Home = (): JSX.Element => {
                     <Section name='Sort by Name' labelStyle={labelSectionStyle} contentValue={getSortByNameContent()}></Section>
                 </Stack>
             </StackItem>
+            <div className={divider} />
             <StackItem className={cakesContainerStyle}>
                 {
                     cakes.length > 0 && cakes.map((cake: ICake, index: number) => getCard(cake, index))
