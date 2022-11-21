@@ -40,6 +40,7 @@ export const imageStyle: string = mergeStyles({
     position: "relative",
     top: "30px",
     left: "30px",
+    borderRadius: "5%",
     selectors: {
         ":hover": {
             WebkitFontSmoothing: "scale(1.1) slow",
