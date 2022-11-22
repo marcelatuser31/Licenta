@@ -145,16 +145,6 @@ export const Profile = (): JSX.Element => {
                     </StackItem>
                 </Stack>
                 <CustomList items={rows} columns={columns}></CustomList>
-                {/* <DataGrid
-                    style={{ width: 1000, height: 695, }}
-                    componentsProps={{ toolbar: { left: 2 } }}
-                    rows={rows}
-                    columns={columns}
-                    pageSize={10}
-                    rowsPerPageOptions={[5]}
-                    checkboxSelection
-                    experimentalFeatures={{ newEditingApi: true }}
-                /> */}
             </StackItem>
         </Stack >
     </div >

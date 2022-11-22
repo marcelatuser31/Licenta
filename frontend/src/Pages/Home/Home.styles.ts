@@ -32,7 +32,7 @@ export const labelSectionStyle: string = mergeStyles({
     color: DEFAULT_COLOR
 })
 
-export const divider: string = mergeStyles({
+export const dividerStyle: string = mergeStyles({
     display: "inline-block",
     borderLeft: "4px solid #ccc",
     height: "3000",

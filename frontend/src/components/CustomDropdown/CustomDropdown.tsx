@@ -43,7 +43,7 @@ export const CustomDropdown = (props: ICustomDropdownProps): JSX.Element => {
 
                 >
                     <ListItemText
-                        primary={props.listItemText}
+                        primary={props.name}
                         secondary={props.defaultValue}
 
                     />

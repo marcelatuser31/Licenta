@@ -8,7 +8,7 @@ import { CustomCard } from "../../components/CustomCard/CustomCard"
 import { CustomDropdown } from "../../components/CustomDropdown/CustomDropdown"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { Section } from "../../components/Section/Section"
-import { divider, labelSectionStyle, selectedMenuStyle } from '../../Pages/Home/Home.styles'
+import { dividerStyle, labelSectionStyle, selectedMenuStyle } from '../../Pages/Home/Home.styles'
 import { ASCENDING, DESCENDING, FAVORITE_ITEMS_LIST_KEY, HEADERS } from "../../Utils/constants"
 import { getImageURLfromByteArray } from "../../Utils/methods"
 import { ICake } from "../../Utils/Models/ICake"
@@ -134,7 +134,7 @@ export const Home = (): JSX.Element => {
                 setDefaultValue={setSelectedSortNameOption}
                 defaultValue={selectedSortNameOption}
                 onSelectItem={sortByName}
-                listItemText='Sort by name' />
+                name='Sort by name' />
         </div>
     }
 
@@ -145,7 +145,7 @@ export const Home = (): JSX.Element => {
                 setDefaultValue={setSelectedSortPriceOption}
                 defaultValue={selectedSortPriceOption}
                 onSelectItem={sortByPrice}
-                listItemText='Sort by price' />
+                name='Sort by price' />
         </div>
     }
 
@@ -159,7 +159,7 @@ export const Home = (): JSX.Element => {
                     <Section name='Sort by Name' labelStyle={labelSectionStyle} contentValue={getSortByNameContent()}></Section>
                 </Stack>
             </StackItem>
-            <div className={divider} />
+            <div className={dividerStyle} />
             <StackItem className={cakesContainerStyle}>
                 {
                     cakes.length > 0 && cakes.map((cake: ICake, index: number) => getCard(cake, index))

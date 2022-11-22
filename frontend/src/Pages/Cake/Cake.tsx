@@ -14,6 +14,7 @@ import { Input } from "../Home/Home"
 import { onUploadPhoto } from "../../Utils/methods"
 import { Section } from "../../components/Section/Section"
 import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
+import { ICake } from "../../Utils/Models/ICake"
 
 const options: IChoiceGroupOption[] = [
     { key: 'A', text: '0.5kg', styles: { root: { marginLeft: 0 } } },
@@ -49,7 +50,7 @@ export const Cake = (): JSX.Element => {
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
         }
         else {
-            shoppingList.cakes.forEach((cake) => {
+            shoppingList.cakes.forEach((cake: IItem) => {
                 if (cake.cakeId === location.state.cakeId) {
                     cake.amount = cake.amount + 1
                 }

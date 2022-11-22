@@ -3,5 +3,5 @@ export interface ICustomDropdownProps {
     setDefaultValue: (event: string) => void,
     defaultValue: string,
     onSelectItem: () => void,
-    listItemText: string
+    name: string
 }
