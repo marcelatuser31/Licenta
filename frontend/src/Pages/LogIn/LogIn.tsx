@@ -5,7 +5,7 @@ import { Fragment, useState } from "react"
 import { NavigateFunction, useNavigate } from "react-router-dom"
 import { FAVORITE_ITEMS_LIST_KEY, MESSAGE_LOGIN, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
 import { Pages } from "../../Utils/enums"
-import { errorMessage } from "../../Utils/methods"
+import { getMessage } from "../../Utils/methods"
 import { RoleRoutes } from "../../Utils/Routes/backEndRoutes"
 import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
 import { ILogIn } from "./LogIn.types"
@@ -35,7 +35,7 @@ export const LogIn = (): JSX.Element => {
             navigate(Pages.Home);
         }
         else {
-            errorMessage(MESSAGE_LOGIN)
+            getMessage(MESSAGE_LOGIN)
         }
     }
 

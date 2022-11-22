@@ -37,9 +37,6 @@ export const Profile = (): JSX.Element => {
         { field: 'price', headerName: 'Price', type: 'number', width: 110 },
     ];
 
-    console.log(rows)
-    console.log(columns)
-
     const onUploadPhoto = async (event: any): Promise<void> => {
         const id: number = JSON.parse(localStorage.getItem(PERSON_KEY) as string)?.id.toString();
         onUploadProfilePhoto(event, id.toString())

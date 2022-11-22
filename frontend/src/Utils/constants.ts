@@ -1,4 +1,17 @@
-export const MESSAGE_LOGIN: string = "Username or password didn't match"
+import { IMessage } from "./methods"
+
+export const MESSAGE_LOGIN: IMessage = {
+  icon: "error",
+  title: "...Oops",
+  text: "Username or password didn't match"
+}
+
+export const MESSAGE_ADDTOCART: IMessage = {
+  icon: "success",
+  title: "Added",
+  text: "Item has been added"
+}
+
 export const HEADERS: any = { 'Content-Type': 'application/json' }
 export const IMAGE_HEADERS: any = {
   'Content-Type': 'multipart/form-data',

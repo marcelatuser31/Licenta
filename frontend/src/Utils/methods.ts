@@ -1,14 +1,22 @@
 import axios from 'axios';
 import { Buffer } from 'buffer';
-import Swal from "sweetalert2";
-import { IMAGE_HEADERS } from './constants';
+import { title } from 'process';
+import Swal, { SweetAlertIcon } from "sweetalert2";
+import { DEFAULT_COLOR, IMAGE_HEADERS } from './constants';
 import { CakeRoutes, PersonRoutes } from './Routes/backEndRoutes';
 
-export const errorMessage = (message: string): void => {
+export interface IMessage {
+    icon: SweetAlertIcon,
+    title: string,
+    text: string
+}
+
+export const getMessage = (props: IMessage): void => {
     Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: message,
+        icon: props.icon,
+        title: props.title,
+        text: props.text,
+        confirmButtonColor: DEFAULT_COLOR
     })
 }
 
