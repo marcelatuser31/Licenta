@@ -132,7 +132,7 @@ export const Navbar = () => {
                             </Badge>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <img width={48} height={48} alt={'Not found'} src={getImageURLfromByteArray(person.image)} className={imageStyle}></img>
+                                    <img width={48} height={48} src={getImageURLfromByteArray(person.image) || 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png'} className={imageStyle}></img>
                                 </IconButton>
                             </Tooltip>
                             <Menu
