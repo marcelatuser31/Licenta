@@ -8,7 +8,7 @@ export const MESSAGE_LOGIN: IMessage = {
 
 export const MESSAGE_ADDTOCART: IMessage = {
   icon: "success",
-  title: "Added",
+  title: "Successfully",
   text: "Item has been added"
 }
 
@@ -23,3 +23,4 @@ export const PERSON_KEY: string = 'person'
 export const FAVORITE_ITEMS_LIST_KEY: string = 'favorite'
 export const ASCENDING: string = 'Ascending'
 export const DESCENDING: string = 'Descending'
+export const DEFAULT_PROFILE_PHOTO: string = 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png'

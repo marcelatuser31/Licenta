@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { Buffer } from 'buffer';
-import { title } from 'process';
 import Swal, { SweetAlertIcon } from "sweetalert2";
 import { DEFAULT_COLOR, IMAGE_HEADERS } from './constants';
 import { CakeRoutes, PersonRoutes } from './Routes/backEndRoutes';
@@ -11,11 +9,11 @@ export interface IMessage {
     text: string
 }
 
-export const getMessage = (props: IMessage): void => {
+export const getMessage = (message: IMessage): void => {
     Swal.fire({
-        icon: props.icon,
-        title: props.title,
-        text: props.text,
+        icon: message.icon,
+        title: message.title,
+        text: message.text,
         confirmButtonColor: DEFAULT_COLOR
     })
 }

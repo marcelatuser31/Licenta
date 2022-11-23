@@ -17,7 +17,7 @@ import { Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { cakeIconStyle, containerStyle, expandedCakeIconStyle, expandedLogoStyle, expandedMenuBoxStyle, imageStyle, logoStyle, menuBoxStyle, myCartButtonStyle, settingsBoxStyle } from './Navbar.styles';
 import { IItem } from '../../Pages/Cake/Cake.types';
-import { HEADERS, ORDER_LIST_KEY, PERSON_KEY } from '../../Utils/constants';
+import { DEFAULT_PROFILE_PHOTO, HEADERS, ORDER_LIST_KEY, PERSON_KEY } from '../../Utils/constants';
 import axios from 'axios';
 import { RoleRoutes } from '../../Utils/Routes/backEndRoutes';
 import { IPerson } from '../../Utils/Models/IPerson';
@@ -132,7 +132,7 @@ export const Navbar = () => {
                             </Badge>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <img width={48} height={48} src={getImageURLfromByteArray(person.image) || 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png'} className={imageStyle}></img>
+                                    <img width={48} height={48} src={getImageURLfromByteArray(person.image) || DEFAULT_PROFILE_PHOTO} className={imageStyle}></img>
                                 </IconButton>
                             </Tooltip>
                             <Menu

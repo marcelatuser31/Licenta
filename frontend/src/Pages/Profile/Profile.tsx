@@ -7,7 +7,7 @@ import { IFavoriteItem } from "../../components/CustomCard/CustomCard.types"
 import { CustomList } from "../../components/CustomList/CustomList"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { Section } from "../../components/Section/Section"
-import { FAVORITE_ITEMS_LIST_KEY, HEADERS, PERSON_KEY } from "../../Utils/constants"
+import { DEFAULT_PROFILE_PHOTO, FAVORITE_ITEMS_LIST_KEY, HEADERS, PERSON_KEY } from "../../Utils/constants"
 import { getImageURLfromByteArray, onUploadProfilePhoto } from "../../Utils/methods"
 import { IPerson } from "../../Utils/Models/IPerson"
 import { PersonRoutes } from "../../Utils/Routes/backEndRoutes"
@@ -101,7 +101,7 @@ export const Profile = (): JSX.Element => {
             <StackItem className={photoStackStyle}>
                 <Stack gap="20">
                     <StackItem>
-                        <img width={260} height={300} alt={'Not found'} src={getImageURLfromByteArray(person?.image) || 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png'}></img>
+                        <img width={260} height={300} alt={'Not found'} src={getImageURLfromByteArray(person?.image) || DEFAULT_PROFILE_PHOTO}></img>
                     </StackItem>
                     <StackItem>
                         <div className={outerDiv}>
