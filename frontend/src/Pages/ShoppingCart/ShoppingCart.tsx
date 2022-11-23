@@ -3,9 +3,12 @@ import { Box, Button } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import axios from "axios";
 import { useState } from "react";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { CustomList } from "../../components/CustomList/CustomList";
 import { Navbar } from "../../components/Navbar/Navbar";
-import { ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants";
+import { MESSAGE_ADD_ORDER, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants";
+import { Pages } from "../../Utils/enums";
+import { getMessage } from "../../Utils/methods";
 import { IPerson } from "../../Utils/Models/IPerson";
 import { OrderRoutes } from "../../Utils/Routes/backEndRoutes";
 import { IItem } from "../Cake/Cake.types";
@@ -15,6 +18,7 @@ import { IItemDTO, IOrderData, IShoppingList } from "./ShoppingCart.types";
 export const ShoppingCart = (): JSX.Element => {
     const shoppingList: IShoppingList = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
+    const navigate: NavigateFunction = useNavigate()
 
     const mapToIItemDTO = (items: IItem[]): IItemDTO[] => {
         return items.map((order: IItem) => { return { id: order.cakeId, amount: order.amount } })
@@ -41,6 +45,9 @@ export const ShoppingCart = (): JSX.Element => {
             drinks: mapToIItemDTO(shoppingList.cakes),
         };
         await axios.post(OrderRoutes.AddOrder, orderData);
+        getMessage(MESSAGE_ADD_ORDER)
+        navigate(Pages.Home)
+
     }
 
     const onDeleteItems = (items: any[]): void => {

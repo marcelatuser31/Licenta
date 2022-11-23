@@ -7,14 +7,13 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { addToCartStyle, choiceGroupStyle, imageStyle, labelStyle, textFieldStyle, titleStyle, valueStyle } from "./Cake.styles"
 import { useState } from "react"
 import { IItem } from "./Cake.types"
-import { MESSAGE_ADDTOCART, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
+import { MESSAGE_ADD_TO_CART, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
 import { IPerson } from "../../Utils/Models/IPerson"
 import { RoleType } from "../../Utils/enums"
 import { Input } from "../Home/Home"
 import { getMessage, onUploadPhoto } from "../../Utils/methods"
 import { Section } from "../../components/Section/Section"
 import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
-import { ICake } from "../../Utils/Models/ICake"
 
 const options: IChoiceGroupOption[] = [
     { key: 'A', text: '0.5kg', styles: { root: { marginLeft: 0 } } },
@@ -57,7 +56,7 @@ export const Cake = (): JSX.Element => {
             })
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
         }
-        getMessage(MESSAGE_ADDTOCART)
+        getMessage(MESSAGE_ADD_TO_CART)
     }
 
     const onChange = (event: any): void => {

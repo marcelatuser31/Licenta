@@ -6,10 +6,16 @@ export const MESSAGE_LOGIN: IMessage = {
   text: "Username or password didn't match"
 }
 
-export const MESSAGE_ADDTOCART: IMessage = {
+export const MESSAGE_ADD_TO_CART: IMessage = {
   icon: "success",
   title: "Successfully",
   text: "Item has been added"
+}
+
+export const MESSAGE_ADD_ORDER: IMessage = {
+  icon: "success",
+  title: "Successfully",
+  text: "Your order has been placed"
 }
 
 export const HEADERS: any = { 'Content-Type': 'application/json' }
