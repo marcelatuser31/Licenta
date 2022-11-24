@@ -1,6 +1,6 @@
 import { Stack, StackItem } from "@fluentui/react"
 import { Button, TextField } from "@mui/material"
-import { DataGrid, GridColDef } from "@mui/x-data-grid"
+import { GridColDef } from "@mui/x-data-grid"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { IFavoriteItem } from "../../components/CustomCard/CustomCard.types"
@@ -39,8 +39,9 @@ export const Profile = (): JSX.Element => {
 
     const onUploadPhoto = async (event: any): Promise<void> => {
         const id: number = JSON.parse(localStorage.getItem(PERSON_KEY) as string)?.id.toString();
-        onUploadProfilePhoto(event, id.toString())
+        await onUploadProfilePhoto(event, id.toString())
         const response: any = await axios.post(PersonRoutes.ReadById, id, { headers: HEADERS })
+        localStorage.setItem(PERSON_KEY, JSON.stringify(person))
         setPerson(response.data)
     }
     const getTextField = (name: string, textFieldValue: string): JSX.Element => {
@@ -95,6 +96,10 @@ export const Profile = (): JSX.Element => {
         getData()
     }
 
+    const onDeleteItems = (items: any[]): void => {
+        localStorage.setItem(FAVORITE_ITEMS_LIST_KEY, JSON.stringify(items))
+    }
+
     return <div>
         <Navbar />
         <Stack horizontal={true} gap='120'>
@@ -135,14 +140,16 @@ export const Profile = (): JSX.Element => {
                     </StackItem>
                 </Stack>
             </StackItem>
-            <StackItem style={{ position: 'relative', top: 32, maxWidth: 800, }}>
-                <Stack>
-                    <StackItem className={sectionTitleStyle}>
-                        Favorite List
-                    </StackItem>
-                </Stack>
-                <CustomList items={rows} columns={columns}></CustomList>
-            </StackItem>
+            {items.length !== 0
+                ? <StackItem style={{ position: 'relative', top: 32, maxWidth: 800, }}>
+                    <Stack>
+                        <StackItem className={sectionTitleStyle}>
+                            Favorite List
+                        </StackItem>
+                    </Stack>
+                    <CustomList items={rows} columns={columns} onDeleteItems={onDeleteItems}></CustomList>
+                </StackItem>
+                : undefined}
         </Stack >
     </div >
 }

@@ -29,7 +29,8 @@ export const labelSectionStyle: string = mergeStyles({
     fontSize: "18px",
     top: 30,
     fontWeight: 600,
-    color: DEFAULT_COLOR
+    width: 120,
+    color: DEFAULT_COLOR,
 })
 
 export const dividerStyle: string = mergeStyles({
