@@ -11,7 +11,7 @@ import { DEFAULT_PROFILE_PHOTO, FAVORITE_ITEMS_LIST_KEY, HEADERS, PERSON_KEY } f
 import { getImageURLfromByteArray, onUploadProfilePhoto } from "../../Utils/methods"
 import { IPerson } from "../../Utils/Models/IPerson"
 import { PersonRoutes } from "../../Utils/Routes/backEndRoutes"
-import { Input } from "../Home/Home"
+import { Input } from "../Cakes/Cakes"
 import { innerDiv, outerDiv } from "../ShoppingCart/ShoppingCart.Styles"
 import { saveButtonStyle, informationStackStyle, labelStyle, photoStackStyle, sectionTitleStyle, textFieldStyle, valueStyle } from "./Profile.styles"
 

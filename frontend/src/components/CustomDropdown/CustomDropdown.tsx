@@ -4,7 +4,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import { selectedMenuStyle } from '../../Pages/Home/Home.styles';
+import { selectedMenuStyle } from '../../Pages/Cakes/Cakes.styles';
 import { ICustomDropdownProps } from './CustomDropdown.types';
 
 export const CustomDropdown = (props: ICustomDropdownProps): JSX.Element => {

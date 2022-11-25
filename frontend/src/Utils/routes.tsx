@@ -1,5 +1,6 @@
-import { Cake } from "../Pages/Cake/Cake";
-import { Home } from "../Pages/Home/Home";
+import { SelectedCake } from "../Pages/SelectedItem/SelectedCake";
+import { Drinks } from "../Pages/Drinks/Drinks";
+import { Cakes } from "../Pages/Cakes/Cakes";
 import { LogIn } from "../Pages/LogIn/LogIn";
 import { Profile } from "../Pages/Profile/Profile";
 import { Register } from "../Pages/Register/Register";
@@ -20,8 +21,8 @@ export const routes: IRoute[] = [
         element: <LogIn />
     },
     {
-        path: '/Home',
-        element: <Home />
+        path: '/Cakes',
+        element: <Cakes />
     },
     {
         path: '/Register',
@@ -29,7 +30,7 @@ export const routes: IRoute[] = [
     },
     {
         path: '/Cake',
-        element: <Cake />
+        element: <SelectedCake />
     },
     {
         path: '/ShoppingCart',
@@ -38,5 +39,9 @@ export const routes: IRoute[] = [
     {
         path: '/Profile',
         element: <Profile />
+    },
+    {
+        path: '/Drinks',
+        element: <Drinks />
     }
 ]

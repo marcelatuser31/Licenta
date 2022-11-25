@@ -1,5 +1,5 @@
 import { Stack, StackItem } from "@fluentui/react"
-import { labelStyle, valueStyle } from "../../Pages/Cake/Cake.styles"
+import { labelStyle, valueStyle } from "../../Pages/SelectedItem/SelectedCake.styles"
 import { ISectionProps } from "./Section.types"
 
 export const Section = (props: ISectionProps): JSX.Element => {

@@ -8,13 +8,14 @@ import { CustomCard } from "../../components/CustomCard/CustomCard"
 import { CustomDropdown } from "../../components/CustomDropdown/CustomDropdown"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { Section } from "../../components/Section/Section"
-import { dividerStyle, labelSectionStyle, selectedMenuStyle } from '../../Pages/Home/Home.styles'
+import { dividerStyle, itemsContainerStyle, labelSectionStyle, selectedMenuStyle } from './Cakes.styles'
 import { ASCENDING, DESCENDING, FAVORITE_ITEMS_LIST_KEY, HEADERS } from "../../Utils/constants"
 import { getImageURLfromByteArray } from "../../Utils/methods"
 import { ICake } from "../../Utils/Models/ICake"
 import { CakeRoutes } from "../../Utils/Routes/backEndRoutes"
-import { cakesContainerStyle, choiceGroupStyle } from "./Home.styles"
+import { choiceGroupStyle } from "./Cakes.styles"
 import { IFavoriteItem } from "../../components/CustomCard/CustomCard.types"
+import { Pages } from "../../Utils/enums"
 
 export const Input = styled('input')({ display: 'none' })
 const getCard = (cake: ICake, index: number): JSX.Element => {
@@ -30,11 +31,11 @@ const getCard = (cake: ICake, index: number): JSX.Element => {
             price={cake.price}
             weight={cake.weight}
             isFavorite={favoriteItem === undefined ? false : true}
-        />
+            page={Pages.Cake} />
     </div>
 }
 
-export const Home = (): JSX.Element => {
+export const Cakes = (): JSX.Element => {
     const [cakes, setCakes] = useState<ICake[]>([])
     const [cakeTypes, setCakeTypes] = useState<string[]>([]);
     const [selectedType, setSelectedType] = useState<string>('All');
@@ -160,7 +161,7 @@ export const Home = (): JSX.Element => {
                 </Stack>
             </StackItem>
             <div className={dividerStyle} />
-            <StackItem className={cakesContainerStyle}>
+            <StackItem className={itemsContainerStyle}>
                 {
                     cakes.length > 0 && cakes.map((cake: ICake, index: number) => getCard(cake, index))
                 }

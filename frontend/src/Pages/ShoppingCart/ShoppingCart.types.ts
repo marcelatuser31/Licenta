@@ -1,4 +1,4 @@
-import { IItem } from "../Cake/Cake.types";
+import { IItem } from "../SelectedItem/SelectedCake.types";
 
 export interface IItemDTO {
     id: number,
@@ -11,7 +11,7 @@ export interface IOrderData {
     drinks?: IItemDTO[]
 }
 
-export interface IShoppingList{
+export interface IShoppingList {
     cakes: IItem[];
     drinks: IItem[];
 };

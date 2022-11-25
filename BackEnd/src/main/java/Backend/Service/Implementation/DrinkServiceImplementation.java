@@ -6,6 +6,8 @@ import Backend.Service.DrinkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class DrinkServiceImplementation implements DrinkService {
@@ -14,6 +16,11 @@ public class DrinkServiceImplementation implements DrinkService {
     @Override
     public Drink readById(Long id) {
         return drinkRepository.findFirstById(id);
+    }
+
+    @Override
+    public List<Drink> getAll() {
+        return (List<Drink>) drinkRepository.findAll();
     }
 
 }

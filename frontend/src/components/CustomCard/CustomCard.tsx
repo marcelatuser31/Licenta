@@ -39,9 +39,9 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
     }));
 
     const onCardClick = (event: any): void => {
-        navigate(Pages.Cake, {
+        navigate(props.page, {
             state: {
-                cakeId: props.id,
+                id: props.id,
                 title: props.title,
                 image: props.image,
                 ingredients: props.ingredients,

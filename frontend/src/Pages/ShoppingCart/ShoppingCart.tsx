@@ -11,7 +11,7 @@ import { Pages } from "../../Utils/enums";
 import { getMessage } from "../../Utils/methods";
 import { IPerson } from "../../Utils/Models/IPerson";
 import { OrderRoutes } from "../../Utils/Routes/backEndRoutes";
-import { IItem } from "../Cake/Cake.types";
+import { IItem } from "../SelectedItem/SelectedCake.types";
 import { addOrderButtonStyle, boxStyle, innerDiv, listStyle, outerDiv } from "./ShoppingCart.Styles";
 import { IItemDTO, IOrderData, IShoppingList } from "./ShoppingCart.types";
 

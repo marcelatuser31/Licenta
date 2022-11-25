@@ -2,7 +2,7 @@ import { mergeStyles } from "@fluentui/merge-styles";
 import { borderRadius } from "@mui/system";
 import { DEFAULT_COLOR } from "../../Utils/constants";
 
-export const cakesContainerStyle: string = mergeStyles({
+export const itemsContainerStyle: string = mergeStyles({
     display: "grid",
     gap: "100px",
     gridTemplateColumns: "repeat(4, 1fr)",

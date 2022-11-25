@@ -4,13 +4,13 @@ import { useLocation } from "react-router-dom"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { IIngredient } from "../../Utils/Models/IIngredient"
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import { addToCartStyle, choiceGroupStyle, imageStyle, labelStyle, textFieldStyle, titleStyle, valueStyle } from "./Cake.styles"
+import { addToCartStyle, choiceGroupStyle, imageStyle, labelStyle, textFieldStyle, titleStyle, valueStyle } from "./SelectedCake.styles"
 import { useState } from "react"
-import { IItem } from "./Cake.types"
+import { IItem } from "./SelectedCake.types"
 import { MESSAGE_ADD_TO_CART, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
 import { IPerson } from "../../Utils/Models/IPerson"
 import { RoleType } from "../../Utils/enums"
-import { Input } from "../Home/Home"
+import { Input } from "../Cakes/Cakes"
 import { getMessage, onUploadPhoto } from "../../Utils/methods"
 import { Section } from "../../components/Section/Section"
 import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
@@ -22,7 +22,7 @@ const options: IChoiceGroupOption[] = [
     { key: 'D', text: '2kg', styles: { root: { marginLeft: 20 } } },
 ];
 
-export const Cake = (): JSX.Element => {
+export const SelectedCake = (): JSX.Element => {
     const [cakeMessage, setCakeMessage] = useState<string>('');
     const [selectedWeight, setSelectedWeight] = useState<number>(1);
     const location = useLocation()

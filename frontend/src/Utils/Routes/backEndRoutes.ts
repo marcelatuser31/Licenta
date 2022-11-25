@@ -22,3 +22,7 @@ export namespace PersonRoutes {
 export namespace OrderRoutes {
     export const AddOrder: string = `${serverURL}/Order/addOrder`
 }
+
+export namespace DrinkRoutes {
+    export const GetAll: string = `${serverURL}/Drink/getAll`
+}
