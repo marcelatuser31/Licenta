@@ -9,5 +9,7 @@ export enum Pages {
     SelectedCake = "/SelectedCake",
     ShoppingCart = "/ShoppingCart",
     Profile = "/Profile",
-    SelectedDrink = "/SelectedDrink"
+    SelectedDrink = "/SelectedDrink",
+    Cakes = "/Cakes",
+    Drinks = "/Drinks"
 }

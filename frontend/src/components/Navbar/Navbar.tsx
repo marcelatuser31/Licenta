@@ -24,7 +24,7 @@ import { IPerson } from '../../Utils/Models/IPerson';
 import { getImageURLfromByteArray } from '../../Utils/methods';
 import { IShoppingList } from '../../Pages/ShoppingCart/ShoppingCart.types';
 
-const pages = [Pages.Home, Pages.LogIn];
+const pages = [Pages.Cakes, Pages.Drinks];
 const settings = [Pages.Profile];
 
 export const Navbar = () => {
