@@ -21,12 +21,12 @@ export const ShoppingCart = (): JSX.Element => {
     const navigate: NavigateFunction = useNavigate()
 
     const mapToIItemDTO = (items: IItem[]): IItemDTO[] => {
-        return items.map((order: IItem) => { return { id: order.cakeId, amount: order.amount } })
+        return items.map((order: IItem) => { return { id: order.id, amount: order.amount } })
     }
 
     const rows: any = shoppingList?.cakes?.map((cake: IItem) => {
         return {
-            id: cake.cakeId,
+            id: cake.id,
             price: cake.price,
             name: cake.name,
             cakeMessage: cake.cakeMessage,

@@ -24,8 +24,9 @@ const getCard = (drink: IDrink, index: number): JSX.Element => {
             image={""}
             id={drink.id}
             price={drink.price}
+            weight={drink.weight}
             isFavorite={favoriteItem === undefined ? false : true}
-            page={Pages.Drink} />
+            page={Pages.SelectedDrink} />
     </div>
 }
 

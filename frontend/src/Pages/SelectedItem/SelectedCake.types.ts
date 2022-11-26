@@ -1,8 +1,8 @@
 export interface IItem {
-    cakeId: number,
+    id: number,
     name: string,
     price: number,
-    cakeMessage: string,
+    cakeMessage?: string,
     weight: number,
     amount: number
 }

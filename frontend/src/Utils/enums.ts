@@ -6,8 +6,8 @@ export enum Pages {
     Home = "/Home",
     LogIn = "/LogIn",
     Register = "/Register",
-    Cake = "/Cake",
+    SelectedCake = "/SelectedCake",
     ShoppingCart = "/ShoppingCart",
     Profile = "/Profile",
-    Drink = "/Drink"
+    SelectedDrink = "/SelectedDrink"
 }
