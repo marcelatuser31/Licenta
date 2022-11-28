@@ -10,7 +10,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IIngredient } from "../../Utils/Models/IIngredient"
 import { cardStyle, ingredientsNameStyle } from "./CustomCard.styles"
 import { NavigateFunction, useNavigate } from "react-router-dom"
-import { Pages } from "../../Utils/enums"
 import { FAVORITE_ITEMS_LIST_KEY } from "../../Utils/constants"
 import { Stack } from "@fluentui/react"
 
@@ -39,7 +38,7 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
     }));
 
     const onCardClick = (event: any): void => {
-        navigate(props.page, {
+        navigate(props.redirectTo, {
             state: {
                 id: props.id,
                 title: props.title,

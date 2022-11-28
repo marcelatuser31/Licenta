@@ -8,14 +8,14 @@ export namespace RoleRoutes {
 export namespace CakeRoutes {
     export const GetAll: string = `${serverURL}/Cake/getAll`
     export const GetTypes: string = `${serverURL}/Cake/getCakeTypes`
-    export const GetCakesByType: string = `${serverURL}/Cake/readByType`
+    export const GetCakesByType: string = `${serverURL}/Cake/getByType`
     export const AddImage: string = `${serverURL}/Cake/addImage`
 }
 
 export namespace PersonRoutes {
     export const Register: string = `${serverURL}/Person/register`
     export const AddImage: string = `${serverURL}/Person/addImage`
-    export const ReadById: string = `${serverURL}/Person/readById`
+    export const GetById: string = `${serverURL}/Person/getById`
     export const Update: string = `${serverURL}/Person/update`
 }
 

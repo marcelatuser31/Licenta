@@ -7,7 +7,7 @@ import { IFavoriteItem } from "../../components/CustomCard/CustomCard.types";
 import { CustomDropdown } from "../../components/CustomDropdown/CustomDropdown";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { Section } from "../../components/Section/Section";
-import { ASCENDING, DESCENDING, FAVORITE_ITEMS_LIST_KEY } from "../../Utils/constants";
+import { ASCENDING, DESCENDING, FAVORITE_ITEMS_LIST_KEY, SORT_BY_NAME, SORT_BY_PRICE } from "../../Utils/constants";
 import { Pages } from "../../Utils/enums";
 import { IDrink } from "../../Utils/Models/IDrink"
 import { DrinkRoutes } from "../../Utils/Routes/backEndRoutes";
@@ -26,7 +26,7 @@ const getCard = (drink: IDrink, index: number): JSX.Element => {
             price={drink.price}
             weight={drink.weight}
             isFavorite={favoriteItem === undefined ? false : true}
-            page={Pages.SelectedDrink} />
+            redirectTo={Pages.SelectedDrink} />
     </div>
 }
 
@@ -81,7 +81,7 @@ export const Drinks = (): JSX.Element => {
             setDefaultValue={setSelectedSortPriceOption}
             defaultValue={selectedSortPriceOption}
             onSelectItem={sortByPrice}
-            name={"Sort by price"} />
+            name={SORT_BY_PRICE} />
     }
 
     const getSortByNameContent = (): JSX.Element => {
@@ -89,7 +89,7 @@ export const Drinks = (): JSX.Element => {
             setDefaultValue={setSelectedSortNameOption}
             defaultValue={selectedSortNameOption}
             onSelectItem={sortByName}
-            name={'Sort by name'} />
+            name={SORT_BY_NAME} />
     }
 
     return <div>
@@ -97,8 +97,8 @@ export const Drinks = (): JSX.Element => {
         <Stack horizontal={true} gap='80'>
             <StackItem>
                 <Stack gap='60'>
-                    <Section name={'Sort By Price:'} labelStyle={labelSectionStyle} contentValue={getSortByPriceContent()}></Section>
-                    <Section name={'Sort By Name:'} labelStyle={labelSectionStyle} contentValue={getSortByNameContent()}></Section>
+                    <Section name={SORT_BY_PRICE} labelStyle={labelSectionStyle} contentValue={getSortByPriceContent()}></Section>
+                    <Section name={SORT_BY_NAME} labelStyle={labelSectionStyle} contentValue={getSortByNameContent()}></Section>
                 </Stack>
             </StackItem>
             <div className={dividerStyle} />
@@ -107,6 +107,6 @@ export const Drinks = (): JSX.Element => {
                     drinks.length > 0 && drinks.map((drink: IDrink, index: number) => getCard(drink, index))
                 }
             </StackItem>
-        </Stack>
-    </div>
+        </Stack >
+    </div >
 }

@@ -3,7 +3,7 @@ import { Button } from "@mui/material"
 import { useLocation } from "react-router-dom"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { Section } from "../../components/Section/Section"
-import { MESSAGE_ADD_TO_CART, ORDER_LIST_KEY } from "../../Utils/constants"
+import { DRINK, ORDER_LIST_KEY } from "../../Utils/constants"
 import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
 import { addToCartStyle, imageStyle, titleStyle } from "./SelectedCake.styles"
 import { IItem } from "./SelectedCake.types"
@@ -23,7 +23,7 @@ export const SelectedDrink = (): JSX.Element => {
                 price: location.state.price,
                 weight: location.state.weight,
                 amount: 1,
-                type: 'Drink'
+                type: DRINK
             }
             shoppingList.drinks.push(newDrink)
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
@@ -36,7 +36,7 @@ export const SelectedDrink = (): JSX.Element => {
             })
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
         }
-        getMessage(MESSAGE_ADD_TO_CART)
+        getMessage('success', 'Successfully', "Item has been added")
     }
 
 

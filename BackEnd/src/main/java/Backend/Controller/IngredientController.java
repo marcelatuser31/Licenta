@@ -2,8 +2,6 @@ package Backend.Controller;
 
 import Backend.Model.Ingredient;
 import Backend.Service.Implementation.IngredientServiceImplementation;
-import Backend.Service.IngredientService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +21,13 @@ public class IngredientController {
     }
 
     @PostMapping("/readById")
-    public ResponseEntity<Ingredient> readById(@RequestBody Long id) {
-        return new ResponseEntity<>(ingredientServiceImplementation.readById(id), HttpStatus.OK);
+    public ResponseEntity<Ingredient> getById(@RequestBody Long id) {
+        return new ResponseEntity<>(ingredientServiceImplementation.getById(id), HttpStatus.OK);
     }
 
     @PostMapping("/readByName")
-    public ResponseEntity readByName(@RequestBody String name) {
-        return ResponseEntity.status(HttpStatus.OK).body(ingredientServiceImplementation.readByName(name));
+    public ResponseEntity getByName(@RequestBody String name) {
+        return ResponseEntity.status(HttpStatus.OK).body(ingredientServiceImplementation.getByName(name));
     }
     
     @PostMapping("/update")

@@ -40,7 +40,7 @@ export const Profile = (): JSX.Element => {
     const onUploadPhoto = async (event: any): Promise<void> => {
         const id: number = JSON.parse(localStorage.getItem(PERSON_KEY) as string)?.id.toString();
         await onUploadProfilePhoto(event, id.toString())
-        const response: any = await axios.post(PersonRoutes.ReadById, id, { headers: HEADERS })
+        const response: any = await axios.post(PersonRoutes.GetById, id, { headers: HEADERS })
         localStorage.setItem(PERSON_KEY, JSON.stringify(person))
         setPerson(response.data)
     }

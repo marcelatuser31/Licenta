@@ -22,9 +22,9 @@ public class CakeController {
     @Autowired
     private CakeServiceImplementation cakeServiceImplementation;
 
-    @PostMapping("/readById")
-    public ResponseEntity readById(@RequestBody Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.readById(id));
+    @PostMapping("/getById")
+    public ResponseEntity getById(@RequestBody Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getById(id));
     }
 
     @PostMapping("/getIngredientsByCakeId")
@@ -52,11 +52,11 @@ public class CakeController {
         cakeServiceImplementation.update(cake);
     }
 
-    @PostMapping("/readByType")
-    public ResponseEntity readByType(@RequestBody CakeType type) {
+    @PostMapping("/getByType")
+    public ResponseEntity getByType(@RequestBody CakeType type) {
         if (type.ordinal() == -1)
             type = CakeType.Car;
-        return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.readByType(type));
+        return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getByType(type));
     }
 
     @GetMapping("/getExpiredCakes")

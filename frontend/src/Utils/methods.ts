@@ -3,17 +3,11 @@ import Swal, { SweetAlertIcon } from "sweetalert2";
 import { DEFAULT_COLOR, IMAGE_HEADERS } from './constants';
 import { CakeRoutes, PersonRoutes } from './Routes/backEndRoutes';
 
-export interface IMessage {
-    icon: SweetAlertIcon,
-    title: string,
-    text: string
-}
-
-export const getMessage = (message: IMessage): void => {
+export const getMessage = (icon: SweetAlertIcon, title: string, message: string): void => {
     Swal.fire({
-        icon: message.icon,
-        title: message.title,
-        text: message.text,
+        icon: icon,
+        title: title,
+        text: message,
         confirmButtonColor: DEFAULT_COLOR
     })
 }

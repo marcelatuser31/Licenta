@@ -1,6 +1,5 @@
 package Backend.Controller;
 
-import Backend.Model.Drink;
 import Backend.Service.Implementation.DrinkServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +16,9 @@ public class DrinkController {
     @Autowired
     private DrinkServiceImplementation drinkServiceImplementation;
 
-    @PostMapping("/readById")
-    public ResponseEntity readById(@RequestBody Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(drinkServiceImplementation.readById(id));
+    @PostMapping("/getById")
+    public ResponseEntity getById(@RequestBody Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(drinkServiceImplementation.getById(id));
     }
 
     @GetMapping("/getAll")

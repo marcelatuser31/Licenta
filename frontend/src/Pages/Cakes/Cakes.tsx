@@ -9,7 +9,7 @@ import { CustomDropdown } from "../../components/CustomDropdown/CustomDropdown"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { Section } from "../../components/Section/Section"
 import { dividerStyle, itemsContainerStyle, labelSectionStyle, selectedMenuStyle } from './Cakes.styles'
-import { ASCENDING, DESCENDING, FAVORITE_ITEMS_LIST_KEY, HEADERS } from "../../Utils/constants"
+import { ASCENDING, DESCENDING, FAVORITE_ITEMS_LIST_KEY, FILTER_BY_TYPE, HEADERS, SORT_BY_NAME, SORT_BY_PRICE } from "../../Utils/constants"
 import { getImageURLfromByteArray } from "../../Utils/methods"
 import { ICake } from "../../Utils/Models/ICake"
 import { CakeRoutes } from "../../Utils/Routes/backEndRoutes"
@@ -31,7 +31,7 @@ const getCard = (cake: ICake, index: number): JSX.Element => {
             price={cake.price}
             weight={cake.weight}
             isFavorite={favoriteItem === undefined ? false : true}
-            page={Pages.SelectedCake} />
+            redirectTo={Pages.SelectedCake} />
     </div>
 }
 
@@ -135,7 +135,7 @@ export const Cakes = (): JSX.Element => {
                 setDefaultValue={setSelectedSortNameOption}
                 defaultValue={selectedSortNameOption}
                 onSelectItem={sortByName}
-                name='Sort by name' />
+                name={SORT_BY_NAME} />
         </div>
     }
 
@@ -146,7 +146,7 @@ export const Cakes = (): JSX.Element => {
                 setDefaultValue={setSelectedSortPriceOption}
                 defaultValue={selectedSortPriceOption}
                 onSelectItem={sortByPrice}
-                name='Sort by price' />
+                name={SORT_BY_PRICE} />
         </div>
     }
 
@@ -155,9 +155,9 @@ export const Cakes = (): JSX.Element => {
         <Stack horizontal={true} gap='80'>
             <StackItem >
                 <Stack gap='60'>
-                    <Section name='Filter By Type' labelStyle={labelSectionStyle} contentValue={getFilterContent()}></Section>
-                    <Section name='Sort by Price' labelStyle={labelSectionStyle} contentValue={getSortByPriceContent()}></Section>
-                    <Section name='Sort by Name' labelStyle={labelSectionStyle} contentValue={getSortByNameContent()}></Section>
+                    <Section name={FILTER_BY_TYPE} labelStyle={labelSectionStyle} contentValue={getFilterContent()}></Section>
+                    <Section name={SORT_BY_PRICE} labelStyle={labelSectionStyle} contentValue={getSortByPriceContent()}></Section>
+                    <Section name={SORT_BY_NAME} labelStyle={labelSectionStyle} contentValue={getSortByNameContent()}></Section>
                 </Stack>
             </StackItem>
             <div className={dividerStyle} />

@@ -3,9 +3,9 @@ import { Box, Button } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import axios from "axios";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { CustomGroupedList } from "../../components/List/CustomGroupedList";
+import { GroupedList } from "../../components/List/GroupedList";
 import { Navbar } from "../../components/Navbar/Navbar";
-import { MESSAGE_ADD_ORDER, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants";
+import { ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants";
 import { Pages } from "../../Utils/enums";
 import { getMessage } from "../../Utils/methods";
 import { IPerson } from "../../Utils/Models/IPerson";
@@ -46,7 +46,7 @@ export const ShoppingCart = (): JSX.Element => {
         }
     })
 
-    const rows: any = cakes.concat(drinks)
+    const rows: any = [...cakes, ...drinks]
 
     const onClick = async (event: any): Promise<void> => {
         if (person.id === undefined)
@@ -58,9 +58,8 @@ export const ShoppingCart = (): JSX.Element => {
             drinks: mapToIItemDTO(shoppingList.cakes),
         };
         await axios.post(OrderRoutes.AddOrder, orderData);
-        getMessage(MESSAGE_ADD_ORDER)
+        getMessage("success", "Successfully", "Your order has been placed")
         navigate(Pages.Home)
-
     }
 
     const onDeleteItems = (items: any[]): void => {
@@ -85,7 +84,7 @@ export const ShoppingCart = (): JSX.Element => {
             <div className={outerDiv}>
                 <div className={innerDiv}>
                     <Box className={`${listStyle} ${innerDiv}`} sx={boxStyle}>
-                        <CustomGroupedList groupByColumn={'type'} items={rows} columns={columns} onDeleteItems={onDeleteItems} />
+                        <GroupedList groupByColumn={'type'} items={rows} columns={columns} onDeleteItems={onDeleteItems} />
                     </Box>
                 </div>
                 <Button variant="contained" className={`${addOrderButtonStyle} ${innerDiv}`} onClick={onClick} >Add Order</Button>

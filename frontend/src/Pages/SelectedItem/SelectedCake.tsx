@@ -7,7 +7,7 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { addToCartStyle, choiceGroupStyle, imageStyle, labelStyle, textFieldStyle, titleStyle, valueStyle } from "./SelectedCake.styles"
 import { useState } from "react"
 import { IItem } from "./SelectedCake.types"
-import { MESSAGE_ADD_TO_CART, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
+import { CAKE, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
 import { IPerson } from "../../Utils/Models/IPerson"
 import { RoleType } from "../../Utils/enums"
 import { Input } from "../Cakes/Cakes"
@@ -44,7 +44,7 @@ export const SelectedCake = (): JSX.Element => {
                 cakeMessage: cakeMessage,
                 weight: selectedWeight,
                 amount: 1,
-                type: 'Cake'
+                type: CAKE
             }
             shoppingList.cakes.push(newCake)
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
@@ -57,7 +57,7 @@ export const SelectedCake = (): JSX.Element => {
             })
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
         }
-        getMessage(MESSAGE_ADD_TO_CART)
+        getMessage('success', 'Successfully', "Item has been added")
     }
 
     const onChange = (event: any): void => {

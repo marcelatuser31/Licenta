@@ -9,7 +9,7 @@ export interface ICardProps {
     price: number;
     weight?: number;
     isFavorite: boolean;
-    page: string;
+    redirectTo: string;
 }
 
 export interface IFavoriteItem {

@@ -14,7 +14,7 @@ public class DrinkServiceImplementation implements DrinkService {
     private final DrinkRepository drinkRepository;
 
     @Override
-    public Drink readById(Long id) {
+    public Drink getById(Long id) {
         return drinkRepository.findFirstById(id);
     }
 

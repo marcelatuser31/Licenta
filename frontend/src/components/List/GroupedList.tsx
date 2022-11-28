@@ -6,7 +6,7 @@ import { deleteButtonStyle } from "./CustomList.styles";
 import { ICustomListProps } from "./CustomList.types"
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export const CustomGroupedList = (props: ICustomListProps): JSX.Element => {
+export const GroupedList = (props: ICustomListProps): JSX.Element => {
     const [items, setItems] = useState<any[]>(props.items);
     const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
@@ -17,7 +17,6 @@ export const CustomGroupedList = (props: ICustomListProps): JSX.Element => {
 
         if (props.onDeleteItems)
             props.onDeleteItems(newItems);
-
     }
 
     const CustomToolbar = (): JSX.Element => {
