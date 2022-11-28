@@ -1,10 +1,10 @@
-import { BaseButton, IColumn, IIconProps, SelectionMode } from "@fluentui/react";
+import { BaseButton, IIconProps } from "@fluentui/react";
 
 export interface ICustomListProps {
     items: any[];
     columns: any[];
-    setSelectedItems?: (items:any[])=>void;
-    onDeleteItems?:(items:any[])=>void;
+    setSelectedItems?: (items: any[]) => void;
+    onDeleteItems?: (items: any[]) => void;
     heigth?: number
     groupByColumn?: string;
 }

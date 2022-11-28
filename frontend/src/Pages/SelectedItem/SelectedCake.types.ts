@@ -4,5 +4,6 @@ export interface IItem {
     price: number,
     cakeMessage?: string,
     weight: number,
-    amount: number
+    amount: number,
+    type: string
 }

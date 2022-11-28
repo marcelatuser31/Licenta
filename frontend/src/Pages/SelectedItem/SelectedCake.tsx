@@ -43,7 +43,8 @@ export const SelectedCake = (): JSX.Element => {
                 price: location.state.price * selectedWeight,
                 cakeMessage: cakeMessage,
                 weight: selectedWeight,
-                amount: 1
+                amount: 1,
+                type: 'Cake'
             }
             shoppingList.cakes.push(newCake)
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))

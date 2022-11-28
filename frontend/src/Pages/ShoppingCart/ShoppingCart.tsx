@@ -2,9 +2,8 @@ import { Stack, StackItem } from "@fluentui/react";
 import { Box, Button } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import axios from "axios";
-import { useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { CustomList } from "../../components/CustomList/CustomList";
+import { CustomGroupedList } from "../../components/List/CustomGroupedList";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { MESSAGE_ADD_ORDER, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants";
 import { Pages } from "../../Utils/enums";
@@ -24,16 +23,30 @@ export const ShoppingCart = (): JSX.Element => {
         return items.map((order: IItem) => { return { id: order.id, amount: order.amount } })
     }
 
-    const rows: any = shoppingList?.cakes?.map((cake: IItem) => {
+    const cakes: any[] = shoppingList?.cakes?.map((cake: IItem) => {
         return {
             id: cake.id,
             price: cake.price,
             name: cake.name,
             cakeMessage: cake.cakeMessage,
             weight: cake.weight,
-            amount: cake.amount
+            amount: cake.amount,
+            type: cake.type
         }
     })
+
+    const drinks: any[] = shoppingList?.drinks?.map((drink: IItem) => {
+        return {
+            id: drink.id,
+            price: drink.price,
+            name: drink.name,
+            weight: drink.weight,
+            amount: drink.amount,
+            type: drink.type
+        }
+    })
+
+    const rows: any = cakes.concat(drinks)
 
     const onClick = async (event: any): Promise<void> => {
         if (person.id === undefined)
@@ -60,7 +73,8 @@ export const ShoppingCart = (): JSX.Element => {
         { field: 'price', headerName: 'Price', type: 'number', width: 110 },
         { field: 'weight', headerName: 'Weight', width: 150, type: 'number' },
         { field: 'amount', headerName: 'Amount', type: 'number' },
-        { field: 'cakeMessage', headerName: 'Cake Message', width: 180, editable: true }
+        { field: 'cakeMessage', headerName: 'Cake Message', width: 180, editable: true },
+        { field: 'type', headerName: 'Type' }
     ];
 
     return <Stack>
@@ -71,7 +85,7 @@ export const ShoppingCart = (): JSX.Element => {
             <div className={outerDiv}>
                 <div className={innerDiv}>
                     <Box className={`${listStyle} ${innerDiv}`} sx={boxStyle}>
-                        <CustomList groupByColumn={"name"} items={rows} columns={columns} onDeleteItems={onDeleteItems} />
+                        <CustomGroupedList groupByColumn={'type'} items={rows} columns={columns} onDeleteItems={onDeleteItems} />
                     </Box>
                 </div>
                 <Button variant="contained" className={`${addOrderButtonStyle} ${innerDiv}`} onClick={onClick} >Add Order</Button>

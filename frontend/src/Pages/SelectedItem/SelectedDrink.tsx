@@ -8,7 +8,6 @@ import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
 import { addToCartStyle, imageStyle, titleStyle } from "./SelectedCake.styles"
 import { IItem } from "./SelectedCake.types"
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import { cakeIconStyle } from "../../components/Navbar/Navbar.styles"
 import { getMessage } from "../../Utils/methods"
 
 export const SelectedDrink = (): JSX.Element => {
@@ -23,7 +22,8 @@ export const SelectedDrink = (): JSX.Element => {
                 name: location.state.title,
                 price: location.state.price,
                 weight: location.state.weight,
-                amount: 1
+                amount: 1,
+                type: 'Drink'
             }
             shoppingList.drinks.push(newDrink)
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
