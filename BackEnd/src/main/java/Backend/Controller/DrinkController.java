@@ -1,5 +1,6 @@
 package Backend.Controller;
 
+import Backend.Model.Drink;
 import Backend.Service.Implementation.DrinkServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,12 @@ public class DrinkController {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity getAll(){
+    public ResponseEntity getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(drinkServiceImplementation.getAll());
+    }
+
+    @PostMapping("/addDrink")
+    public ResponseEntity addDrink(@RequestBody Drink drink) {
+        return ResponseEntity.status(HttpStatus.OK).body(drinkServiceImplementation.addDrink(drink));
     }
 }

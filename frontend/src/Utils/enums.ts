@@ -13,3 +13,11 @@ export enum Pages {
     Cakes = "/Cakes",
     Drinks = "/Drinks"
 }
+
+export enum SweetAlertIcon {
+    Succes = 'success',
+    Error = 'error',
+    Warning = 'warning',
+    Info = 'Info',
+    Question = 'Question'
+}

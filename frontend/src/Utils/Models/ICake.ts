@@ -7,6 +7,6 @@ export interface ICake {
     weight: number;
     amount: number;
     ingredients: IIngredient[];
-    expirationDate: Date;
+    expirationDate?: Date;
     image: any;
 }

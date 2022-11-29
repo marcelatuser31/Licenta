@@ -22,4 +22,5 @@ public interface CakeService {
     void deleteCake(Long id);
     List<String> getCakeTypes();
     Cake addCakeImage(Long cakeId, MultipartFile image);
+    Cake addCake(Cake cake);
 }

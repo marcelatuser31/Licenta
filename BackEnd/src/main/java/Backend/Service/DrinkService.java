@@ -9,5 +9,5 @@ import java.util.List;
 public interface DrinkService {
     Drink getById(Long id);
     List<Drink> getAll();
-
+Drink addDrink(Drink drink);
 }

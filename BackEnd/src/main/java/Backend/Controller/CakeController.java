@@ -78,4 +78,9 @@ public class CakeController {
     public ResponseEntity addImage(@RequestParam (value="image", required = false) MultipartFile image, @RequestParam(value="cakeId") String cakeId){
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.addCakeImage(Long.parseLong(cakeId), image));
     }
+
+    @PostMapping("/addCake")
+    public ResponseEntity addCake(@RequestBody Cake cake){
+        return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.addCake(cake));
+    }
 }

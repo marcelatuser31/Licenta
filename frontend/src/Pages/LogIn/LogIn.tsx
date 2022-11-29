@@ -3,8 +3,8 @@ import { createTheme } from '@mui/material/styles'
 import axios from "axios"
 import { Fragment, useState } from "react"
 import { NavigateFunction, useNavigate } from "react-router-dom"
-import { FAVORITE_ITEMS_LIST_KEY, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
-import { Pages } from "../../Utils/enums"
+import { ERROR_MESSAGE, FAVORITE_ITEMS_LIST_KEY, LOGIN_MESSAGE, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
+import { Pages, SweetAlertIcon } from "../../Utils/enums"
 import { getMessage } from "../../Utils/methods"
 import { RoleRoutes } from "../../Utils/Routes/backEndRoutes"
 import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
@@ -35,7 +35,7 @@ export const LogIn = (): JSX.Element => {
             navigate(Pages.Home);
         }
         else {
-            getMessage('error', '...Oops', "Username or password didn't match")
+            getMessage(SweetAlertIcon.Error, ERROR_MESSAGE, LOGIN_MESSAGE)
         }
     }
 

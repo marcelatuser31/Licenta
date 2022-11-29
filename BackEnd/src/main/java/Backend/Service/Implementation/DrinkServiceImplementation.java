@@ -23,4 +23,11 @@ public class DrinkServiceImplementation implements DrinkService {
         return (List<Drink>) drinkRepository.findAll();
     }
 
+    @Override
+    public Drink addDrink(Drink drink) {
+        Drink newDrink = new Drink(drink.getId(), drink.getName(), drink.getWeight(), drink.getPrice(), drink.getAmount());
+        drinkRepository.save(newDrink);
+        return newDrink;
+    }
+
 }

@@ -124,4 +124,11 @@ public class CakeServiceImplementation implements CakeService {
         cakeRepository.save(cake);
         return cake;
     }
+
+    @Override
+    public Cake addCake(Cake cake) {
+        Cake newCake = new Cake(cake.getId(), cake.getName(), cake.getPrice(), cake.getWeight(), cake.getAmount(), cake.getIngredients(), cake.getType(), cake.getExpirationDate(), null);
+        cakeRepository.save(newCake);
+        return newCake;
+    }
 }
