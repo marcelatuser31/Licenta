@@ -5,6 +5,9 @@ import { MutableRefObject, useState } from "react";
 import { deleteButtonStyle } from "./CustomList.styles";
 import { ICustomListProps } from "./CustomList.types"
 import DeleteIcon from '@mui/icons-material/Delete';
+import { getMessage } from "../../Utils/methods";
+import { SweetAlertIcon } from "../../Utils/enums";
+import { DELETE_MESSAGE, NO, QUESTION_MESSAGE, YES } from "../../Utils/constants";
 
 export const GroupedList = (props: ICustomListProps): JSX.Element => {
     const [items, setItems] = useState<any[]>(props.items);
@@ -17,6 +20,11 @@ export const GroupedList = (props: ICustomListProps): JSX.Element => {
 
         if (props.onDeleteItems)
             props.onDeleteItems(newItems);
+
+    }
+
+    const onClick = (event: any): void => {
+        getMessage(SweetAlertIcon.Question, QUESTION_MESSAGE, DELETE_MESSAGE, YES, NO, onDeleteItems)
     }
 
     const CustomToolbar = (): JSX.Element => {
@@ -26,7 +34,7 @@ export const GroupedList = (props: ICustomListProps): JSX.Element => {
                 <GridToolbarFilterButton />
                 <GridToolbarDensitySelector />
                 <GridToolbarExport />
-                <Button variant="text" onClick={onDeleteItems} startIcon={<DeleteIcon />} style={deleteButtonStyle}>Delete</Button>
+                <Button variant="text" onClick={onClick} startIcon={<DeleteIcon />} style={deleteButtonStyle}>Delete</Button>
             </GridToolbarContainer>
         );
     }

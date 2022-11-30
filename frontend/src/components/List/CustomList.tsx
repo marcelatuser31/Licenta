@@ -2,6 +2,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Button } from '@mui/material';
 import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton } from '@mui/x-data-grid';
 import { useState } from "react";
+import { DELETE_MESSAGE, NO, QUESTION_MESSAGE, YES } from '../../Utils/constants';
+import { SweetAlertIcon } from '../../Utils/enums';
+import { getMessage } from '../../Utils/methods';
 import { deleteButtonStyle } from './CustomList.styles';
 import './CustomList.styles.ts';
 import { ICustomListProps } from "./CustomList.types";
@@ -18,6 +21,10 @@ export const CustomList = (props: ICustomListProps): JSX.Element => {
             props.onDeleteItems(newItems);
     }
 
+    const onClick = (event: any): void => {
+        getMessage(SweetAlertIcon.Question, QUESTION_MESSAGE, DELETE_MESSAGE, YES, NO, onDeleteItems)
+    }
+
     const CustomToolbar = (): JSX.Element => {
         return (
             <GridToolbarContainer>
@@ -25,7 +32,7 @@ export const CustomList = (props: ICustomListProps): JSX.Element => {
                 <GridToolbarFilterButton />
                 <GridToolbarDensitySelector />
                 <GridToolbarExport />
-                <Button variant="text" onClick={onDeleteItems} startIcon={<DeleteIcon />} style={deleteButtonStyle}>Delete</Button>
+                <Button variant="text" onClick={onClick} startIcon={<DeleteIcon />} style={deleteButtonStyle}>Delete</Button>
             </GridToolbarContainer>
         );
     }

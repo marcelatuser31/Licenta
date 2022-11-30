@@ -20,3 +20,7 @@ export const ERROR_MESSAGE: string = '...Ooops'
 export const ADD_ORDER_MESSAGE: string = 'Your order has been placed'
 export const ADD_TO_CART_MESSAGE: string = 'Item has been added'
 export const LOGIN_MESSAGE: string = "Username or password didn't match"
+export const YES: string = 'YES'
+export const NO: string = 'NO'
+export const QUESTION_MESSAGE: string = '...Hmmm'
+export const DELETE_MESSAGE: string = 'Are you sure?'

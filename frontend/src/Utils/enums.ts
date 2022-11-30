@@ -18,6 +18,6 @@ export enum SweetAlertIcon {
     Succes = 'success',
     Error = 'error',
     Warning = 'warning',
-    Info = 'Info',
-    Question = 'Question'
+    Info = 'info',
+    Question = 'question'
 }
