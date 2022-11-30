@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+
+  app:
+    image: be
+    ports:
+      - "8081:8081"
+
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+
+    environment:
+      - POSTGRES_PASSWORD=quertyuiop
+      - POSTGRES_USER=portgres
+      - POSTGRES_DB=sd
