@@ -60,6 +60,7 @@ export const ShoppingCart = (): JSX.Element => {
         await axios.post(OrderRoutes.AddOrder, orderData);
         getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_ORDER_MESSAGE)
         navigate(Pages.Home)
+        localStorage.removeItem(ORDER_LIST_KEY)
     }
 
     const onDeleteItems = (items: any[]): void => {
