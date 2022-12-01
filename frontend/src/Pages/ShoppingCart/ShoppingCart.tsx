@@ -55,12 +55,12 @@ export const ShoppingCart = (): JSX.Element => {
         const orderData: IOrderData = {
             id: parseInt(person.id?.toString()),
             cakes: mapToIItemDTO(shoppingList.cakes),
-            drinks: mapToIItemDTO(shoppingList.cakes),
+            drinks: mapToIItemDTO(shoppingList.drinks),
         };
         await axios.post(OrderRoutes.AddOrder, orderData);
         getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_ORDER_MESSAGE)
         navigate(Pages.Home)
-        localStorage.removeItem(ORDER_LIST_KEY)
+        localStorage.setItem(ORDER_LIST_KEY, JSON.stringify([]))
     }
 
     const onDeleteItems = (items: any[]): void => {
