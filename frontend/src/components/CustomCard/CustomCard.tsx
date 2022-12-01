@@ -10,14 +10,13 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IIngredient } from "../../Utils/Models/IIngredient"
 import { cardStyle, ingredientsNameStyle } from "./CustomCard.styles"
 import { NavigateFunction, useNavigate } from "react-router-dom"
-import { Pages } from "../../Utils/enums"
 import { FAVORITE_ITEMS_LIST_KEY } from "../../Utils/constants"
 import { Stack } from "@fluentui/react"
 
 export const CustomCard = (props: ICardProps): JSX.Element => {
     const [expanded, setExpanded] = React.useState(false);
     const navigate: NavigateFunction = useNavigate()
-    const [isFavorite, setIsFavorite] = useState<Boolean>(false)
+    const [isFavorite, setIsFavorite] = useState<Boolean>(props.isFavorite)
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -39,9 +38,9 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
     }));
 
     const onCardClick = (event: any): void => {
-        navigate(Pages.Cake, {
+        navigate(props.redirectTo, {
             state: {
-                cakeId: props.id,
+                id: props.id,
                 title: props.title,
                 image: props.image,
                 ingredients: props.ingredients,

@@ -20,7 +20,7 @@ public class CakeServiceImplementation implements CakeService {
 
     private final CakeRepository cakeRepository;
 
-    public Cake readById(Long id) {
+    public Cake getById(Long id) {
         Cake cake = cakeRepository.findFirstById(id);
         return cake;
     }
@@ -73,7 +73,7 @@ public class CakeServiceImplementation implements CakeService {
     }
 
     @Override
-    public List<Cake> readByType(CakeType type) {
+    public List<Cake> getByType(CakeType type) {
         return cakeRepository.findAllByType(type);
     }
 
@@ -123,5 +123,12 @@ public class CakeServiceImplementation implements CakeService {
         cake.setImage(imageCake);
         cakeRepository.save(cake);
         return cake;
+    }
+
+    @Override
+    public Cake addCake(Cake cake) {
+        Cake newCake = new Cake(cake.getId(), cake.getName(), cake.getPrice(), cake.getWeight(), cake.getAmount(), cake.getIngredients(), cake.getType(), cake.getExpirationDate(), null);
+        cakeRepository.save(newCake);
+        return newCake;
     }
 }

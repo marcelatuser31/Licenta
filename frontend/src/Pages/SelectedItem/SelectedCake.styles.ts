@@ -9,13 +9,15 @@ export const titleStyle: string = mergeStyles({
     color: 'black',
     position: "relative",
     top: "30px",
-    fontFamily: 'Brush Script MT'
+    fontFamily: 'Brush Script MT',
+    width: 600
 })
 
 export const addToCartStyle: string = mergeStyles({
+    position: "relative",
+    top: 40,
     width: 200,
-    height: 50,
-    left: 100
+    height: 50
 })
 
 export const valueStyle: string = mergeStyles({
@@ -40,6 +42,7 @@ export const imageStyle: string = mergeStyles({
     position: "relative",
     top: "30px",
     left: "30px",
+    borderRadius: "5%",
     selectors: {
         ":hover": {
             WebkitFontSmoothing: "scale(1.1) slow",
@@ -50,7 +53,6 @@ export const imageStyle: string = mergeStyles({
 })
 
 export const textFieldStyle: string = mergeStyles({
-    width: '50px',
     position: 'relative',
     top: -5
 })

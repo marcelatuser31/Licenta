@@ -16,21 +16,22 @@ import CakeIcon from '@mui/icons-material/Cake';
 import { Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { cakeIconStyle, containerStyle, expandedCakeIconStyle, expandedLogoStyle, expandedMenuBoxStyle, imageStyle, logoStyle, menuBoxStyle, myCartButtonStyle, settingsBoxStyle } from './Navbar.styles';
-import { IItemOrder } from '../../Pages/Cake/Cake.types';
-import { HEADERS, ORDER_LIST_KEY, PERSON_KEY } from '../../Utils/constants';
+import { IItem } from '../../Pages/SelectedItem/SelectedCake.types';
+import { DEFAULT_PROFILE_PHOTO, HEADERS, ORDER_LIST_KEY, PERSON_KEY } from '../../Utils/constants';
 import axios from 'axios';
 import { RoleRoutes } from '../../Utils/Routes/backEndRoutes';
 import { IPerson } from '../../Utils/Models/IPerson';
 import { getImageURLfromByteArray } from '../../Utils/methods';
+import { IShoppingList } from '../../Pages/ShoppingCart/ShoppingCart.types';
 
-const pages = [Pages.Home, Pages.LogIn];
+const pages = [Pages.Cakes, Pages.Drinks];
 const settings = [Pages.Profile];
 
 export const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const navigate: NavigateFunction = useNavigate();
-    const newCakeList: IItemOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
+    const shoppingList: IShoppingList = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
 
     const onLogout = async (event: any): Promise<void> => {
@@ -126,12 +127,12 @@ export const Navbar = () => {
                     </Box>
                     <div>
                         <Box sx={settingsBoxStyle}>
-                            <Badge color="error" badgeContent={newCakeList.length} className={myCartButtonStyle} onClick={() => navigate(Pages.ShoppingCart)}>
+                            <Badge color="error" badgeContent={shoppingList?.cakes?.length} className={myCartButtonStyle} onClick={() => navigate(Pages.ShoppingCart)}>
                                 <ShoppingCartIcon />
                             </Badge>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <img width={48} height={48} alt={'Not found'} src={getImageURLfromByteArray(person.image)} className={imageStyle}></img>
+                                    <img width={48} height={48} src={getImageURLfromByteArray(person.image) || DEFAULT_PROFILE_PHOTO} className={imageStyle}></img>
                                 </IconButton>
                             </Tooltip>
                             <Menu

@@ -1,0 +1,56 @@
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Button } from '@mui/material';
+import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton } from '@mui/x-data-grid';
+import { useState } from "react";
+import { DELETE_MESSAGE, NO, QUESTION_MESSAGE, YES } from '../../Utils/constants';
+import { SweetAlertIcon } from '../../Utils/enums';
+import { getMessage } from '../../Utils/methods';
+import { deleteButtonStyle } from './CustomList.styles';
+import './CustomList.styles.ts';
+import { ICustomListProps } from "./CustomList.types";
+
+export const CustomList = (props: ICustomListProps): JSX.Element => {
+    const [selectedItems, setSelectedItems] = useState<number[]>([]);
+    const [items, setItems] = useState<any[]>(props.items);
+
+    const onDeleteItems = (): void => {
+        const newItems: any[] = items.filter((item: any) => !selectedItems.includes(item.id));
+        setItems(newItems);
+
+        if (props.onDeleteItems)
+            props.onDeleteItems(newItems);
+    }
+
+    const onClick = (event: any): void => {
+        getMessage(SweetAlertIcon.Question, QUESTION_MESSAGE, DELETE_MESSAGE, YES, NO, onDeleteItems)
+    }
+
+    const CustomToolbar = (): JSX.Element => {
+        return (
+            <GridToolbarContainer>
+                <GridToolbarColumnsButton />
+                <GridToolbarFilterButton />
+                <GridToolbarDensitySelector />
+                <GridToolbarExport />
+                <Button variant="text" onClick={onClick} startIcon={<DeleteIcon />} style={deleteButtonStyle}>Delete</Button>
+            </GridToolbarContainer>
+        );
+    }
+
+    const onSelectionModelChange = (selectedItems: any[]): void => {
+        setSelectedItems(selectedItems)
+    }
+
+    return <DataGrid
+        style={{ height: props.heigth || 700 }}
+        components={{ Toolbar: CustomToolbar }}
+        componentsProps={{ toolbar: { left: 2 } }}
+        rows={items}
+        columns={props.columns}
+        pageSize={10}
+        rowsPerPageOptions={[5]}
+        checkboxSelection
+        experimentalFeatures={{ newEditingApi: true }}
+        onSelectionModelChange={onSelectionModelChange}
+    />
+}

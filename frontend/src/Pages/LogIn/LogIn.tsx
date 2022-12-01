@@ -3,18 +3,20 @@ import { createTheme } from '@mui/material/styles'
 import axios from "axios"
 import { Fragment, useState } from "react"
 import { NavigateFunction, useNavigate } from "react-router-dom"
-import { FAVORITE_ITEMS_LIST_KEY, MESSAGE_LOGIN, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
-import { Pages } from "../../Utils/enums"
-import { errorMessage } from "../../Utils/methods"
+import { ERROR_MESSAGE, FAVORITE_ITEMS_LIST_KEY, LOGIN_MESSAGE, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
+import { Pages, SweetAlertIcon } from "../../Utils/enums"
+import { getMessage } from "../../Utils/methods"
 import { RoleRoutes } from "../../Utils/Routes/backEndRoutes"
+import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
 import { ILogIn } from "./LogIn.types"
 
+const orderList: IShoppingList = { cakes: [], drinks: [] };
 export const LogIn = (): JSX.Element => {
     const navigate: NavigateFunction = useNavigate()
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    localStorage.setItem(ORDER_LIST_KEY, JSON.stringify([]))
+    localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(orderList))
     localStorage.setItem(FAVORITE_ITEMS_LIST_KEY, JSON.stringify([]))
 
     const onClickRegister = (event: any): void => {
@@ -33,7 +35,7 @@ export const LogIn = (): JSX.Element => {
             navigate(Pages.Home);
         }
         else {
-            errorMessage(MESSAGE_LOGIN)
+            getMessage(SweetAlertIcon.Error, ERROR_MESSAGE, LOGIN_MESSAGE)
         }
     }
 

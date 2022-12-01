@@ -4,15 +4,31 @@ import { useLocation } from "react-router-dom"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { IIngredient } from "../../Utils/Models/IIngredient"
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import { addToCartStyle, choiceGroupStyle, imageStyle, labelStyle, textFieldStyle, titleStyle, valueStyle } from "./Cake.styles"
+import { addToCartStyle, choiceGroupStyle, imageStyle, labelStyle, textFieldStyle, titleStyle, valueStyle } from "./SelectedCake.styles"
 import { useState } from "react"
-import { IItemOrder } from "./Cake.types"
-import { ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
+import { IItem } from "./SelectedCake.types"
+import { ADD_TO_CART_MESSAGE, CAKE, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants"
 import { IPerson } from "../../Utils/Models/IPerson"
-import { RoleType } from "../../Utils/enums"
-import { Input } from "../Home/Home"
-import { onUploadPhoto } from "../../Utils/methods"
+import { RoleType, SweetAlertIcon } from "../../Utils/enums"
+import { Input } from "../Cakes/Cakes"
+import { getMessage, onUploadPhoto } from "../../Utils/methods"
 import { Section } from "../../components/Section/Section"
+import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
+import { CustomDialog } from "../../components/CustomDialog/CustomDialog"
+import { ICake } from "../../Utils/Models/ICake"
+import axios from "axios"
+import { CakeRoutes } from "../../Utils/Routes/backEndRoutes"
+
+export const defaultItem: ICake = {
+    id: 0,
+    name: "",
+    price: 0,
+    weight: 0,
+    amount: 0,
+    ingredients: [],
+    expirationDate: undefined,
+    image: undefined
+}
 
 const options: IChoiceGroupOption[] = [
     { key: 'A', text: '0.5kg', styles: { root: { marginLeft: 0 } } },
@@ -21,39 +37,66 @@ const options: IChoiceGroupOption[] = [
     { key: 'D', text: '2kg', styles: { root: { marginLeft: 20 } } },
 ];
 
-export const Cake = (): JSX.Element => {
+export const SelectedCake = (): JSX.Element => {
     const [cakeMessage, setCakeMessage] = useState<string>('');
     const [selectedWeight, setSelectedWeight] = useState<number>(1);
+    const [item, setItem] = useState<ICake>(defaultItem);
     const location = useLocation()
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
+    const dialogLabels: string[] = ['Name', 'Price', 'Weight', 'Amount']
 
     const onCheckBoxGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
         setSelectedWeight(Number(option?.text.substring(0, option.text.length - 2)))
     }
 
     const onAddToCart = (event: any): void => {
-        const cakeList: IItemOrder[] = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
-        const cake: IItemOrder | undefined = cakeList.find((a: IItemOrder) => a.cakeId === location.state.cakeId)
+        const shoppingList: IShoppingList = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
+
+        const cake: IItem | undefined = shoppingList.cakes.find((a: IItem) => a.id === location.state.id)
         if (cake === undefined) {
-            const newCake: IItemOrder = {
-                cakeId: location.state.cakeId,
+            const newCake: IItem = {
+                id: location.state.id,
                 name: location.state.title,
                 price: location.state.price * selectedWeight,
                 cakeMessage: cakeMessage,
                 weight: selectedWeight,
-                amount: 1
+                amount: 1,
+                type: CAKE
             }
-            cakeList.push(newCake)
-            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(cakeList))
+            shoppingList.cakes.push(newCake)
+            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
         }
         else {
-            const cakeList2: IItemOrder[] = cakeList.map((cake) => {
-                if (cake.cakeId === location.state.cakeId) {
+            shoppingList.cakes.forEach((cake: IItem) => {
+                if (cake.id === location.state.id) {
                     cake.amount = cake.amount + 1
                 }
-                return cake;
             })
-            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(cakeList2))
+            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
+        }
+        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_TO_CART_MESSAGE)
+    }
+
+    const onSave = async (event: any): Promise<void> => {
+        const response = await axios.post(CakeRoutes.AddCake, item);
+    }
+
+    const onChangeDialog = (event: any): void => {
+        const value: any = event.target.value;
+        const name: string = event.target.name;
+        switch (name) {
+            case 'Name':
+                setItem({ ...item, name: value })
+                break
+            case "Price":
+                setItem({ ...item, price: value })
+                break
+            case "Amount":
+                setItem({ ...item, amount: value })
+                break
+            case "Weight":
+                setItem({ ...item, weight: value })
+                break
         }
     }
 
@@ -100,6 +143,7 @@ export const Cake = (): JSX.Element => {
     }
 
     return <>
+        {console.log(item)}
         <Navbar />
         <Stack horizontal={true} gap='80' >
             <StackItem>
@@ -116,11 +160,13 @@ export const Cake = (): JSX.Element => {
                     <Section name={"Cake Message:"} contentValue={getMessageContent()} gap={10} />
                     {person.role.type == RoleType.Admin
                         ? <Section name={"Upload Photo:"} contentValue={getUploadContent()} gap={10} />
-                        : undefined}
+                        : <StackItem align="center">
+                            <Button variant="contained" className={addToCartStyle} endIcon={<ShoppingCartCheckoutIcon />} onClick={onAddToCart} >Add to cart</Button>
+                        </StackItem>}
+                    <StackItem>
+                        <CustomDialog labels={dialogLabels} buttonTitle={"ADD CAKE"} onChange={onChangeDialog} onSave={onSave} />
+                    </StackItem>
                 </Stack>
-            </StackItem>
-            <StackItem align="center">
-                <Button variant="contained" className={addToCartStyle} endIcon={<ShoppingCartCheckoutIcon />} onClick={onAddToCart} >Add to cart</Button>
             </StackItem>
         </Stack >
     </>

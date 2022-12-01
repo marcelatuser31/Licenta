@@ -38,7 +38,8 @@ export const textFieldStyle: string = mergeStyles({
     height: 10
 })
 
-export const editProfileButtonStyle: SxProps<Theme> = {
+export const saveButtonStyle: SxProps<Theme> = {
     mt: 3,
-    mb: 2
+    mb: 2,
+    width: 150
 }

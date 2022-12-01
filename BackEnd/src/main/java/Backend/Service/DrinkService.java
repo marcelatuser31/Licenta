@@ -3,8 +3,11 @@ package Backend.Service;
 import Backend.Model.Drink;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public interface DrinkService {
-    Drink readById(Long id);
-
+    Drink getById(Long id);
+    List<Drink> getAll();
+Drink addDrink(Drink drink);
 }

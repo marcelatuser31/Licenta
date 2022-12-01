@@ -4,7 +4,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import { selectedMenuStyle } from '../../Pages/Home/Home.styles';
+import { selectedMenuStyle } from '../../Pages/Cakes/Cakes.styles';
 import { ICustomDropdownProps } from './CustomDropdown.types';
 
 export const CustomDropdown = (props: ICustomDropdownProps): JSX.Element => {
@@ -30,7 +30,7 @@ export const CustomDropdown = (props: ICustomDropdownProps): JSX.Element => {
             <List
                 component="nav"
                 aria-label="Device settings"
-                sx={{ bgcolor: 'background.paper', width: '130%' }}
+                sx={{ bgcolor: 'background.paper', width: '130%', paddingBottom: 0, paddingTop: 0 }}
             >
                 <ListItem
                     button
@@ -40,10 +40,12 @@ export const CustomDropdown = (props: ICustomDropdownProps): JSX.Element => {
                     aria-label="when device is locked"
                     aria-expanded={open ? 'true' : undefined}
                     onClick={handleClickListItem}
+
                 >
                     <ListItemText
-                        primary="Sort by price"
+                        primary={props.name}
                         secondary={props.defaultValue}
+
                     />
                 </ListItem>
             </List>

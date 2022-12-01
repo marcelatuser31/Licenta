@@ -1,18 +1,19 @@
 import { Stack, StackItem } from "@fluentui/react"
 import { Button, TextField } from "@mui/material"
-import { DataGrid, GridColDef } from "@mui/x-data-grid"
+import { GridColDef } from "@mui/x-data-grid"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { IFavoriteItem } from "../../components/CustomCard/CustomCard.types"
+import { CustomList } from "../../components/List/CustomList"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { Section } from "../../components/Section/Section"
-import { FAVORITE_ITEMS_LIST_KEY, HEADERS, PERSON_KEY } from "../../Utils/constants"
+import { DEFAULT_PROFILE_PHOTO, FAVORITE_ITEMS_LIST_KEY, HEADERS, PERSON_KEY } from "../../Utils/constants"
 import { getImageURLfromByteArray, onUploadProfilePhoto } from "../../Utils/methods"
 import { IPerson } from "../../Utils/Models/IPerson"
 import { PersonRoutes } from "../../Utils/Routes/backEndRoutes"
-import { Input } from "../Home/Home"
+import { Input } from "../Cakes/Cakes"
 import { innerDiv, outerDiv } from "../ShoppingCart/ShoppingCart.Styles"
-import { editProfileButtonStyle, informationStackStyle, labelStyle, photoStackStyle, sectionTitleStyle, textFieldStyle, valueStyle } from "./Profile.styles"
+import { saveButtonStyle, informationStackStyle, labelStyle, photoStackStyle, sectionTitleStyle, textFieldStyle, valueStyle } from "./Profile.styles"
 
 export const Profile = (): JSX.Element => {
     const [person, setPerson] = useState<IPerson>(JSON.parse(localStorage.getItem(PERSON_KEY) as string));
@@ -38,8 +39,9 @@ export const Profile = (): JSX.Element => {
 
     const onUploadPhoto = async (event: any): Promise<void> => {
         const id: number = JSON.parse(localStorage.getItem(PERSON_KEY) as string)?.id.toString();
-        onUploadProfilePhoto(event, id.toString())
-        const response: any = await axios.post(PersonRoutes.ReadById, id, { headers: HEADERS })
+        await onUploadProfilePhoto(event, id.toString())
+        const response: any = await axios.post(PersonRoutes.GetById, id, { headers: HEADERS })
+        localStorage.setItem(PERSON_KEY, JSON.stringify(person))
         setPerson(response.data)
     }
     const getTextField = (name: string, textFieldValue: string): JSX.Element => {
@@ -94,13 +96,17 @@ export const Profile = (): JSX.Element => {
         getData()
     }
 
+    const onDeleteItems = (items: any[]): void => {
+        localStorage.setItem(FAVORITE_ITEMS_LIST_KEY, JSON.stringify(items))
+    }
+
     return <div>
         <Navbar />
         <Stack horizontal={true} gap='120'>
             <StackItem className={photoStackStyle}>
                 <Stack gap="20">
                     <StackItem>
-                        <img width={260} height={300} alt={'Not found'} src={getImageURLfromByteArray(person?.image)}></img>
+                        <img width={260} height={300} alt={'Not found'} src={getImageURLfromByteArray(person?.image) || DEFAULT_PROFILE_PHOTO}></img>
                     </StackItem>
                     <StackItem>
                         <div className={outerDiv}>
@@ -125,32 +131,25 @@ export const Profile = (): JSX.Element => {
                     {getSection("Email:", person.role.email)}
                     {getSection("Username:", person.role.username)}
                     {getSection("Password:", person.role.password)}
-                    <StackItem>
+                    <StackItem align="center">
                         <Button
-                            onClick={onEditProfile} type="submit" fullWidth variant="contained" sx={editProfileButtonStyle}
+                            onClick={onEditProfile} type="submit" fullWidth variant="contained" sx={saveButtonStyle}
                         >
-                            Edit Profile
+                            Save
                         </Button>
                     </StackItem>
                 </Stack>
             </StackItem>
-            <StackItem style={{ position: 'relative', top: 32, maxWidth: 800, }}>
-                <Stack>
-                    <StackItem className={sectionTitleStyle}>
-                        Favorite List
-                    </StackItem>
-                </Stack>
-                <DataGrid
-                    style={{ width: 1000, height: 695, }}
-                    componentsProps={{ toolbar: { left: 2 } }}
-                    rows={rows}
-                    columns={columns}
-                    pageSize={10}
-                    rowsPerPageOptions={[5]}
-                    checkboxSelection
-                    experimentalFeatures={{ newEditingApi: true }}
-                />
-            </StackItem>
+            {items.length !== 0
+                ? <StackItem style={{ position: 'relative', top: 32, maxWidth: 800, }}>
+                    <Stack>
+                        <StackItem className={sectionTitleStyle}>
+                            Favorite List
+                        </StackItem>
+                    </Stack>
+                    <CustomList items={rows} columns={columns} onDeleteItems={onDeleteItems}></CustomList>
+                </StackItem>
+                : undefined}
         </Stack >
     </div >
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface IngredientService {
-    Ingredient readById(Long id);
-    Ingredient readByName(String name);
+    Ingredient getById(Long id);
+    Ingredient getByName(String name);
     Ingredient update(Ingredient ingredient);
 }

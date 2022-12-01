@@ -6,7 +6,18 @@ export enum Pages {
     Home = "/Home",
     LogIn = "/LogIn",
     Register = "/Register",
-    Cake = "/Cake",
+    SelectedCake = "/SelectedCake",
     ShoppingCart = "/ShoppingCart",
-    Profile = "/Profile"
+    Profile = "/Profile",
+    SelectedDrink = "/SelectedDrink",
+    Cakes = "/Cakes",
+    Drinks = "/Drinks"
+}
+
+export enum SweetAlertIcon {
+    Succes = 'success',
+    Error = 'error',
+    Warning = 'warning',
+    Info = 'info',
+    Question = 'question'
 }

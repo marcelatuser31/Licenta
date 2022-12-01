@@ -1,14 +1,24 @@
 import axios from 'axios';
-import { Buffer } from 'buffer';
-import Swal from "sweetalert2";
-import { IMAGE_HEADERS } from './constants';
+import Swal, { SweetAlertIcon } from "sweetalert2";
+import { DEFAULT_COLOR, IMAGE_HEADERS } from './constants';
 import { CakeRoutes, PersonRoutes } from './Routes/backEndRoutes';
 
-export const errorMessage = (message: string): void => {
+export const getMessage = (icon: SweetAlertIcon, title: string, message: string, confirmButtonText?: string, cancelButtonText?: string, onDeleteItems?: () => void) => {
     Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
+        icon: icon,
+        title: title,
         text: message,
+        confirmButtonColor: DEFAULT_COLOR,
+        cancelButtonColor: DEFAULT_COLOR,
+        cancelButtonText: cancelButtonText,
+        confirmButtonText: confirmButtonText,
+        showConfirmButton: true,
+        showCancelButton: true
+    }).then((resultContent) => {
+        if (resultContent['isConfirmed']) {
+            if (onDeleteItems)
+                onDeleteItems()
+        }
     })
 }
 
