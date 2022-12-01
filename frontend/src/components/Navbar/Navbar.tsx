@@ -16,7 +16,6 @@ import CakeIcon from '@mui/icons-material/Cake';
 import { Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { cakeIconStyle, containerStyle, expandedCakeIconStyle, expandedLogoStyle, expandedMenuBoxStyle, imageStyle, logoStyle, menuBoxStyle, myCartButtonStyle, settingsBoxStyle } from './Navbar.styles';
-import { IItem } from '../../Pages/SelectedItem/SelectedCake.types';
 import { DEFAULT_PROFILE_PHOTO, HEADERS, ORDER_LIST_KEY, PERSON_KEY } from '../../Utils/constants';
 import axios from 'axios';
 import { RoleRoutes } from '../../Utils/Routes/backEndRoutes';
@@ -57,7 +56,7 @@ export const Navbar = () => {
     };
 
     return (
-        <AppBar position="static" >
+        <AppBar position="sticky" >
             <Container maxWidth="xl" style={containerStyle}>
                 <Toolbar disableGutters >
                     <CakeIcon sx={expandedCakeIconStyle} />
