@@ -38,7 +38,7 @@ public class PersonController {
     }
 
     @PostMapping(value="/addImage", consumes={"multipart/form-data"})
-    public ResponseEntity addImage(@RequestParam (value="image", required = false) MultipartFile image, @RequestParam(value="personId") String personId){
-        return ResponseEntity.status(HttpStatus.OK).body(personServiceImplementation.addPersonImage(Long.parseLong(personId), image));
+    public ResponseEntity addImage(@RequestParam (value="image", required = false) MultipartFile image, @RequestParam(value="id") String id){
+        return ResponseEntity.status(HttpStatus.OK).body(personServiceImplementation.addPersonImage(Long.parseLong(id), image));
     }
 }

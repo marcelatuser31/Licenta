@@ -106,7 +106,7 @@ public class CakeServiceImplementation implements CakeService {
     }
 
     @Override
-    public Cake addCakeImage(Long cakeId, MultipartFile image) {
+    public Cake addCakeImage(Long id, MultipartFile image) {
         byte[] imageCake = null;
         System.out.println(image);
         System.out.println(image.getSize());
@@ -116,7 +116,7 @@ public class CakeServiceImplementation implements CakeService {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        Cake cake = cakeRepository.findFirstById(cakeId);
+        Cake cake = cakeRepository.findFirstById(id);
         if (cake == null) {
             return null;
         }

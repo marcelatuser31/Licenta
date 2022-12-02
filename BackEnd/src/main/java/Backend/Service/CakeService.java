@@ -21,6 +21,6 @@ public interface CakeService {
     List<Cake> getExpiredCakes();
     void deleteCake(Long id);
     List<String> getCakeTypes();
-    Cake addCakeImage(Long cakeId, MultipartFile image);
+    Cake addCakeImage(Long id, MultipartFile image);
     Cake addCake(Cake cake);
 }

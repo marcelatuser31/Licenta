@@ -38,22 +38,12 @@ export const getImageURLfromByteArray = (byteArray: any): string => {
     return URL.createObjectURL(image)
 }
 
-export const onUploadPhoto = (event: any, cakeId: string): void => {
+export const onUploadPhoto = (event: any, id: string, url: string): void => {
     const formdata: FormData = new FormData()
     formdata.append('image', event.target.files[0])
-    formdata.append('cakeId', cakeId)
+    formdata.append('id', id)
     const getData = async (): Promise<void> => {
-        const response = await axios.post(CakeRoutes.AddImage, formdata, { headers: IMAGE_HEADERS })
-    }
-    getData()
-}
-
-export const onUploadProfilePhoto = (event: any, personId: string): void => {
-    const formdata: FormData = new FormData()
-    formdata.append('image', event.target.files[0])
-    formdata.append('personId', personId)
-    const getData = async (): Promise<void> => {
-        const response = await axios.post(PersonRoutes.AddImage, formdata, { headers: IMAGE_HEADERS })
+        const response = await axios.post(url, formdata, { headers: IMAGE_HEADERS })
     }
     getData()
 }

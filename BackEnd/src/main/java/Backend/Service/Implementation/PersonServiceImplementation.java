@@ -91,7 +91,7 @@ public class PersonServiceImplementation implements PersonService {
     }
 
     @Override
-    public Person addPersonImage(Long personId, MultipartFile image) {
+    public Person addPersonImage(Long id, MultipartFile image) {
         byte[] imagePerson = null;
         System.out.println(image);
         System.out.println(image.getSize());
@@ -101,7 +101,7 @@ public class PersonServiceImplementation implements PersonService {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        Person person = personRepository.findFirstById(personId);
+        Person person = personRepository.findFirstById(id);
         if (person == null) {
             return null;
         }

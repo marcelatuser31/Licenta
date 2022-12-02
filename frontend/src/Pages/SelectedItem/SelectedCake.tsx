@@ -138,12 +138,11 @@ export const SelectedCake = (): JSX.Element => {
     const getUploadContent = (): JSX.Element => {
         return <Button variant="contained" component="label">
             Upload
-            <Input accept='image/*' id='contained-button-file' multiple type='file' onChange={(event: any) => onUploadPhoto(event, location.state.cakeId)} />
+            <Input accept='image/*' id='contained-button-file' multiple type='file' onChange={(event: any) => onUploadPhoto(event, location.state.id, CakeRoutes.AddImage)} />
         </Button>
     }
 
     return <>
-        {console.log(item)}
         <Navbar />
         <Stack horizontal={true} gap='80' >
             <StackItem>

@@ -8,7 +8,7 @@ import { CustomList } from "../../components/List/CustomList"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { Section } from "../../components/Section/Section"
 import { DEFAULT_PROFILE_PHOTO, FAVORITE_ITEMS_LIST_KEY, HEADERS, PERSON_KEY } from "../../Utils/constants"
-import { getImageURLfromByteArray, onUploadProfilePhoto } from "../../Utils/methods"
+import { getImageURLfromByteArray, onUploadPhoto } from "../../Utils/methods"
 import { IPerson } from "../../Utils/Models/IPerson"
 import { PersonRoutes } from "../../Utils/Routes/backEndRoutes"
 import { Input } from "../Cakes/Cakes"
@@ -37,13 +37,14 @@ export const Profile = (): JSX.Element => {
         { field: 'price', headerName: 'Price', type: 'number', width: 110 },
     ];
 
-    const onUploadPhoto = async (event: any): Promise<void> => {
+    const onUploadProfilePhoto = async (event: any): Promise<void> => {
         const id: number = JSON.parse(localStorage.getItem(PERSON_KEY) as string)?.id.toString();
-        await onUploadProfilePhoto(event, id.toString())
+        await onUploadPhoto(event, id.toString(), PersonRoutes.AddImage)
         const response: any = await axios.post(PersonRoutes.GetById, id, { headers: HEADERS })
         localStorage.setItem(PERSON_KEY, JSON.stringify(person))
         setPerson(response.data)
     }
+
     const getTextField = (name: string, textFieldValue: string): JSX.Element => {
         return <TextField name={name}
             defaultValue={textFieldValue}
@@ -113,7 +114,7 @@ export const Profile = (): JSX.Element => {
                             <div className={innerDiv}>
                                 <Button variant="contained" component="label">
                                     Upload Photo
-                                    <Input accept='image/*' id='contained-button-file' multiple type='file' onChange={onUploadPhoto} />
+                                    <Input accept='image/*' id='contained-button-file' multiple type='file' onChange={onUploadProfilePhoto} />
                                 </Button>
                             </div>
                         </div>
