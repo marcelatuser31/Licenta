@@ -9,6 +9,7 @@ import { Navbar } from "../../components/Navbar/Navbar";
 import { Section } from "../../components/Section/Section";
 import { ASCENDING, DESCENDING, FAVORITE_ITEMS_LIST_KEY, SORT_BY_NAME, SORT_BY_PRICE } from "../../Utils/constants";
 import { Pages } from "../../Utils/enums";
+import { getImageURLfromByteArray } from "../../Utils/methods";
 import { IDrink } from "../../Utils/Models/IDrink"
 import { DrinkRoutes } from "../../Utils/Routes/backEndRoutes";
 import { dividerStyle, itemsContainerStyle, labelSectionStyle } from "../Cakes/Cakes.styles";
@@ -21,7 +22,7 @@ const getCard = (drink: IDrink, index: number): JSX.Element => {
     return <div className={customCardStyle} key={index}>
         <CustomCard
             title={drink.name}
-            image={""}
+            image={getImageURLfromByteArray(drink.image)}
             id={drink.id}
             price={drink.price}
             weight={drink.weight}

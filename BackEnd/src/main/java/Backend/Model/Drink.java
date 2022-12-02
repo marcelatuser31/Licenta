@@ -1,11 +1,9 @@
 package Backend.Model;
 
 import lombok.*;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -22,4 +20,7 @@ public class Drink implements Serializable {
     private Float weight;
     private Float price;
     private Integer amount;
+    @Lob
+    @Type(type = "org.hibernate.type.ImageType")
+    private byte[] image;
 }

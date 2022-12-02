@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @CrossOrigin
@@ -30,5 +31,9 @@ public class DrinkController {
     @PostMapping("/addDrink")
     public ResponseEntity addDrink(@RequestBody Drink drink) {
         return ResponseEntity.status(HttpStatus.OK).body(drinkServiceImplementation.addDrink(drink));
+    }
+    @PostMapping(value="/addImage", consumes={"multipart/form-data"})
+    public ResponseEntity addImage(@RequestParam (value="image", required = false) MultipartFile image, @RequestParam(value="id") String id){
+        return ResponseEntity.status(HttpStatus.OK).body(drinkServiceImplementation.addDrinkImage(Long.parseLong(id), image));
     }
 }

@@ -1,11 +1,14 @@
 package Backend.Service.Implementation;
 
+import Backend.Model.Cake;
 import Backend.Model.Drink;
 import Backend.Repository.DrinkRepository;
 import Backend.Service.DrinkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -25,9 +28,28 @@ public class DrinkServiceImplementation implements DrinkService {
 
     @Override
     public Drink addDrink(Drink drink) {
-        Drink newDrink = new Drink(drink.getId(), drink.getName(), drink.getWeight(), drink.getPrice(), drink.getAmount());
+        Drink newDrink = new Drink(drink.getId(), drink.getName(), drink.getWeight(), drink.getPrice(), drink.getAmount(), null);
         drinkRepository.save(newDrink);
         return newDrink;
     }
 
-}
+    @Override
+    public Drink addDrinkImage(Long id, MultipartFile image) {
+            byte[] imageDrink = null;
+            System.out.println(image);
+            System.out.println(image.getSize());
+            try {
+                imageDrink = image.getBytes();
+                System.out.println(imageDrink.length);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+            Drink drink = drinkRepository.findFirstById(id);
+            if (drink == null) {
+                return null;
+            }
+            drink.setImage(imageDrink);
+            drinkRepository.save(drink);
+            return drink;
+        }
+    }

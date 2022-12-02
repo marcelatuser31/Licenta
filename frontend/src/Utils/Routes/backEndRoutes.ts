@@ -27,4 +27,5 @@ export namespace OrderRoutes {
 export namespace DrinkRoutes {
     export const GetAll: string = `${serverURL}/Drink/getAll`
     export const AddDrink: string = `${serverURL}/Drink/addDrink`
+    export const AddImage: string = `${serverURL}/Drink/addImage`
 }
