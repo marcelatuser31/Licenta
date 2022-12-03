@@ -108,8 +108,6 @@ public class CakeServiceImplementation implements CakeService {
     @Override
     public Cake addCakeImage(Long id, MultipartFile image) {
         byte[] imageCake = null;
-        System.out.println(image);
-        System.out.println(image.getSize());
         try {
             imageCake = image.getBytes();
             System.out.println(imageCake.length);

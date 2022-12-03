@@ -93,8 +93,6 @@ public class PersonServiceImplementation implements PersonService {
     @Override
     public Person addPersonImage(Long id, MultipartFile image) {
         byte[] imagePerson = null;
-        System.out.println(image);
-        System.out.println(image.getSize());
         try {
             imagePerson = image.getBytes();
             System.out.println(imagePerson.length);

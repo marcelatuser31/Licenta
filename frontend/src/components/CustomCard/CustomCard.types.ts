@@ -10,6 +10,7 @@ export interface ICardProps {
     weight?: number;
     isFavorite: boolean;
     redirectTo: string;
+    showIngredients: boolean;
 }
 
 export interface IFavoriteItem {

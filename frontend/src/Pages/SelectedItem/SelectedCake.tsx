@@ -7,9 +7,9 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { addToCartStyle, choiceGroupStyle, imageStyle, labelStyle, textFieldStyle, titleStyle, valueStyle } from "./SelectedCake.styles"
 import { useState } from "react"
 import { IItem } from "./SelectedCake.types"
-import { ADD_TO_CART_MESSAGE, CAKE, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants"
+import { ADD_CAKE, ADD_TO_CART_MESSAGE, CAKE, OK, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants"
 import { IPerson } from "../../Utils/Models/IPerson"
-import { RoleType, SweetAlertIcon } from "../../Utils/enums"
+import { ItemField, RoleType, SweetAlertIcon } from "../../Utils/enums"
 import { Input } from "../Cakes/Cakes"
 import { getMessage, onUploadPhoto } from "../../Utils/methods"
 import { Section } from "../../components/Section/Section"
@@ -27,7 +27,7 @@ export const defaultItem: ICake = {
     amount: 0,
     ingredients: [],
     expirationDate: undefined,
-    image: undefined
+    image: ''
 }
 
 const options: IChoiceGroupOption[] = [
@@ -43,7 +43,7 @@ export const SelectedCake = (): JSX.Element => {
     const [item, setItem] = useState<ICake>(defaultItem);
     const location = useLocation()
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
-    const dialogLabels: string[] = ['Name', 'Price', 'Weight', 'Amount']
+    const cakeField: string[] = [ItemField.Name, ItemField.Price, ItemField.Weight, ItemField.Amount, ItemField.Ingredients]
 
     const onCheckBoxGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
         setSelectedWeight(Number(option?.text.substring(0, option.text.length - 2)))
@@ -74,7 +74,7 @@ export const SelectedCake = (): JSX.Element => {
             })
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
         }
-        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_TO_CART_MESSAGE)
+        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_TO_CART_MESSAGE, true, OK)
     }
 
     const onSave = async (event: any): Promise<void> => {
@@ -85,16 +85,16 @@ export const SelectedCake = (): JSX.Element => {
         const value: any = event.target.value;
         const name: string = event.target.name;
         switch (name) {
-            case 'Name':
+            case ItemField.Name:
                 setItem({ ...item, name: value })
                 break
-            case "Price":
+            case ItemField.Price:
                 setItem({ ...item, price: value })
                 break
-            case "Amount":
+            case ItemField.Amount:
                 setItem({ ...item, amount: value })
                 break
-            case "Weight":
+            case ItemField.Weight:
                 setItem({ ...item, weight: value })
                 break
         }
@@ -163,7 +163,7 @@ export const SelectedCake = (): JSX.Element => {
                             <Button variant="contained" className={addToCartStyle} endIcon={<ShoppingCartCheckoutIcon />} onClick={onAddToCart} >Add to cart</Button>
                         </StackItem>}
                     <StackItem>
-                        <CustomDialog labels={dialogLabels} buttonTitle={"ADD CAKE"} onChange={onChangeDialog} onSave={onSave} />
+                        <CustomDialog labels={cakeField} buttonTitle={ADD_CAKE} onChange={onChangeDialog} onSave={onSave} />
                     </StackItem>
                 </Stack>
             </StackItem>

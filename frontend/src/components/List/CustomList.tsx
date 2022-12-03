@@ -2,7 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Button } from '@mui/material';
 import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton } from '@mui/x-data-grid';
 import { useState } from "react";
-import { DELETE_MESSAGE, NO, QUESTION_MESSAGE, YES } from '../../Utils/constants';
+import { ARE_YOU_SURE, NO, QUESTION_MESSAGE, YES } from '../../Utils/constants';
 import { SweetAlertIcon } from '../../Utils/enums';
 import { getMessage } from '../../Utils/methods';
 import { deleteButtonStyle } from './CustomList.styles';
@@ -22,7 +22,7 @@ export const CustomList = (props: ICustomListProps): JSX.Element => {
     }
 
     const onClick = (event: any): void => {
-        getMessage(SweetAlertIcon.Question, QUESTION_MESSAGE, DELETE_MESSAGE, YES, NO, onDeleteItems)
+        getMessage(SweetAlertIcon.Question, QUESTION_MESSAGE, ARE_YOU_SURE, true, YES, true, NO, onDeleteItems)
     }
 
     const CustomToolbar = (): JSX.Element => {

@@ -27,7 +27,8 @@ const getCard = (drink: IDrink, index: number): JSX.Element => {
             price={drink.price}
             weight={drink.weight}
             isFavorite={favoriteItem === undefined ? false : true}
-            redirectTo={Pages.SelectedDrink} />
+            redirectTo={Pages.SelectedDrink}
+            showIngredients={false} />
     </div>
 }
 

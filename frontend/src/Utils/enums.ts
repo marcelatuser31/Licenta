@@ -21,3 +21,11 @@ export enum SweetAlertIcon {
     Info = 'info',
     Question = 'question'
 }
+
+export enum ItemField {
+    Name = 'Name',
+    Price = 'Price',
+    Weight = 'Weight',
+    Amount = 'Amount',
+    Ingredients = 'Ingredients'
+}

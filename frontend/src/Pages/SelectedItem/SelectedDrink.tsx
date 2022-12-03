@@ -3,13 +3,13 @@ import { Button } from "@mui/material"
 import { useLocation } from "react-router-dom"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { Section } from "../../components/Section/Section"
-import { ADD_TO_CART_MESSAGE, DRINK, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants"
+import { ADD_DRINK, ADD_TO_CART_MESSAGE, DRINK, OK, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants"
 import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
 import { addToCartStyle, imageStyle, titleStyle } from "./SelectedCake.styles"
 import { IItem } from "./SelectedCake.types"
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { getMessage, onUploadPhoto } from "../../Utils/methods"
-import { RoleType, SweetAlertIcon } from "../../Utils/enums"
+import { ItemField, RoleType, SweetAlertIcon } from "../../Utils/enums"
 import { useState } from "react"
 import { IDrink } from "../../Utils/Models/IDrink"
 import axios from "axios"
@@ -24,13 +24,13 @@ export const defaultItem: IDrink = {
     weight: 0,
     price: 0,
     amount: 0,
-    image: undefined
+    image: ''
 }
 
 export const SelectedDrink = (): JSX.Element => {
     const location = useLocation()
     const [item, setItem] = useState<IDrink>(defaultItem);
-    const dialogLabels: string[] = ['Name', 'Price', 'Weight', 'Amount']
+    const drinkField: string[] = [ItemField.Name, ItemField.Price, ItemField.Weight, ItemField.Amount]
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
     const onAddToCart = (event: any): void => {
         const shoppingList: IShoppingList = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
@@ -55,7 +55,7 @@ export const SelectedDrink = (): JSX.Element => {
             })
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
         }
-        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_TO_CART_MESSAGE)
+        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_TO_CART_MESSAGE, true, OK)
     }
 
     const onSave = async (event: any): Promise<void> => {
@@ -66,16 +66,16 @@ export const SelectedDrink = (): JSX.Element => {
         const value: any = event.target.value;
         const name: string = event.target.name;
         switch (name) {
-            case 'Name':
+            case ItemField.Name:
                 setItem({ ...item, name: value })
                 break
-            case "Price":
+            case ItemField.Price:
                 setItem({ ...item, price: value })
                 break
-            case "Amount":
+            case ItemField.Amount:
                 setItem({ ...item, amount: value })
                 break
-            case "Weight":
+            case ItemField.Weight:
                 setItem({ ...item, weight: value })
                 break
         }
@@ -107,7 +107,7 @@ export const SelectedDrink = (): JSX.Element => {
                             <Button variant="contained" className={addToCartStyle} endIcon={<ShoppingCartCheckoutIcon />} onClick={onAddToCart} >Add to cart</Button>
                         </StackItem>}
                     <StackItem>
-                        <CustomDialog labels={dialogLabels} buttonTitle={"ADD DRINK"} onChange={onChangeDialog} onSave={onSave} />
+                        <CustomDialog labels={drinkField} buttonTitle={ADD_DRINK} onChange={onChangeDialog} onSave={onSave} />
                     </StackItem>
                 </Stack>
             </StackItem>

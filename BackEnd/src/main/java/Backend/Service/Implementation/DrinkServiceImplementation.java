@@ -36,8 +36,6 @@ public class DrinkServiceImplementation implements DrinkService {
     @Override
     public Drink addDrinkImage(Long id, MultipartFile image) {
             byte[] imageDrink = null;
-            System.out.println(image);
-            System.out.println(image.getSize());
             try {
                 imageDrink = image.getBytes();
                 System.out.println(imageDrink.length);

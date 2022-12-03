@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles'
 import axios from "axios"
 import { Fragment, useState } from "react"
 import { NavigateFunction, useNavigate } from "react-router-dom"
-import { ERROR_MESSAGE, FAVORITE_ITEMS_LIST_KEY, LOGIN_MESSAGE, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
+import { CANCEL, ERROR_MESSAGE, FAVORITE_ITEMS_LIST_KEY, LOGIN_MESSAGE, OK, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
 import { Pages, SweetAlertIcon } from "../../Utils/enums"
 import { getMessage } from "../../Utils/methods"
 import { RoleRoutes } from "../../Utils/Routes/backEndRoutes"
@@ -35,7 +35,7 @@ export const LogIn = (): JSX.Element => {
             navigate(Pages.Home);
         }
         else {
-            getMessage(SweetAlertIcon.Error, ERROR_MESSAGE, LOGIN_MESSAGE)
+            getMessage(SweetAlertIcon.Error, ERROR_MESSAGE, LOGIN_MESSAGE, false, undefined, true, CANCEL)
         }
     }
 

@@ -5,7 +5,7 @@ import axios from "axios";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { GroupedList } from "../../components/List/GroupedList";
 import { Navbar } from "../../components/Navbar/Navbar";
-import { ADD_ORDER_MESSAGE, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants";
+import { ADD_ORDER_MESSAGE, OK, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants";
 import { Pages, SweetAlertIcon } from "../../Utils/enums";
 import { getMessage } from "../../Utils/methods";
 import { IPerson } from "../../Utils/Models/IPerson";
@@ -58,7 +58,7 @@ export const ShoppingCart = (): JSX.Element => {
             drinks: mapToIItemDTO(shoppingList.drinks),
         };
         await axios.post(OrderRoutes.AddOrder, orderData);
-        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_ORDER_MESSAGE)
+        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_ORDER_MESSAGE, true, OK)
         navigate(Pages.Home)
         localStorage.setItem(ORDER_LIST_KEY, JSON.stringify([]))
     }

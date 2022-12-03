@@ -4,5 +4,5 @@ export interface IDrink {
     weight: number;
     price: number;
     amount: number;
-    image: any;
+    image: string;
 }

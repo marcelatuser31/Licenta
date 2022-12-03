@@ -7,7 +7,7 @@ import { ICustomListProps } from "./CustomList.types"
 import DeleteIcon from '@mui/icons-material/Delete';
 import { getMessage } from "../../Utils/methods";
 import { SweetAlertIcon } from "../../Utils/enums";
-import { DELETE_MESSAGE, NO, QUESTION_MESSAGE, YES } from "../../Utils/constants";
+import { ARE_YOU_SURE, NO, QUESTION_MESSAGE, YES } from "../../Utils/constants";
 
 export const GroupedList = (props: ICustomListProps): JSX.Element => {
     const [items, setItems] = useState<any[]>(props.items);
@@ -24,7 +24,7 @@ export const GroupedList = (props: ICustomListProps): JSX.Element => {
     }
 
     const onClick = (event: any): void => {
-        getMessage(SweetAlertIcon.Question, QUESTION_MESSAGE, DELETE_MESSAGE, YES, NO, onDeleteItems)
+        getMessage(SweetAlertIcon.Question, QUESTION_MESSAGE, ARE_YOU_SURE, true, YES, true, NO, onDeleteItems)
     }
 
     const CustomToolbar = (): JSX.Element => {

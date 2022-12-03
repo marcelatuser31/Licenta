@@ -31,7 +31,8 @@ const getCard = (cake: ICake, index: number): JSX.Element => {
             price={cake.price}
             weight={cake.weight}
             isFavorite={favoriteItem === undefined ? false : true}
-            redirectTo={Pages.SelectedCake} />
+            redirectTo={Pages.SelectedCake}
+            showIngredients={true} />
     </div>
 }
 
@@ -63,13 +64,6 @@ export const Cakes = (): JSX.Element => {
     }
 
     useEffect(() => {
-        const getData = async (): Promise<any> => {
-            const response = await axios.get(CakeRoutes.GetTypes);
-            const types: string[] = response.data
-            types.push('All');
-            setCakeTypes(types)
-        }
-        getData();
         const getCakesByType = async (): Promise<any> => {
             if (selectedType === 'All') {
                 const response = await axios.get(CakeRoutes.GetAll)
@@ -84,8 +78,13 @@ export const Cakes = (): JSX.Element => {
 
     useEffect(() => {
         const getData = async (): Promise<void> => {
-            const response = await axios.get(CakeRoutes.GetAll)
+            let response = await axios.get(CakeRoutes.GetAll)
             setCakes(response.data)
+
+            response = await axios.get(CakeRoutes.GetTypes);
+            const types: string[] = response.data
+            types.push('All');
+            setCakeTypes(types)
         }
         getData()
     }, [])

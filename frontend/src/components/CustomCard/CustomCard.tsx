@@ -101,25 +101,29 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
                     <IconButton aria-label="share">
                         <ShareIcon />
                     </IconButton>
-                    <ExpandMore
-                        expand={expanded}
-                        onClick={handleExpandClick}
-                        aria-expanded={expanded}
-                        aria-label="show more"
-                    >
-                        <ExpandMoreIcon />
-                    </ExpandMore>
+                    {props.showIngredients === true
+                        ? <ExpandMore
+                            expand={expanded}
+                            onClick={handleExpandClick}
+                            aria-expanded={expanded}
+                            aria-label="show more"
+                        >
+                            <ExpandMoreIcon />
+                        </ExpandMore>
+                        : undefined}
                 </CardActions>
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        <div className={ingredientsNameStyle}>Ingredients</div>
-                        {props.ingredients?.map((ingredient: IIngredient) =>
-                            <Typography variant="body2" color="text.secondary">
-                                {ingredient.name}
-                            </Typography>
-                        )}
-                    </CardContent>
-                </Collapse>
+                {props.showIngredients === true
+                    ? <Collapse in={expanded} timeout="auto" unmountOnExit>
+                        <CardContent>
+                            <div className={ingredientsNameStyle}>Ingredients</div>
+                            {props.ingredients?.map((ingredient: IIngredient) =>
+                                <Typography variant="body2" color="text.secondary">
+                                    {ingredient.name}
+                                </Typography>
+                            )}
+                        </CardContent>
+                    </Collapse>
+                    : undefined}
             </Stack>
         </Card>
     </Fragment>

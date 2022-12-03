@@ -7,5 +7,5 @@ export interface IPerson {
     phone: string;
     role: IRole;
     isActive: boolean;
-    image?: any;
-} 
+    image?: string;
+}
