@@ -101,19 +101,18 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
                     <IconButton aria-label="share">
                         <ShareIcon />
                     </IconButton>
-                    {props.showIngredients === true
-                        ? <ExpandMore
+                    {!props.hideIngredients
+                        && <ExpandMore
                             expand={expanded}
                             onClick={handleExpandClick}
                             aria-expanded={expanded}
                             aria-label="show more"
                         >
                             <ExpandMoreIcon />
-                        </ExpandMore>
-                        : undefined}
+                        </ExpandMore>}
                 </CardActions>
-                {props.showIngredients === true
-                    ? <Collapse in={expanded} timeout="auto" unmountOnExit>
+                {!props.hideIngredients
+                    && <Collapse in={expanded} timeout="auto" unmountOnExit>
                         <CardContent>
                             <div className={ingredientsNameStyle}>Ingredients</div>
                             {props.ingredients?.map((ingredient: IIngredient) =>
@@ -122,8 +121,7 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
                                 </Typography>
                             )}
                         </CardContent>
-                    </Collapse>
-                    : undefined}
+                    </Collapse>}
             </Stack>
         </Card>
     </Fragment>

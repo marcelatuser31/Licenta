@@ -25,7 +25,8 @@ export const informationStackStyle: string = mergeStyles({
 export const labelStyle: string = mergeStyles({
     fontFamily: 'Brush Script MT',
     fontSize: "30px",
-    color: DEFAULT_COLOR
+    color: DEFAULT_COLOR,
+    width: "120px"
 })
 
 export const valueStyle: string = mergeStyles({

@@ -35,7 +35,7 @@ export const LogIn = (): JSX.Element => {
             navigate(Pages.Home);
         }
         else {
-            getMessage(SweetAlertIcon.Error, ERROR_MESSAGE, LOGIN_MESSAGE, false, undefined, true, CANCEL)
+            getMessage(SweetAlertIcon.Error, ERROR_MESSAGE, LOGIN_MESSAGE)
         }
     }
 

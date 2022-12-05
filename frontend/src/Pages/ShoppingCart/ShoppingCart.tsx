@@ -58,7 +58,7 @@ export const ShoppingCart = (): JSX.Element => {
             drinks: mapToIItemDTO(shoppingList.drinks),
         };
         await axios.post(OrderRoutes.AddOrder, orderData);
-        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_ORDER_MESSAGE, true, OK)
+        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_ORDER_MESSAGE)
         navigate(Pages.Home)
         localStorage.setItem(ORDER_LIST_KEY, JSON.stringify([]))
     }

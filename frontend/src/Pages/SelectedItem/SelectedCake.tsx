@@ -74,7 +74,7 @@ export const SelectedCake = (): JSX.Element => {
             })
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
         }
-        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_TO_CART_MESSAGE, true, OK)
+        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_TO_CART_MESSAGE)
     }
 
     const onSave = async (event: any): Promise<void> => {

@@ -1,23 +1,22 @@
 import axios from 'axios';
-import Swal, { SweetAlertIcon, SweetAlertResult } from "sweetalert2";
-import { DEFAULT_COLOR, IMAGE_HEADERS, NO, YES } from './constants';
+import Swal, { SweetAlertResult } from "sweetalert2";
+import { CANCEL, DEFAULT_COLOR, IMAGE_HEADERS, NO, OK, YES } from './constants';
+import { SweetAlertIcon } from './enums';
 
-export const getMessage = (icon: SweetAlertIcon, title: string, message: string, showConfirmButton?: boolean, confirmButtonText?: string, showCancelButton?: boolean, cancelButtonText?: string, onConfirm?: () => void) => {
+export const getMessage = (icon: SweetAlertIcon, title: string, message: string, onConfirm?: () => void) => {
     Swal.fire({
         icon: icon,
         title: title,
         text: message,
         confirmButtonColor: '#a5dc86',
         cancelButtonColor: '#f27474',
-        cancelButtonText: cancelButtonText,
-        confirmButtonText: confirmButtonText,
-        showConfirmButton: showConfirmButton,
-        showCancelButton: showCancelButton
+        cancelButtonText: icon === SweetAlertIcon.Question ? NO : CANCEL,
+        confirmButtonText: icon === SweetAlertIcon.Question ? YES : OK,
+        showConfirmButton: icon === SweetAlertIcon.Question || icon === SweetAlertIcon.Info || icon === SweetAlertIcon.Succes ? true : false,
+        showCancelButton: icon === SweetAlertIcon.Question || icon === SweetAlertIcon.Error ? true : false
     }).then((resultContent: SweetAlertResult<any>) => {
-        if (resultContent['isConfirmed']) {
-            if (onConfirm)
-                onConfirm()
-        }
+        if (resultContent['isConfirmed'] && (onConfirm))
+            onConfirm()
     })
 }
 

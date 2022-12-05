@@ -31,8 +31,7 @@ const getCard = (cake: ICake, index: number): JSX.Element => {
             price={cake.price}
             weight={cake.weight}
             isFavorite={favoriteItem === undefined ? false : true}
-            redirectTo={Pages.SelectedCake}
-            showIngredients={true} />
+            redirectTo={Pages.SelectedCake} />
     </div>
 }
 

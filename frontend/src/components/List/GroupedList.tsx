@@ -24,7 +24,7 @@ export const GroupedList = (props: ICustomListProps): JSX.Element => {
     }
 
     const onClick = (event: any): void => {
-        getMessage(SweetAlertIcon.Question, QUESTION_MESSAGE, ARE_YOU_SURE, true, YES, true, NO, onDeleteItems)
+        getMessage(SweetAlertIcon.Question, QUESTION_MESSAGE, ARE_YOU_SURE, onDeleteItems)
     }
 
     const CustomToolbar = (): JSX.Element => {
