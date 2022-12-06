@@ -7,28 +7,14 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { addToCartStyle, choiceGroupStyle, imageStyle, labelStyle, textFieldStyle, titleStyle, valueStyle } from "./SelectedCake.styles"
 import { useState } from "react"
 import { IItem } from "./SelectedCake.types"
-import { ADD_CAKE, ADD_TO_CART_MESSAGE, CAKE, OK, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants"
+import { ADD_MESSAGE, CAKE, OK, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants"
 import { IPerson } from "../../Utils/Models/IPerson"
-import { ItemField, RoleType, SweetAlertIcon } from "../../Utils/enums"
+import { RoleType, SweetAlertIcon } from "../../Utils/enums"
 import { Input } from "../Cakes/Cakes"
 import { getMessage, onUploadPhoto } from "../../Utils/methods"
 import { Section } from "../../components/Section/Section"
 import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
-import { CustomDialog } from "../../components/CustomDialog/CustomDialog"
-import { ICake } from "../../Utils/Models/ICake"
-import axios from "axios"
 import { CakeRoutes } from "../../Utils/Routes/backEndRoutes"
-
-export const defaultItem: ICake = {
-    id: 0,
-    name: "",
-    price: 0,
-    weight: 0,
-    amount: 0,
-    ingredients: [],
-    expirationDate: undefined,
-    image: ''
-}
 
 const options: IChoiceGroupOption[] = [
     { key: 'A', text: '0.5kg', styles: { root: { marginLeft: 0 } } },
@@ -40,10 +26,9 @@ const options: IChoiceGroupOption[] = [
 export const SelectedCake = (): JSX.Element => {
     const [cakeMessage, setCakeMessage] = useState<string>('');
     const [selectedWeight, setSelectedWeight] = useState<number>(1);
-    const [item, setItem] = useState<ICake>(defaultItem);
+
     const location = useLocation()
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
-    const cakeField: string[] = [ItemField.Name, ItemField.Price, ItemField.Weight, ItemField.Amount, ItemField.Ingredients]
 
     const onCheckBoxGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
         setSelectedWeight(Number(option?.text.substring(0, option.text.length - 2)))
@@ -53,7 +38,7 @@ export const SelectedCake = (): JSX.Element => {
         const shoppingList: IShoppingList = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
 
         const cake: IItem | undefined = shoppingList.cakes.find((a: IItem) => a.id === location.state.id)
-        if (cake === undefined) {
+        if (!cake) {
             const newCake: IItem = {
                 id: location.state.id,
                 name: location.state.title,
@@ -74,30 +59,7 @@ export const SelectedCake = (): JSX.Element => {
             })
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
         }
-        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_TO_CART_MESSAGE)
-    }
-
-    const onSave = async (event: any): Promise<void> => {
-        const response = await axios.post(CakeRoutes.AddCake, item);
-    }
-
-    const onChangeDialog = (event: any): void => {
-        const value: any = event.target.value;
-        const name: string = event.target.name;
-        switch (name) {
-            case ItemField.Name:
-                setItem({ ...item, name: value })
-                break
-            case ItemField.Price:
-                setItem({ ...item, price: value })
-                break
-            case ItemField.Amount:
-                setItem({ ...item, amount: value })
-                break
-            case ItemField.Weight:
-                setItem({ ...item, weight: value })
-                break
-        }
+        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE)
     }
 
     const onChange = (event: any): void => {
@@ -163,7 +125,7 @@ export const SelectedCake = (): JSX.Element => {
                             <Button variant="contained" className={addToCartStyle} endIcon={<ShoppingCartCheckoutIcon />} onClick={onAddToCart} >Add to cart</Button>
                         </StackItem>}
                     <StackItem>
-                        <CustomDialog labels={cakeField} buttonTitle={ADD_CAKE} onChange={onChangeDialog} onSave={onSave} />
+
                     </StackItem>
                 </Stack>
             </StackItem>

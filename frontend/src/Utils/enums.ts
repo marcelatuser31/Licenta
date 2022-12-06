@@ -11,7 +11,8 @@ export enum Pages {
     Profile = "/Profile",
     SelectedDrink = "/SelectedDrink",
     Cakes = "/Cakes",
-    Drinks = "/Drinks"
+    Drinks = "/Drinks",
+    Manage = "/Manage"
 }
 
 export enum SweetAlertIcon {

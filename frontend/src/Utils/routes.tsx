@@ -7,6 +7,7 @@ import { Register } from "../Pages/Register/Register";
 import { ShoppingCart } from "../Pages/ShoppingCart/ShoppingCart";
 import { SelectedDrink } from "../Pages/SelectedItem/SelectedDrink";
 import { Home } from "../Pages/Home/Home";
+import { Manage } from "../Pages/Manage/Manage";
 
 export interface IRoute {
     path: string;
@@ -53,5 +54,9 @@ export const routes: IRoute[] = [
     {
         path: '/Home',
         element: <Home />
+    },
+    {
+        path: '/Manage',
+        element: <Manage />
     }
 ]

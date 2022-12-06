@@ -1,44 +1,28 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
-import React from "react";
-import { IDialogProps } from "./CustomDialog.types";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material"
+import { ADD_MESSAGE, SUCCESSFULLY } from "../../Utils/constants";
+import { SweetAlertIcon } from "../../Utils/enums";
+import { getMessage } from "../../Utils/methods";
+import { IDialogComponentProps } from "./CustomDialog.types";
 
-export const CustomDialog = (props: IDialogProps): JSX.Element => {
-    const [open, setOpen] = React.useState(false);
+export const CustomDialog = (props: IDialogComponentProps): JSX.Element => {
 
-    const onOpenDialog = () => {
-        setOpen(true);
+    const closeDialog = (): void => {
+        props.onClose();
     };
 
-    const onCloseDialog = () => {
-        setOpen(false);
+    const Add = (): void => {
+        props.onSubmit();
+        props.onClose();
     };
 
-    return (
-        <div>
-            <Button variant="outlined" onClick={onOpenDialog}>
-                {props.buttonTitle}
-            </Button>
-            <Dialog open={open} onClose={onCloseDialog}>
-                <DialogTitle>{props.buttonTitle}</DialogTitle>
-                <DialogContent>
-                    {props.labels.map((label: string) =>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id={label}
-                            label={label}
-                            fullWidth
-                            variant="standard"
-                            name={label}
-                            onChange={props.onChange}
-                            type={label === 'Name' ? 'text' : 'Number'}
-                        />)}
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={onCloseDialog}>Cancel</Button>
-                    <Button onClick={props.onSave}>SAVE</Button>
-                </DialogActions>
-            </Dialog>
-        </div>
-    );
+    return (<Dialog open={props.openDialog} onClose={closeDialog} >
+        <DialogTitle>{props.title}</DialogTitle>
+        <DialogContent style={{ width: "450px", }} >
+            {props.content}
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={closeDialog}>Cancel</Button>
+            <Button onClick={Add}>Add</Button>
+        </DialogActions>
+    </Dialog>)
 }

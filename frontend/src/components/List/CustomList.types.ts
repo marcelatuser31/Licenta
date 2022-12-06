@@ -7,6 +7,7 @@ export interface ICustomListProps {
     onDeleteItems?: (items: any[]) => void;
     heigth?: number
     groupByColumn?: string;
+    addButton?: boolean
 }
 
 export interface IActionButtonProps<T> {

@@ -1,8 +1,8 @@
-import { ICake } from "../../Utils/Models/ICake";
-
-export interface IDialogProps {
-    labels: string[],
-    buttonTitle: string,
-    onChange: (event: any) => void,
-    onSave: (event: any) => void
+export interface IDialogComponentProps {
+    openDialog: boolean;
+    content: JSX.Element,
+    title: string,
+    onSubmit: () => void;
+    onClose: () => void;
+    addButton?: boolean;
 }

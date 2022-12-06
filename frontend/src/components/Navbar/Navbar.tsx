@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { Pages } from '../../Utils/enums';
+import { Pages, RoleType } from '../../Utils/enums';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import CakeIcon from '@mui/icons-material/Cake';
 import { Badge } from '@mui/material';
@@ -22,6 +22,7 @@ import { RoleRoutes } from '../../Utils/Routes/backEndRoutes';
 import { IPerson } from '../../Utils/Models/IPerson';
 import { getImageURLfromByteArray } from '../../Utils/methods';
 import { IShoppingList } from '../../Pages/ShoppingCart/ShoppingCart.types';
+import { Manage } from '../../Pages/Manage/Manage';
 
 const pages = [Pages.Cakes, Pages.Drinks];
 const settings = [Pages.Profile];
@@ -102,6 +103,7 @@ export const Navbar = () => {
                                     <Typography textAlign="center">{page.substring(1)}</Typography>
                                 </MenuItem>
                             ))}
+                            <MenuItem onClick={() => navigate(Pages.Manage)}>Manage</MenuItem>
                         </Menu>
                     </Box>
                     <CakeIcon sx={cakeIconStyle} />
@@ -123,6 +125,13 @@ export const Navbar = () => {
                                 {page.substring(1)}
                             </Button>
                         ))}
+                        {person.role.type == RoleType.Admin
+                            && <Button
+                                onClick={() => navigate(Pages.Manage)}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                Manage
+                            </Button>}
                     </Box>
                     <div>
                         <Box sx={settingsBoxStyle}>
