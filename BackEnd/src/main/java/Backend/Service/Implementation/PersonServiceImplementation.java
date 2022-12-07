@@ -84,7 +84,6 @@ public class PersonServiceImplementation implements PersonService {
             );
             msg.setContent(multipart);
             Transport.send(msg);
-            System.out.println("send");
         } catch (Exception e) {
             e.printStackTrace();
         }
