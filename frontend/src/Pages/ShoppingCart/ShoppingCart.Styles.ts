@@ -26,7 +26,9 @@ export const innerDiv: string = mergeStyles({
 export const addOrderButtonStyle: string = mergeStyles({
     position: 'relative',
     width: 200,
-    top: 60
+    top: 25,
+    align: 'center',
+    left: 400
 })
 
 export const deleteButtonStyle: React.CSSProperties = {

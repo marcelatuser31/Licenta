@@ -6,4 +6,5 @@ import lombok.Data;
 public class CakeDTO {
     private Long id;
     private Integer amount;
+    private Float price;
 }

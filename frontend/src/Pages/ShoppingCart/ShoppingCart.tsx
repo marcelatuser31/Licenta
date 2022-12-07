@@ -1,10 +1,11 @@
 import { Stack, StackItem } from "@fluentui/react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import axios from "axios";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { GroupedList } from "../../components/List/GroupedList";
 import { Navbar } from "../../components/Navbar/Navbar";
+import { Section } from "../../components/Section/Section";
 import { ADD_ORDER_MESSAGE, OK, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants";
 import { Pages, SweetAlertIcon } from "../../Utils/enums";
 import { getMessage } from "../../Utils/methods";
@@ -20,7 +21,7 @@ export const ShoppingCart = (): JSX.Element => {
     const navigate: NavigateFunction = useNavigate()
 
     const mapToIItemDTO = (items: IItem[]): IItemDTO[] => {
-        return items.map((order: IItem) => { return { id: order.id, amount: order.amount } })
+        return items.map((order: IItem) => { return { id: order.id, amount: order.amount, price: order.price } })
     }
 
     const cakes: any[] = shoppingList?.cakes?.map((cake: IItem) => {
@@ -77,19 +78,31 @@ export const ShoppingCart = (): JSX.Element => {
         { field: 'type', headerName: 'Type' }
     ];
 
+    const cakesPrice: number = cakes.reduce((sum, cake) => sum = sum + cake.price * cake.amount, 0)
+    const drinksPrice: number = drinks.reduce((sum, drink) => sum = sum + drink.price * drink.amount, 0)
+    const totalPrice: number = cakesPrice + drinksPrice
+
     return <Stack>
         <StackItem>
             <Navbar />
         </StackItem>
         <StackItem>
             <div className={outerDiv}>
-                <div className={innerDiv}>
-                    <Box className={`${listStyle} ${innerDiv}`} sx={boxStyle}>
-                        <GroupedList groupByColumn={'type'} items={rows} columns={columns} onDeleteItems={onDeleteItems} />
-                    </Box>
-                </div>
-                <Button variant="contained" className={`${addOrderButtonStyle} ${innerDiv}`} onClick={onClick} >Add Order</Button>
+                <Box className={`${listStyle} ${innerDiv}`} sx={boxStyle}>
+                    <GroupedList groupByColumn={'type'} items={rows} columns={columns} onDeleteItems={onDeleteItems} />
+                    <Stack horizontal={true} >
+                        <Section name={"TOTAL:"} contentValue={totalPrice + ' RON'} isHorizontal={true} gap={-20}></Section>
+                        <StackItem >
+                            <Button variant="contained" className={addOrderButtonStyle} onClick={onClick} >Add Order</Button>
+                        </StackItem>
+                    </Stack>
+
+                </Box>
+
             </div>
+
+
+
         </StackItem>
     </Stack >
 }

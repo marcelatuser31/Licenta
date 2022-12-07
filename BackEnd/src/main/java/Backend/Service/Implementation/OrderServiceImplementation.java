@@ -98,11 +98,11 @@ public class OrderServiceImplementation implements OrderService {
         sumaDrink = 0F;
 
         for (int i = 0; i < cakeList.size(); i++) {
-            Float CakePrice = cakeList.get(i).getPrice();
+            Float CakePrice = orderDTO.getCakes().get(i).getPrice();
             sumaCake = sumaCake + CakePrice;
         }
         for (int i = 0; i < drinkList.size(); i++) {
-            Float DrinkPrice = drinkList.get(i).getPrice();
+            Float DrinkPrice = orderDTO.getDrinks().get(i).getPrice();
             sumaDrink = sumaDrink + DrinkPrice;
         }
         suma = sumaCake + sumaDrink;

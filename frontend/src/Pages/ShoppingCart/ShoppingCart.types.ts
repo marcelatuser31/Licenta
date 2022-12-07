@@ -2,7 +2,8 @@ import { IItem } from "../SelectedItem/SelectedCake.types";
 
 export interface IItemDTO {
     id: number,
-    amount: number
+    amount: number,
+    price: number
 }
 
 export interface IOrderData {

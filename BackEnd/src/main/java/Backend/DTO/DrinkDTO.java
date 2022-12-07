@@ -6,4 +6,5 @@ import lombok.Data;
 public class DrinkDTO {
     private Long id;
     private Integer amount;
+    private Float price;
 }

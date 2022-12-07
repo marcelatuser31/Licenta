@@ -1,7 +1,4 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material"
-import { ADD_MESSAGE, SUCCESSFULLY } from "../../Utils/constants";
-import { SweetAlertIcon } from "../../Utils/enums";
-import { getMessage } from "../../Utils/methods";
 import { IDialogComponentProps } from "./CustomDialog.types";
 
 export const CustomDialog = (props: IDialogComponentProps): JSX.Element => {
