@@ -142,15 +142,15 @@ export const Profile = (): JSX.Element => {
                 </Stack>
             </StackItem>
             {items.length !== 0
-                ? <StackItem style={{ position: 'relative', top: 32, maxWidth: 800, }}>
+                && <StackItem style={{ position: 'relative', top: 32, maxWidth: 1000, }}>
                     <Stack>
-                        <StackItem className={sectionTitleStyle}>
+                        <StackItem align='center' className={sectionTitleStyle}>
                             Favorite List
                         </StackItem>
                     </Stack>
-                    <CustomList items={rows} columns={columns} onDeleteItems={onDeleteItems}></CustomList>
+                    <CustomList items={rows} columns={columns} onDeleteItems={onDeleteItems} width={800}></CustomList>
                 </StackItem>
-                : undefined}
+            }
         </Stack >
     </div >
 }

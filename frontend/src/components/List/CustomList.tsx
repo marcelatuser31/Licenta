@@ -42,7 +42,7 @@ export const CustomList = (props: ICustomListProps): JSX.Element => {
     }
 
     return <DataGrid
-        style={{ height: props.heigth || 700 }}
+        style={{ height: props.heigth || 700, width: props.width || 700 }}
         components={{ Toolbar: CustomToolbar }}
         componentsProps={{ toolbar: { left: 2 } }}
         rows={items}

@@ -14,7 +14,7 @@ export const sectionTitleStyle: string = mergeStyles({
     textalign: 'left',
     color: 'black',
     position: "relative",
-    fontFamily: 'Brush Script MT'
+    fontFamily: 'Brush Script MT',
 })
 
 export const informationStackStyle: string = mergeStyles({

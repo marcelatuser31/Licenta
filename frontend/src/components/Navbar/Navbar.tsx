@@ -15,7 +15,7 @@ import { NavigateFunction, useNavigate } from 'react-router-dom';
 import CakeIcon from '@mui/icons-material/Cake';
 import { Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { cakeIconStyle, containerStyle, expandedCakeIconStyle, expandedLogoStyle, expandedMenuBoxStyle, imageStyle, logoStyle, menuBoxStyle, myCartButtonStyle, settingsBoxStyle } from './Navbar.styles';
+import { cakeIconStyle, containerStyle, expandedCakeIconStyle, expandedLogoStyle, expandedMenuBoxStyle, imageStyle, logoStyle, menuBoxStyle, myCartButtonStyle, pageButtonStyle, settingsBoxStyle } from './Navbar.styles';
 import { DEFAULT_PROFILE_PHOTO, HEADERS, ORDER_LIST_KEY, PERSON_KEY } from '../../Utils/constants';
 import axios from 'axios';
 import { RoleRoutes } from '../../Utils/Routes/backEndRoutes';
@@ -120,7 +120,7 @@ export const Navbar = () => {
                             <Button
                                 key={page}
                                 onClick={() => navigate(page)}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
+                                sx={pageButtonStyle}
                             >
                                 {page.substring(1)}
                             </Button>
@@ -128,7 +128,7 @@ export const Navbar = () => {
                         {person.role.type == RoleType.Admin
                             && <Button
                                 onClick={() => navigate(Pages.Manage)}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
+                                sx={pageButtonStyle}
                             >
                                 Manage
                             </Button>}

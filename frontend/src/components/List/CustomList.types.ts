@@ -5,9 +5,13 @@ export interface ICustomListProps {
     columns: any[];
     setSelectedItems?: (items: any[]) => void;
     onDeleteItems?: (items: any[]) => void;
-    heigth?: number
+    heigth?: number;
+    width?: number;
     groupByColumn?: string;
     addButton?: boolean
+    dialogContent?: JSX.Element
+    dialogTitle?: string
+    onSave?: () => void;
 }
 
 export interface IActionButtonProps<T> {

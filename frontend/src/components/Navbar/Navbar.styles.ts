@@ -83,3 +83,9 @@ export const containerStyle: React.CSSProperties = {
     marginLeft: 0,
     maxWidth: 2000
 }
+
+export const pageButtonStyle: SxProps<Theme> = {
+    my: 2,
+    color: 'white',
+    display: 'block'
+}
