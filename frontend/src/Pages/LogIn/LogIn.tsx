@@ -10,7 +10,7 @@ import { RoleRoutes } from "../../Utils/Routes/backEndRoutes"
 import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
 import { ILogIn } from "./LogIn.types"
 
-const orderList: IShoppingList = { cakes: [], drinks: [] };
+export const orderList: IShoppingList = { cakes: [], drinks: [] };
 export const LogIn = (): JSX.Element => {
     const navigate: NavigateFunction = useNavigate()
     const [username, setUsername] = useState<string>('');

@@ -11,6 +11,7 @@ import { Pages, SweetAlertIcon } from "../../Utils/enums";
 import { getMessage } from "../../Utils/methods";
 import { IPerson } from "../../Utils/Models/IPerson";
 import { OrderRoutes } from "../../Utils/Routes/backEndRoutes";
+import { orderList } from "../LogIn/LogIn";
 import { IItem } from "../SelectedItem/SelectedCake.types";
 import { addOrderButtonStyle, boxStyle, innerDiv, listStyle, outerDiv } from "./ShoppingCart.Styles";
 import { IItemDTO, IOrderData, IShoppingList } from "./ShoppingCart.types";
@@ -61,11 +62,14 @@ export const ShoppingCart = (): JSX.Element => {
         await axios.post(OrderRoutes.AddOrder, orderData);
         getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_ORDER_MESSAGE)
         navigate(Pages.Home)
-        localStorage.setItem(ORDER_LIST_KEY, JSON.stringify([]))
+        localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(orderList))
     }
 
     const onDeleteItems = (items: any[]): void => {
-        localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(items))
+        if (items.length === 0)
+            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(orderList))
+        else
+            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(items))
     }
 
     const columns: GridColDef[] = [
