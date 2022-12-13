@@ -11,5 +11,4 @@ public interface OrderService {
     OrderResponseDTO addOrder(OrderDTO orderDTO);
     Order update(Order order);
     void cancelOrder(Long id);
-    void sendEmail(String email, String message);
 }

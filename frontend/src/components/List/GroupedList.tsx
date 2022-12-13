@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { DataGridPremium, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton, useGridApiRef, useKeepGroupedColumnsHidden } from "@mui/x-data-grid-premium"
 import { GridApiPremium } from "@mui/x-data-grid-premium/models/gridApiPremium";
 import { MutableRefObject, useEffect, useState } from "react";
-import { addButtonStyle, deleteButtonStyle } from "./CustomList.styles";
+import { addButtonStyle, dataGridStyle, deleteButtonStyle } from "./CustomList.styles";
 import { ICustomListProps } from "./CustomList.types"
 import DeleteIcon from '@mui/icons-material/Delete';
 import { getMessage } from "../../Utils/methods";
@@ -71,7 +71,7 @@ export const GroupedList = (props: ICustomListProps): JSX.Element => {
 
     return <div>
         <DataGridPremium
-            style={{ height: props.heigth || 700, width: props.width || 700 }}
+            style={dataGridStyle(props.heigth, props.width)}
             components={{ Toolbar: CustomToolbar }}
             {...getGroupedData()}
             apiRef={apiRef}

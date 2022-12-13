@@ -7,3 +7,10 @@ export const addButtonStyle: React.CSSProperties = {
     ...deleteButtonStyle,
     border: 0
 }
+
+export const dataGridStyle = (heigth?: number, width?: number): React.CSSProperties => {
+    return {
+        height: heigth || 700,
+        width: width || 700
+    }
+}

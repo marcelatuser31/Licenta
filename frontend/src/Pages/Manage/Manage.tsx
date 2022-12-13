@@ -37,8 +37,8 @@ export const defaultCake: ICake = {
 export const Manage = (): JSX.Element => {
     const [cakes, setCakes] = useState<ICake[]>([])
     const [drinks, setDrinks] = useState<IDrink[]>([])
-    const [cake, setCake] = useState<ICake>(defaultCake);
-    const [drink, setDrink] = useState<IDrink>(defaultDrink);
+    const [selectedCake, setSelectedCake] = useState<ICake>(defaultCake);
+    const [selectedDrink, setSelectedDrink] = useState<IDrink>(defaultDrink);
     const [addSelectedOption, setAddSelectedOption] = useState<IChoiceGroupOption | undefined>();
     const drinkFields: string[] = [ItemField.Name, ItemField.Price, ItemField.Weight, ItemField.Amount]
     const cakeFields: string[] = [...drinkFields, ItemField.Ingredients]
@@ -92,16 +92,16 @@ export const Manage = (): JSX.Element => {
         const name: string = event.target.name;
         switch (name) {
             case ItemField.Name:
-                setCake({ ...cake, name: value })
+                setSelectedCake({ ...selectedCake, name: value })
                 break
             case ItemField.Price:
-                setCake({ ...cake, price: value })
+                setSelectedCake({ ...selectedCake, price: value })
                 break
             case ItemField.Amount:
-                setCake({ ...cake, amount: value })
+                setSelectedCake({ ...selectedCake, amount: value })
                 break
             case ItemField.Weight:
-                setCake({ ...cake, weight: value })
+                setSelectedCake({ ...selectedCake, weight: value })
                 break
         }
     }
@@ -111,27 +111,27 @@ export const Manage = (): JSX.Element => {
         const name: string = event.target.name;
         switch (name) {
             case ItemField.Name:
-                setDrink({ ...drink, name: value })
+                setSelectedDrink({ ...selectedDrink, name: value })
                 break
             case ItemField.Price:
-                setDrink({ ...drink, price: value })
+                setSelectedDrink({ ...selectedDrink, price: value })
                 break
             case ItemField.Amount:
-                setDrink({ ...drink, amount: value })
+                setSelectedDrink({ ...selectedDrink, amount: value })
                 break
             case ItemField.Weight:
-                setDrink({ ...drink, weight: value })
+                setSelectedDrink({ ...selectedDrink, weight: value })
                 break
         }
     }
 
     const onSaveCake = async (): Promise<void> => {
-        await axios.post(CakeRoutes.AddCake, cake);
+        await axios.post(CakeRoutes.AddCake, selectedCake);
         getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE)
     }
 
     const onSaveDrink = async (): Promise<void> => {
-        await axios.post(DrinkRoutes.AddDrink, drink);
+        await axios.post(DrinkRoutes.AddDrink, selectedDrink);
         getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE)
     }
 
@@ -143,11 +143,14 @@ export const Manage = (): JSX.Element => {
             return true
     }
 
-    let itemList: string[] = []
-    if (addSelectedOption?.key === CAKE)
-        itemList = cakeFields
-    else
-        itemList = drinkFields
+    const getItemList = (): string[] => {
+        let itemList: string[] = []
+        if (addSelectedOption?.key === CAKE)
+            itemList = cakeFields
+        else
+            itemList = drinkFields
+        return itemList
+    }
 
     const dialogContent: JSX.Element =
         <div>
@@ -155,7 +158,7 @@ export const Manage = (): JSX.Element => {
                 options={options}
                 styles={choiceGroupStyle}
             />
-            {itemList.map((label: string) =>
+            {getItemList().map((label: string) =>
                 <TextField
                     autoFocus
                     margin="dense"

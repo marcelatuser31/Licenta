@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ARE_YOU_SURE, NO, QUESTION_MESSAGE, YES } from '../../Utils/constants';
 import { SweetAlertIcon } from '../../Utils/enums';
 import { getMessage } from '../../Utils/methods';
-import { deleteButtonStyle } from './CustomList.styles';
+import { dataGridStyle, deleteButtonStyle } from './CustomList.styles';
 import './CustomList.styles.ts';
 import { ICustomListProps } from "./CustomList.types";
 
@@ -42,7 +42,7 @@ export const CustomList = (props: ICustomListProps): JSX.Element => {
     }
 
     return <DataGrid
-        style={{ height: props.heigth || 700, width: props.width || 700 }}
+        style={dataGridStyle(props?.heigth, props?.width)}
         components={{ Toolbar: CustomToolbar }}
         componentsProps={{ toolbar: { left: 2 } }}
         rows={items}

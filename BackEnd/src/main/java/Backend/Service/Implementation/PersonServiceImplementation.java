@@ -36,7 +36,7 @@ public class PersonServiceImplementation implements PersonService {
     public void register(Person person) {
         personRepository.save(person);
         String message = "Username-ul tau este " + person.getRole().getUsername() + " si parola" + person.getRole().getPassword();
-        sendEmail(person.getRole().getEmail(), message);
+        sendEmail(person.getRole().getEmail(), message, "New Account");
     }
 
     @Override
@@ -53,7 +53,7 @@ public class PersonServiceImplementation implements PersonService {
     }
 
     @Override
-    public void sendEmail(String email, String message) {
+    public void sendEmail(String email, String message, String subject) {
         String username = "tusermarcela@gmail.com";
         String password = "gfwamfomwdoisskn";
 
@@ -75,7 +75,7 @@ public class PersonServiceImplementation implements PersonService {
         try {
             msg.setFrom(new InternetAddress(username));
             msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-            msg.setSubject("New Account");
+            msg.setSubject(subject);
             BodyPart messageBodyPart = new MimeBodyPart();
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(messageBodyPart);

@@ -71,5 +71,4 @@ public class RoleServiceImplementation implements RoleService {
         Person person = personRepository.findFirstById(id);
         person.setActive(false);
     }
-
 }

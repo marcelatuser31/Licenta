@@ -32,7 +32,7 @@ public class OrderServiceImplementation implements OrderService {
     private final CakeRepository cakeRepository;
     private final PersonRepository personRepository;
     private final DrinkRepository drinkRepository;
-
+private final PersonServiceImplementation personServiceImplementation;
     @Override
     public Order readById(Long id) {
         return orderRepository.findFirstById(id);
@@ -42,8 +42,7 @@ public class OrderServiceImplementation implements OrderService {
         List<Cake> cakeList = new ArrayList<>();
         List<Drink> drinkList = new ArrayList<>();
         List<String> errorMessages = new ArrayList<>();
-        List<String> cakeNames = new ArrayList<>();
-        List<String> drinkNames = new ArrayList<>();
+        String orderList = "";
 
         for (int i = 0; i < orderDTO.getCakes().size(); i++) {
             Long id = orderDTO.getCakes().get(i).getId();
@@ -98,26 +97,33 @@ public class OrderServiceImplementation implements OrderService {
         sumaDrink = 0F;
 
         for (int i = 0; i < cakeList.size(); i++) {
-            Float CakePrice = orderDTO.getCakes().get(i).getPrice();
+            Float CakePrice = orderDTO.getCakes().get(i).getPrice() * orderDTO.getCakes().get(i).getAmount();
             sumaCake = sumaCake + CakePrice;
         }
         for (int i = 0; i < drinkList.size(); i++) {
-            Float DrinkPrice = orderDTO.getDrinks().get(i).getPrice();
+            Float DrinkPrice = orderDTO.getDrinks().get(i).getPrice() * orderDTO.getDrinks().get(i).getAmount();
             sumaDrink = sumaDrink + DrinkPrice;
         }
         suma = sumaCake + sumaDrink;
 
         for (int i = 0; i < cakeList.size(); i++) {
-            String cakeName = cakeList.get(i).getName();
-            cakeNames.add(cakeName);
-        }
-        for (int i = 0; i < drinkList.size(); i++) {
-            String drinkName = drinkList.get(i).getName();
-            drinkNames.add(drinkName);
+            String name = cakeList.get(i).getName();
+            Integer amount = orderDTO.getCakes().get(i).getAmount();
+            Float price = orderDTO.getCakes().get(i).getPrice() * amount;
+            String newItem = amount + " x " + name + " = " + price + " RON" + "<br/>";
+            orderList = orderList + newItem;
         }
 
-        String message = "Comanda a fost plasata." + "Valoarea comenzii este " + suma + "RON. Produsele comandate sunt " + cakeNames + ' ' + drinkNames;
-        sendEmail(person.getRole().getEmail(), message);
+        for (int i = 0; i < drinkList.size(); i++) {
+            String name = drinkList.get(i).getName();
+            Integer amount = orderDTO.getDrinks().get(i).getAmount();
+            Float price = orderDTO.getDrinks().get(i).getPrice() * amount;
+            String newItem = amount + " x " + name + " = " + price + " RON" + "<br/>";
+            orderList = orderList + newItem;
+        }
+
+        String message = "Comanda a fost plasata cu succes." + "<br/>" + "Valoarea comenzii este " + suma + " RON." + "<br/>" + "Produsele comandate sunt:" + "<br/>" + orderList;
+        personServiceImplementation.sendEmail(person.getRole().getEmail(), message, "Add Order");
         return new OrderResponseDTO(suma, errorMessages);
     }
 
@@ -128,7 +134,6 @@ public class OrderServiceImplementation implements OrderService {
         dbOrder.setPerson(order.getPerson());
         dbOrder.setCakes(order.getCakes());
         orderRepository.save(dbOrder);
-
         return dbOrder;
     }
 
@@ -138,41 +143,6 @@ public class OrderServiceImplementation implements OrderService {
         LocalDateTime currentDate = LocalDateTime.now();
         if (order.getDate().getYear() == currentDate.getYear() && order.getDate().getMonth() == currentDate.getMonth() && order.getDate().getDayOfMonth() == currentDate.getDayOfMonth()) {
             orderRepository.delete(order);
-        }
-    }
-
-    @Override
-    public void sendEmail(String email, String message) {
-        String username = "tusermarcela@gmail.com";
-        String password = "gfwamfomwdoisskn";
-
-        Properties properties = new Properties();
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "465");
-        properties.put("mail.smtp.ssl.enable", "true");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-
-        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }
-        });
-
-        //Start our mail message
-        MimeMessage msg = new MimeMessage(session);
-        try {
-            msg.setFrom(new InternetAddress(username));
-            msg.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-            msg.setSubject("Add Order");
-            BodyPart messageBodyPart = new MimeBodyPart();
-            Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart(messageBodyPart);
-            messageBodyPart.setContent(Methods.getMessageContent(message), "text/html");
-            msg.setContent(multipart);
-            Transport.send(msg);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

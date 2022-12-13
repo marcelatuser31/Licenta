@@ -1,12 +1,12 @@
 import { Stack, StackItem } from "@fluentui/react";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import axios from "axios";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { GroupedList } from "../../components/List/GroupedList";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { Section } from "../../components/Section/Section";
-import { ADD_ORDER_MESSAGE, OK, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants";
+import { ADD_ORDER_MESSAGE, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants";
 import { Pages, SweetAlertIcon } from "../../Utils/enums";
 import { getMessage } from "../../Utils/methods";
 import { IPerson } from "../../Utils/Models/IPerson";
@@ -78,8 +78,8 @@ export const ShoppingCart = (): JSX.Element => {
         { field: 'type', headerName: 'Type' }
     ];
 
-    const cakesPrice: number = cakes.reduce((sum, cake) => sum = sum + cake.price * cake.amount, 0)
-    const drinksPrice: number = drinks.reduce((sum, drink) => sum = sum + drink.price * drink.amount, 0)
+    const cakesPrice: number = cakes.reduce((sum: number, cake: any) => sum = sum + cake.price * cake.amount, 0)
+    const drinksPrice: number = drinks.reduce((sum: number, drink: any) => sum = sum + drink.price * drink.amount, 0)
     const totalPrice: number = cakesPrice + drinksPrice
 
     return <Stack>
@@ -89,20 +89,15 @@ export const ShoppingCart = (): JSX.Element => {
         <StackItem>
             <div className={outerDiv}>
                 <Box className={`${listStyle} ${innerDiv}`} sx={boxStyle}>
-                    <GroupedList groupByColumn={'type'} items={rows} columns={columns} onDeleteItems={onDeleteItems} />
+                    <GroupedList groupByColumn={'type'} items={rows} columns={columns} onDeleteItems={onDeleteItems} width={1200} />
                     <Stack horizontal={true} >
                         <Section name={"TOTAL:"} contentValue={totalPrice + ' RON'} isHorizontal={true} gap={-20}></Section>
                         <StackItem >
                             <Button variant="contained" className={addOrderButtonStyle} onClick={onClick} >Add Order</Button>
                         </StackItem>
                     </Stack>
-
                 </Box>
-
             </div>
-
-
-
         </StackItem>
     </Stack >
 }

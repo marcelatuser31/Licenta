@@ -12,6 +12,6 @@ public interface PersonService {
     List <Person> getAllPerson();
     void register(Person person);
     Person update(Person person);
-    void sendEmail(String email, String message);
+    void sendEmail(String email, String message, String subject);
     Person addPersonImage(Long id, MultipartFile image);
 }
