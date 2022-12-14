@@ -37,10 +37,10 @@ export const SelectedCake = (): JSX.Element => {
     const onAddToCart = (event: any): void => {
         const shoppingList: IShoppingList = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
 
-        const cake: IItem | undefined = shoppingList.cakes.find((a: IItem) => a.id === location.state.id)
+        const cake: IItem | undefined = shoppingList.cakes.find((a: IItem) => a.id === location.state.id && a.cakeMessage === cakeMessage && a.weight === selectedWeight)
         if (!cake) {
             const newCake: IItem = {
-                id: location.state.id,
+                id: location.state.price * selectedWeight * (cakeMessage.length + 1),
                 name: location.state.title,
                 price: location.state.price * selectedWeight,
                 cakeMessage: cakeMessage,

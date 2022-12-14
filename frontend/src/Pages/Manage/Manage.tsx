@@ -144,12 +144,10 @@ export const Manage = (): JSX.Element => {
     }
 
     const getItemList = (): string[] => {
-        let itemList: string[] = []
         if (addSelectedOption?.key === CAKE)
-            itemList = cakeFields
+            return cakeFields
         else
-            itemList = drinkFields
-        return itemList
+            return drinkFields
     }
 
     const dialogContent: JSX.Element =
