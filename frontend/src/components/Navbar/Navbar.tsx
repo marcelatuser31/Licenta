@@ -135,7 +135,7 @@ export const Navbar = () => {
                     </Box>
                     <div>
                         <Box sx={settingsBoxStyle}>
-                            <Badge color="error" badgeContent={shoppingList?.cakes?.length} className={myCartButtonStyle} onClick={() => navigate(Pages.ShoppingCart)}>
+                            <Badge color="error" badgeContent={shoppingList?.cakes?.length + shoppingList?.drinks.length} className={myCartButtonStyle} onClick={() => navigate(Pages.ShoppingCart)}>
                                 <ShoppingCartIcon />
                             </Badge>
                             <Tooltip title="Open settings">

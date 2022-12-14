@@ -17,6 +17,11 @@ import { Input } from "../Cakes/Cakes"
 export const SelectedDrink = (): JSX.Element => {
     const location = useLocation()
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
+
+    const onConfirm = (): void => {
+        window.location.reload()
+    }
+
     const onAddToCart = (event: any): void => {
         const shoppingList: IShoppingList = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
         const drink: IItem | undefined = shoppingList.drinks.find((a: IItem) => a.id === location.state.id)
@@ -40,7 +45,7 @@ export const SelectedDrink = (): JSX.Element => {
             })
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
         }
-        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE)
+        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE, onConfirm)
     }
 
     const getUploadContent = (): JSX.Element => {

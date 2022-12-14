@@ -34,6 +34,10 @@ export const SelectedCake = (): JSX.Element => {
         setSelectedWeight(Number(option?.text.substring(0, option.text.length - 2)))
     }
 
+    const onConfirm = (): void => {
+        window.location.reload()
+    }
+
     const onAddToCart = (event: any): void => {
         const shoppingList: IShoppingList = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
 
@@ -59,7 +63,7 @@ export const SelectedCake = (): JSX.Element => {
             })
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
         }
-        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE)
+        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE, onConfirm)
     }
 
     const onChange = (event: any): void => {
