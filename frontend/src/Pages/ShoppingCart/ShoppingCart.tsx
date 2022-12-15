@@ -27,7 +27,7 @@ export const ShoppingCart = (): JSX.Element => {
 
     const cakes: any[] = shoppingList?.cakes?.map((cake: IItem) => {
         return {
-            id: cake.id,
+            id: cake.id * cake.price * (cake.cakeMessage?.length || 0 + 1) * cake.weight,
             price: cake.price,
             name: cake.name,
             cakeMessage: cake.cakeMessage,

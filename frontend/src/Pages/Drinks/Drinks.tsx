@@ -7,7 +7,7 @@ import { IFavoriteItem } from "../../components/CustomCard/CustomCard.types";
 import { CustomDropdown } from "../../components/CustomDropdown/CustomDropdown";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { Section } from "../../components/Section/Section";
-import { ASCENDING, DESCENDING, FAVORITE_ITEMS_LIST_KEY, SORT_BY_NAME, SORT_BY_PRICE } from "../../Utils/constants";
+import { ASCENDING, DEFAULT_PRODUCT_PHOTO, DESCENDING, FAVORITE_ITEMS_LIST_KEY, SORT_BY_NAME, SORT_BY_PRICE } from "../../Utils/constants";
 import { Pages } from "../../Utils/enums";
 import { getImageURLfromByteArray } from "../../Utils/methods";
 import { IDrink } from "../../Utils/Models/IDrink"
@@ -22,7 +22,7 @@ const getCard = (drink: IDrink, index: number): JSX.Element => {
     return <div className={customCardStyle} key={index}>
         <CustomCard
             title={drink.name}
-            image={getImageURLfromByteArray(drink.image)}
+            image={getImageURLfromByteArray(drink.image) || DEFAULT_PRODUCT_PHOTO}
             id={drink.id}
             price={drink.price}
             weight={drink.weight}

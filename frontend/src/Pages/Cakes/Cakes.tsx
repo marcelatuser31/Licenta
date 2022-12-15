@@ -27,7 +27,7 @@ const getCard = (cake: ICake, index: number): JSX.Element => {
             title={cake.name}
             expirationDate={cake.expirationDate}
             ingredients={cake.ingredients}
-            image={getImageURLfromByteArray(cake.image)}
+            image={getImageURLfromByteArray(cake.image) || 'https://www.webstoresl.com/sellercenter/assets/images/no-product-image.png'}
             price={cake.price}
             weight={cake.weight}
             isFavorite={favoriteItem === undefined ? false : true}

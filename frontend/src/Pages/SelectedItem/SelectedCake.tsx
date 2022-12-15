@@ -7,7 +7,7 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { addToCartStyle, choiceGroupStyle, imageStyle, labelStyle, textFieldStyle, titleStyle, valueStyle } from "./SelectedCake.styles"
 import { useState } from "react"
 import { IItem } from "./SelectedCake.types"
-import { ADD_MESSAGE, CAKE, OK, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants"
+import { ADD_MESSAGE, CAKE, DEFAULT_PRODUCT_PHOTO, OK, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants"
 import { IPerson } from "../../Utils/Models/IPerson"
 import { RoleType, SweetAlertIcon } from "../../Utils/enums"
 import { Input } from "../Cakes/Cakes"
@@ -41,10 +41,10 @@ export const SelectedCake = (): JSX.Element => {
     const onAddToCart = (event: any): void => {
         const shoppingList: IShoppingList = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
 
-        const cake: IItem | undefined = shoppingList.cakes.find((a: IItem) => a.id === location.state.price * selectedWeight * (cakeMessage.length + 1) && a.cakeMessage === cakeMessage && a.weight === selectedWeight)
+        const cake: IItem | undefined = shoppingList.cakes.find((a: IItem) => a.id === location.state.id && a.cakeMessage === cakeMessage && a.weight === selectedWeight)
         if (!cake) {
             const newCake: IItem = {
-                id: location.state.price * selectedWeight * (cakeMessage.length + 1),
+                id: location.state.id,
                 name: location.state.title,
                 price: location.state.price * selectedWeight,
                 cakeMessage: cakeMessage,
@@ -57,7 +57,7 @@ export const SelectedCake = (): JSX.Element => {
         }
         else {
             shoppingList.cakes.forEach((cake: IItem) => {
-                if (cake.id === location.state.price * selectedWeight * (cakeMessage.length + 1)) {
+                if (cake.id === location.state.id) {
                     cake.amount = cake.amount + 1
                 }
             })
@@ -112,7 +112,7 @@ export const SelectedCake = (): JSX.Element => {
         <Navbar />
         <Stack horizontal={true} gap='80' >
             <StackItem>
-                <img width={600} height={600} alt={'Not found'} src={location.state.image} className={imageStyle} />
+                <img width={600} height={600} alt={'Not found'} src={location.state.image || DEFAULT_PRODUCT_PHOTO} className={imageStyle} />
             </StackItem>
             <StackItem>
                 <Stack gap='30'>
