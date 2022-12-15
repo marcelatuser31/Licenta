@@ -61,7 +61,7 @@ export const Manage = (): JSX.Element => {
             name: cake.name,
             weight: cake.weight,
             amount: cake.amount,
-            type: 'Cake'
+            type: CAKE
         }
     })
 
@@ -72,7 +72,7 @@ export const Manage = (): JSX.Element => {
             name: drink.name,
             weight: drink.weight,
             amount: drink.amount,
-            type: 'Drink'
+            type: DRINK
         }
     })
 
@@ -167,6 +167,7 @@ export const Manage = (): JSX.Element => {
                     name={label}
                     onChange={(isCakeSelected()) ? onChangeCake : onChangeDrink}
                     type={label === ItemField.Name ? 'text' : 'Number'}
+                    InputProps={{ inputProps: { min: 1, max: 100 } }}
                 />)}
         </div>
 
