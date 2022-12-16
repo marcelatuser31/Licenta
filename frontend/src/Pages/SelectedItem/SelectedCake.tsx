@@ -11,7 +11,7 @@ import { ADD_MESSAGE, CAKE, DEFAULT_PRODUCT_PHOTO, OK, ORDER_LIST_KEY, PERSON_KE
 import { IPerson } from "../../Utils/Models/IPerson"
 import { RoleType, SweetAlertIcon } from "../../Utils/enums"
 import { Input } from "../Cakes/Cakes"
-import { getMessage, onUploadPhoto } from "../../Utils/methods"
+import { getMessage, onUploadPhoto, reloadPage } from "../../Utils/methods"
 import { Section } from "../../components/Section/Section"
 import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
 import { CakeRoutes } from "../../Utils/Routes/backEndRoutes"
@@ -32,10 +32,6 @@ export const SelectedCake = (): JSX.Element => {
 
     const onCheckBoxGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
         setSelectedWeight(Number(option?.text.substring(0, option.text.length - 2)))
-    }
-
-    const onConfirm = (): void => {
-        window.location.reload()
     }
 
     const onAddToCart = (event: any): void => {
@@ -63,7 +59,7 @@ export const SelectedCake = (): JSX.Element => {
             })
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
         }
-        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE, onConfirm)
+        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE, reloadPage)
     }
 
     const onChange = (event: any): void => {
@@ -112,7 +108,7 @@ export const SelectedCake = (): JSX.Element => {
         <Navbar />
         <Stack horizontal={true} gap='80' >
             <StackItem>
-                <img width={600} height={600} alt={'Not found'} src={location.state.image || DEFAULT_PRODUCT_PHOTO} className={imageStyle} />
+                <img width={600} height={600} alt={'Not found'} src={location.state.image} className={imageStyle} />
             </StackItem>
             <StackItem>
                 <Stack gap='30'>

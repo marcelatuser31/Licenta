@@ -8,7 +8,7 @@ import { IconButtonProps } from '@mui/material/IconButton';
 import React from "react"
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IIngredient } from "../../Utils/Models/IIngredient"
-import { cardStyle, ingredientsNameStyle } from "./CustomCard.styles"
+import { avatarStyle, cardHeaderStyle, cardStyle, ingredientsNameStyle } from "./CustomCard.styles"
 import { NavigateFunction, useNavigate } from "react-router-dom"
 import { FAVORITE_ITEMS_LIST_KEY } from "../../Utils/constants"
 import { Stack } from "@fluentui/react"
@@ -76,7 +76,7 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
                 <span title={props.title}>
                     <CardHeader onClick={onCardClick}
                         avatar={
-                            <Avatar sx={{ bgcolor: '#1976d2' }} aria-label="recipe">
+                            <Avatar sx={avatarStyle} aria-label="recipe">
                                 {props.title[0]}
                             </Avatar>
                         }
@@ -86,8 +86,8 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
                             </IconButton>
                         }
                         title={props.title}
-                        style={{ textOverflow: 'elipsis', overflow: 'hidden', whiteSpace: 'nowrap', width: 270 }}
-                        subheader={props.price?.toString() + ' RON/KG'}
+                        style={cardHeaderStyle}
+                        subheader={props.price?.toString() + ((props.hideIngredients) ? ' RON' : ' RON/KG')}
                     />
                 </span>
                 <img width={300} height={300} alt={'Not found'} src={props.image} onClick={onCardClick}

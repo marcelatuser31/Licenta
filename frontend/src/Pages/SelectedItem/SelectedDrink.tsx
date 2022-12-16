@@ -8,7 +8,7 @@ import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
 import { addToCartStyle, imageStyle, titleStyle } from "./SelectedCake.styles"
 import { IItem } from "./SelectedCake.types"
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import { getMessage, onUploadPhoto } from "../../Utils/methods"
+import { getMessage, onUploadPhoto, reloadPage } from "../../Utils/methods"
 import { RoleType, SweetAlertIcon } from "../../Utils/enums"
 import { DrinkRoutes } from "../../Utils/Routes/backEndRoutes"
 import { IPerson } from "../../Utils/Models/IPerson"
@@ -17,10 +17,6 @@ import { Input } from "../Cakes/Cakes"
 export const SelectedDrink = (): JSX.Element => {
     const location = useLocation()
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
-
-    const onConfirm = (): void => {
-        window.location.reload()
-    }
 
     const onAddToCart = (event: any): void => {
         const shoppingList: IShoppingList = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
@@ -45,7 +41,7 @@ export const SelectedDrink = (): JSX.Element => {
             })
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(shoppingList))
         }
-        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE, onConfirm)
+        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE, reloadPage)
     }
 
     const getUploadContent = (): JSX.Element => {

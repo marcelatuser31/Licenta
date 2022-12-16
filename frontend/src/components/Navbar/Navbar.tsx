@@ -22,7 +22,6 @@ import { RoleRoutes } from '../../Utils/Routes/backEndRoutes';
 import { IPerson } from '../../Utils/Models/IPerson';
 import { getImageURLfromByteArray } from '../../Utils/methods';
 import { IShoppingList } from '../../Pages/ShoppingCart/ShoppingCart.types';
-import { Manage } from '../../Pages/Manage/Manage';
 
 const pages = [Pages.Cakes, Pages.Drinks];
 const settings = [Pages.Profile];

@@ -9,7 +9,7 @@ import { CustomDropdown } from "../../components/CustomDropdown/CustomDropdown"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { Section } from "../../components/Section/Section"
 import { dividerStyle, itemsContainerStyle, labelSectionStyle, selectedMenuStyle } from './Cakes.styles'
-import { ASCENDING, DESCENDING, FAVORITE_ITEMS_LIST_KEY, FILTER_BY_TYPE, HEADERS, SORT_BY_NAME, SORT_BY_PRICE } from "../../Utils/constants"
+import { ASCENDING, DEFAULT_PRODUCT_PHOTO, DESCENDING, FAVORITE_ITEMS_LIST_KEY, FILTER_BY_TYPE, HEADERS, SORT_BY_NAME, SORT_BY_PRICE } from "../../Utils/constants"
 import { getImageURLfromByteArray } from "../../Utils/methods"
 import { ICake } from "../../Utils/Models/ICake"
 import { CakeRoutes } from "../../Utils/Routes/backEndRoutes"
@@ -27,7 +27,7 @@ const getCard = (cake: ICake, index: number): JSX.Element => {
             title={cake.name}
             expirationDate={cake.expirationDate}
             ingredients={cake.ingredients}
-            image={getImageURLfromByteArray(cake.image) || 'https://www.webstoresl.com/sellercenter/assets/images/no-product-image.png'}
+            image={getImageURLfromByteArray(cake.image) || DEFAULT_PRODUCT_PHOTO}
             price={cake.price}
             weight={cake.weight}
             isFavorite={favoriteItem === undefined ? false : true}

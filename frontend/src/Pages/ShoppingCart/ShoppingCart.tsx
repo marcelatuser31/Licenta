@@ -11,7 +11,7 @@ import { Pages, SweetAlertIcon } from "../../Utils/enums";
 import { getMessage } from "../../Utils/methods";
 import { IPerson } from "../../Utils/Models/IPerson";
 import { OrderRoutes } from "../../Utils/Routes/backEndRoutes";
-import { orderList } from "../LogIn/LogIn";
+import { emptyShoppingCart } from "../LogIn/LogIn";
 import { IItem } from "../SelectedItem/SelectedCake.types";
 import { addOrderButtonStyle, boxStyle, innerDiv, listStyle, outerDiv } from "./ShoppingCart.Styles";
 import { IItemDTO, IOrderData, IShoppingList } from "./ShoppingCart.types";
@@ -25,9 +25,13 @@ export const ShoppingCart = (): JSX.Element => {
         return items.map((order: IItem) => { return { id: order.id, amount: order.amount, price: order.price } })
     }
 
+    const getId = (cake: IItem): number => {
+        return cake.id * cake.price * (cake.cakeMessage?.length || 0 + 1) * cake.weight
+    }
+
     const cakes: any[] = shoppingList?.cakes?.map((cake: IItem) => {
         return {
-            id: cake.id * cake.price * (cake.cakeMessage?.length || 0 + 1) * cake.weight,
+            id: getId(cake),
             price: cake.price,
             name: cake.name,
             cakeMessage: cake.cakeMessage,
@@ -62,12 +66,12 @@ export const ShoppingCart = (): JSX.Element => {
         await axios.post(OrderRoutes.AddOrder, orderData);
         getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_ORDER_MESSAGE)
         navigate(Pages.Home)
-        localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(orderList))
+        localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(emptyShoppingCart))
     }
 
     const onDeleteItems = (items: any[]): void => {
         if (items.length === 0)
-            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(orderList))
+            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(emptyShoppingCart))
         else
             localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(items))
     }

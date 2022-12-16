@@ -45,3 +45,7 @@ export const onUploadPhoto = (event: any, id: string, url: string): void => {
     }
     getData()
 }
+
+export const reloadPage = (): void => {
+    window.location.reload()
+}

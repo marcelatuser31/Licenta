@@ -10,13 +10,13 @@ import { RoleRoutes } from "../../Utils/Routes/backEndRoutes"
 import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
 import { ILogIn } from "./LogIn.types"
 
-export const orderList: IShoppingList = { cakes: [], drinks: [] };
+export const emptyShoppingCart: IShoppingList = { cakes: [], drinks: [] };
 export const LogIn = (): JSX.Element => {
     const navigate: NavigateFunction = useNavigate()
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
 
-    localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(orderList))
+    localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(emptyShoppingCart))
     localStorage.setItem(FAVORITE_ITEMS_LIST_KEY, JSON.stringify([]))
 
     const onClickRegister = (event: any): void => {
