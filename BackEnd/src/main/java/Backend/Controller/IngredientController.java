@@ -25,6 +25,11 @@ public class IngredientController {
         return new ResponseEntity<>(ingredientServiceImplementation.getById(id), HttpStatus.OK);
     }
 
+    @PostMapping("/insert")
+    public void insert(@RequestBody String name){
+        ingredientServiceImplementation.insert(name);
+    }
+
     @PostMapping("/readByName")
     public ResponseEntity getByName(@RequestBody String name) {
         return ResponseEntity.status(HttpStatus.OK).body(ingredientServiceImplementation.getByName(name));

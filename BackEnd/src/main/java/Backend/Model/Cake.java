@@ -16,13 +16,13 @@ import org.hibernate.annotations.Type;
 @Data
 public class Cake implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Float price;
     private Float weight;
     private Integer amount;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.DETACH)
     private List<Ingredient> ingredients;
     private CakeType type;
     private LocalDateTime expirationDate;

@@ -6,9 +6,10 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import { GroupedList } from "../../components/List/GroupedList";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { Section } from "../../components/Section/Section";
-import { ADD_ORDER_MESSAGE, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants";
+import { ADD_ORDER_MESSAGE, CAKE, DRINK, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants";
 import { Pages, SweetAlertIcon } from "../../Utils/enums";
-import { getMessage } from "../../Utils/methods";
+import { getMessage, reloadPage } from "../../Utils/methods";
+import { ICake } from "../../Utils/Models/ICake";
 import { IPerson } from "../../Utils/Models/IPerson";
 import { OrderRoutes } from "../../Utils/Routes/backEndRoutes";
 import { emptyShoppingCart } from "../LogIn/LogIn";
@@ -29,7 +30,7 @@ export const ShoppingCart = (): JSX.Element => {
         return cake.id * cake.price * (cake.cakeMessage?.length || 0 + 1) * cake.weight
     }
 
-    const cakes: any[] = shoppingList?.cakes?.map((cake: IItem) => {
+    const cakes: IItem[] = shoppingList?.cakes?.map((cake: IItem) => {
         return {
             id: getId(cake),
             price: cake.price,
@@ -41,7 +42,7 @@ export const ShoppingCart = (): JSX.Element => {
         }
     })
 
-    const drinks: any[] = shoppingList?.drinks?.map((drink: IItem) => {
+    const drinks: IItem[] = shoppingList?.drinks?.map((drink: IItem) => {
         return {
             id: drink.id,
             price: drink.price,
@@ -70,10 +71,18 @@ export const ShoppingCart = (): JSX.Element => {
     }
 
     const onDeleteItems = (items: any[]): void => {
-        if (items.length === 0)
-            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(emptyShoppingCart))
-        else
-            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(items))
+        let newCakes: IItem[] = shoppingList.cakes
+        let newDrinks: IItem[] = shoppingList.drinks
+        items.forEach((item) => {
+            if (item.type === DRINK) {
+                newDrinks = newDrinks.filter(() => newDrinks.includes(item))
+            }
+            else {
+                newCakes = newCakes.filter(() => newCakes.includes(item))
+            }
+            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify({ cakes: newCakes, drinks: newDrinks }))
+        })
+        reloadPage()
     }
 
     const columns: GridColDef[] = [

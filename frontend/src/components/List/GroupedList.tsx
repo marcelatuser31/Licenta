@@ -22,10 +22,11 @@ export const GroupedList = (props: ICustomListProps): JSX.Element => {
 
     const onDeleteItems = (): void => {
         const newItems: any[] = items.filter((item: any) => !selectedItems.includes(item.id));
+        const newItems1: any[] = items.filter((item: any) => selectedItems.includes(item.id));
         setItems(newItems);
 
         if (props.onDeleteItems)
-            props.onDeleteItems(newItems);
+            props.onDeleteItems(newItems1);
     }
 
     const onDelete = (event: any): void => {

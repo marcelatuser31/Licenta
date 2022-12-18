@@ -18,6 +18,10 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
     const navigate: NavigateFunction = useNavigate()
     const [isFavorite, setIsFavorite] = useState<Boolean>(props.isFavorite)
 
+    React.useEffect(() => {
+        setIsFavorite(props.isFavorite)
+    }, [props.isFavorite])
+
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
@@ -64,7 +68,7 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
             localStorage.setItem(FAVORITE_ITEMS_LIST_KEY, JSON.stringify(favoriteList))
         }
         else {
-            const removeList: IFavoriteItem[] = favoriteList.filter(i => i.id != props.id)
+            const removeList: IFavoriteItem[] = favoriteList.filter(i => i.id !== props.id)
             localStorage.setItem(FAVORITE_ITEMS_LIST_KEY, JSON.stringify(removeList))
         }
         setIsFavorite(!isFavorite)

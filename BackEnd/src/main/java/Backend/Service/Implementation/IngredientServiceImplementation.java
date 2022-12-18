@@ -3,6 +3,7 @@ package Backend.Service.Implementation;
 import Backend.Model.Ingredient;
 import Backend.Repository.IngredientRepository;
 import Backend.Service.IngredientService;
+import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,5 +30,10 @@ public class IngredientServiceImplementation implements IngredientService {
         dbIngredient.setName(ingredient.getName());
         ingredientRepository.save(dbIngredient);
         return dbIngredient;
+    }
+
+    public void insert(String name) {
+        Ingredient ingredient = new Ingredient(null,name);
+        ingredientRepository.save(ingredient);
     }
 }

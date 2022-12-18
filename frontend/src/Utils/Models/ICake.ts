@@ -9,4 +9,5 @@ export interface ICake {
     ingredients: IIngredient[];
     expirationDate?: Date;
     image: string;
+    type?: string;
 }

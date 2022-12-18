@@ -20,7 +20,7 @@ import { Pages } from "../../Utils/enums"
 export const Input = styled('input')({ display: 'none' })
 const getCard = (cake: ICake, index: number): JSX.Element => {
     const favoriteList: IFavoriteItem[] = JSON.parse(localStorage.getItem(FAVORITE_ITEMS_LIST_KEY) as string)
-    const favoriteItem = favoriteList.find((item: IFavoriteItem) => item.id === cake.id);
+    const favoriteItem = favoriteList.find((item: IFavoriteItem) => item.id === cake.id && item.name === cake.name);
     return <div className={customCardStyle} key={index}>
         <CustomCard
             id={cake.id}
@@ -36,7 +36,7 @@ const getCard = (cake: ICake, index: number): JSX.Element => {
 }
 
 export const Cakes = (): JSX.Element => {
-    const [cakes, setCakes] = useState<ICake[]>([])
+    const [cakes, setCakes] = useState<ICake[]>([]);
     const [cakeTypes, setCakeTypes] = useState<string[]>([]);
     const [selectedType, setSelectedType] = useState<string>('All');
     const [selectedSortPriceOption, setSelectedSortPriceOption] = useState<string>("");
@@ -63,19 +63,6 @@ export const Cakes = (): JSX.Element => {
     }
 
     useEffect(() => {
-        const getCakesByType = async (): Promise<any> => {
-            if (selectedType === 'All') {
-                const response = await axios.get(CakeRoutes.GetAll)
-                setCakes(response.data)
-            } else {
-                const response = await axios.post(CakeRoutes.GetCakesByType, cakeTypes.indexOf(selectedType), { headers: HEADERS })
-                setCakes(response.data)
-            }
-        }
-        getCakesByType()
-    }, [selectedType])
-
-    useEffect(() => {
         const getData = async (): Promise<void> => {
             let response = await axios.get(CakeRoutes.GetAll)
             setCakes(response.data)
@@ -95,6 +82,12 @@ export const Cakes = (): JSX.Element => {
                 text: type
             }
         })
+
+    const getFilteredCakes = (): ICake[] => {
+        if (selectedType === 'All')
+            return cakes;
+        return cakes.filter((cake: ICake) => cake.type === selectedType)
+    }
 
     const onChoiceGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
         if (option === undefined)
@@ -121,7 +114,7 @@ export const Cakes = (): JSX.Element => {
         return <ChoiceGroup
             onChange={onChoiceGroupChange}
             className={choiceGroupStyle}
-            defaultSelectedKey="B"
+            defaultSelectedKey=""
             options={options}
         />
     }
@@ -161,7 +154,7 @@ export const Cakes = (): JSX.Element => {
             <div className={dividerStyle} />
             <StackItem className={itemsContainerStyle}>
                 {
-                    cakes.length > 0 && cakes.map((cake: ICake, index: number) => getCard(cake, index))
+                    cakes.length > 0 && getFilteredCakes().map((cake: ICake, index: number) => getCard(cake, index))
                 }
             </StackItem>
         </Stack >

@@ -17,7 +17,7 @@ import { dividerStyle, itemsContainerStyle, labelSectionStyle } from "../Cakes/C
 
 const getCard = (drink: IDrink, index: number): JSX.Element => {
     const favoriteList: IFavoriteItem[] = JSON.parse(localStorage.getItem(FAVORITE_ITEMS_LIST_KEY) as string)
-    const favoriteItem = favoriteList.find((item: IFavoriteItem) => item.id === drink.id)
+    const favoriteItem = favoriteList.find((item: IFavoriteItem) => item.id === drink.id && item.name === drink.name)
 
     return <div className={customCardStyle} key={index}>
         <CustomCard
@@ -26,7 +26,7 @@ const getCard = (drink: IDrink, index: number): JSX.Element => {
             id={drink.id}
             price={drink.price}
             weight={drink.weight}
-            isFavorite={favoriteItem === undefined ? false : true}
+            isFavorite={!favoriteItem}
             redirectTo={Pages.SelectedDrink}
             hideIngredients={true} />
     </div>
