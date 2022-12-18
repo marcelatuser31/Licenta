@@ -26,13 +26,9 @@ export const ShoppingCart = (): JSX.Element => {
         return items.map((order: IItem) => { return { id: order.id, amount: order.amount, price: order.price } })
     }
 
-    const getId = (cake: IItem): number => {
-        return cake.id * cake.price * (cake.cakeMessage?.length || 0 + 1) * cake.weight
-    }
-
     const cakes: IItem[] = shoppingList?.cakes?.map((cake: IItem) => {
         return {
-            id: getId(cake),
+            id: cake.id,
             price: cake.price,
             name: cake.name,
             cakeMessage: cake.cakeMessage,
@@ -60,7 +56,7 @@ export const ShoppingCart = (): JSX.Element => {
             return
 
         const orderData: IOrderData = {
-            id: parseInt(person.id?.toString()),
+            id: person.id?.toString(),
             cakes: mapToIItemDTO(shoppingList.cakes),
             drinks: mapToIItemDTO(shoppingList.drinks),
         };
@@ -75,13 +71,14 @@ export const ShoppingCart = (): JSX.Element => {
         let newDrinks: IItem[] = shoppingList.drinks
         items.forEach((item) => {
             if (item.type === DRINK) {
-                newDrinks = newDrinks.filter(() => newDrinks.includes(item))
+                newDrinks = newDrinks.filter((f) => item.id !== f.id)
             }
             else {
-                newCakes = newCakes.filter(() => newCakes.includes(item))
+                newCakes = newCakes.filter((f) => item.id !== f.id)
             }
-            localStorage.setItem(ORDER_LIST_KEY, JSON.stringify({ cakes: newCakes, drinks: newDrinks }))
+
         })
+        localStorage.setItem(ORDER_LIST_KEY, JSON.stringify({ cakes: newCakes, drinks: newDrinks }))
         reloadPage()
     }
 

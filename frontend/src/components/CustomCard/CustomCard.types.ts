@@ -5,7 +5,7 @@ export interface ICardProps {
     expirationDate?: Date;
     ingredients?: IIngredient[];
     image: string;
-    id: number;
+    id: string;
     price: number;
     weight?: number;
     isFavorite: boolean;
@@ -14,7 +14,7 @@ export interface ICardProps {
 }
 
 export interface IFavoriteItem {
-    id: number,
+    id: string,
     name: string,
     price: number
 }

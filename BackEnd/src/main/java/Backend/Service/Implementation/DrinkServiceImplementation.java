@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +18,7 @@ public class DrinkServiceImplementation implements DrinkService {
     private final DrinkRepository drinkRepository;
 
     @Override
-    public Drink getById(Long id) {
+    public Drink getById(UUID id) {
         return drinkRepository.findFirstById(id);
     }
 
@@ -28,13 +29,13 @@ public class DrinkServiceImplementation implements DrinkService {
 
     @Override
     public Drink addDrink(Drink drink) {
-        Drink newDrink = new Drink(drink.getId(), drink.getName(), drink.getWeight(), drink.getPrice(), drink.getAmount(), null);
+        Drink newDrink = new Drink(UUID.randomUUID(), drink.getName(), drink.getWeight(), drink.getPrice(), drink.getAmount(), null);
         drinkRepository.save(newDrink);
         return newDrink;
     }
 
     @Override
-    public Drink addDrinkImage(Long id, MultipartFile image) {
+    public Drink addDrinkImage(UUID id, MultipartFile image) {
             byte[] imageDrink = null;
             try {
                 imageDrink = image.getBytes();

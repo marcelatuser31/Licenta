@@ -6,11 +6,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public interface DrinkService {
-    Drink getById(Long id);
+    Drink getById(UUID id);
     List<Drink> getAll();
     Drink addDrink(Drink drink);
-    Drink addDrinkImage(Long id, MultipartFile image);
+    Drink addDrinkImage(UUID id, MultipartFile image);
 }

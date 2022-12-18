@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class RoleServiceImplementation implements RoleService {
     private final PersonRepository personRepository;
 
     @Override
-    public Role readById(Long id) {
+    public Role readById(UUID id) {
         return roleRepository.findAllById(id);
     }
 
@@ -67,7 +68,7 @@ public class RoleServiceImplementation implements RoleService {
 
     @Override
     @Transactional
-    public void LogOut(Long id) {
+    public void LogOut(UUID id) {
         Person person = personRepository.findFirstById(id);
         person.setActive(false);
     }

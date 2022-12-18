@@ -1,7 +1,7 @@
 import { RoleType } from "../enums";
 
 export interface IRole {
-    id?: number;
+    id?: string;
     username: string;
     password: string;
     email: string;

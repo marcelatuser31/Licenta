@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
+
 @Controller
 @CrossOrigin
 @Validated
@@ -15,26 +18,23 @@ import org.springframework.web.bind.annotation.*;
 public class IngredientController {
     @Autowired
     private IngredientServiceImplementation ingredientServiceImplementation;
-    @GetMapping("/getName1")
-    public String getName() {
-        return "cvghbkj";
-    }
 
     @PostMapping("/readById")
-    public ResponseEntity<Ingredient> getById(@RequestBody Long id) {
+    public ResponseEntity<Ingredient> getById(@RequestBody UUID id) {
         return new ResponseEntity<>(ingredientServiceImplementation.getById(id), HttpStatus.OK);
     }
 
     @PostMapping("/insert")
-    public void insert(@RequestBody String name){
+    public ResponseEntity insert(@RequestBody String name){
         ingredientServiceImplementation.insert(name);
+        return  null;
     }
 
     @PostMapping("/readByName")
     public ResponseEntity getByName(@RequestBody String name) {
         return ResponseEntity.status(HttpStatus.OK).body(ingredientServiceImplementation.getByName(name));
     }
-    
+
     @PostMapping("/update")
     public ResponseEntity update(@RequestBody Ingredient ingredient){
         return ResponseEntity.status(HttpStatus.OK).body(ingredientServiceImplementation.update(ingredient));

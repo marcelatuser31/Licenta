@@ -1,14 +1,14 @@
 import { IItem } from "../SelectedItem/SelectedCake.types";
 
 export interface IItemDTO {
-    id: number,
+    id: string,
     amount: number,
     price: number
 }
 
 export interface IOrderData {
     cakes?: IItemDTO[],
-    id: number,
+    id: string,
     drinks?: IItemDTO[]
 }
 

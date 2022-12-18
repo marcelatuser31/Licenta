@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class OrderServiceImplementation implements OrderService {
     private final DrinkRepository drinkRepository;
 private final PersonServiceImplementation personServiceImplementation;
     @Override
-    public Order readById(Long id) {
+    public Order readById(UUID id) {
         return orderRepository.findFirstById(id);
     }
 
@@ -45,7 +46,7 @@ private final PersonServiceImplementation personServiceImplementation;
         String orderList = "";
 
         for (int i = 0; i < orderDTO.getCakes().size(); i++) {
-            Long id = orderDTO.getCakes().get(i).getId();
+            UUID id = orderDTO.getCakes().get(i).getId();
             Cake currentCake = cakeRepository.findFirstById(id);
             if (currentCake != null) {
 
@@ -66,7 +67,7 @@ private final PersonServiceImplementation personServiceImplementation;
         }
 
         for (int i = 0; i < orderDTO.getDrinks().size(); i++) {
-            Long id = orderDTO.getDrinks().get(i).getId();
+            UUID id = orderDTO.getDrinks().get(i).getId();
             Drink currentDrink = drinkRepository.findFirstById(id);
             if (currentDrink != null) {
 
@@ -87,7 +88,7 @@ private final PersonServiceImplementation personServiceImplementation;
         }
 
         Person person = personRepository.findFirstById(orderDTO.getId());
-        Order order = new Order(100L, person, cakeList, drinkList, LocalDateTime.now());
+        Order order = new Order(UUID.randomUUID(), person, cakeList, drinkList, LocalDateTime.now());
         orderRepository.save(order);
 
         Float suma;
@@ -132,13 +133,13 @@ private final PersonServiceImplementation personServiceImplementation;
         Order dbOrder = orderRepository.findFirstById(order.getId());
 
         dbOrder.setPerson(order.getPerson());
-        dbOrder.setCakes(order.getCakes());
         orderRepository.save(dbOrder);
+        dbOrder.setCakes(order.getCakes());
         return dbOrder;
     }
 
     @Override
-    public void cancelOrder(Long id) {
+    public void cancelOrder(UUID id) {
         Order order = orderRepository.findFirstById(id);
         LocalDateTime currentDate = LocalDateTime.now();
         if (order.getDate().getYear() == currentDate.getYear() && order.getDate().getMonth() == currentDate.getMonth() && order.getDate().getDayOfMonth() == currentDate.getDayOfMonth()) {

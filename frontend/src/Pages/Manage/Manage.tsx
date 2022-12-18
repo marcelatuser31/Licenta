@@ -20,7 +20,7 @@ const options: IChoiceGroupOption[] = [
 ];
 
 export const defaultDrink: IDrink = {
-    id: 0,
+    id: "",
     name: "",
     weight: 0,
     price: 0,
@@ -180,7 +180,14 @@ export const Manage = (): JSX.Element => {
                 <div className={outerDiv}>
                     <div className={innerDiv}>
                         <Box className={`${listStyle} ${innerDiv}`} sx={boxStyle}>
-                            <GroupedList groupByColumn={'type'} items={rows} columns={columns} addButton={true} dialogContent={dialogContent} dialogTitle={(isCakeSelected()) ? ADD_CAKE : ADD_DRINK} onSave={(isCakeSelected()) ? onSaveCake : onSaveDrink} />
+                            <GroupedList groupByColumn={'type'}
+                                items={rows}
+                                columns={columns}
+                                addButton={true}
+                                dialogContent={dialogContent}
+                                dialogTitle={(isCakeSelected()) ? ADD_CAKE : ADD_DRINK}
+                                onSave={(isCakeSelected()) ? onSaveCake : onSaveDrink}
+                                width={1150} />
                         </Box>
                     </div>
                 </div>

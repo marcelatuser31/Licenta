@@ -1,5 +1,5 @@
 export interface IDrink {
-    id: number;
+    id: string;
     name: string;
     weight: number;
     price: number;

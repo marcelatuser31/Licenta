@@ -1,4 +1,4 @@
-export const serverURL: string = "http://localhost:8081";
+export const serverURL: string = "http://localhost:8080";
 
 export namespace RoleRoutes {
     export const LogIn: string = `${serverURL}/Role/LogIn`;

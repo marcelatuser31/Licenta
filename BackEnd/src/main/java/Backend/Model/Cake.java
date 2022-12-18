@@ -6,6 +6,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 @Entity
@@ -16,8 +19,10 @@ import org.hibernate.annotations.Type;
 @Data
 public class Cake implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GenericGenerator(name="UUID", strategy = "uuid2")
+    @GeneratedValue(generator = "UUID")
+
+    private UUID id;
     private String name;
     private Float price;
     private Float weight;

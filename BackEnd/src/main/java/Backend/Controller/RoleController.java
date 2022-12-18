@@ -10,16 +10,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/Role")
 public class RoleController {
     private final RoleServiceImplementation roleServiceImplementation;
-
-    @GetMapping("/getName")
-    public String getName() {
-        return "vfcd";
-    }
 
     @PostMapping("/getPasswordByUsername")
     public ResponseEntity getPasswordByUsername(@RequestBody String username) {
@@ -37,8 +34,7 @@ public class RoleController {
     }
 
     @PostMapping("/LogOut")
-    public void LogOut(@RequestBody Long id){
+    public void LogOut(@RequestBody UUID id){
         roleServiceImplementation.LogOut(id);
-
     }
 }

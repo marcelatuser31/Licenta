@@ -16,6 +16,7 @@ import javax.mail.internet.MimeMultipart;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class PersonServiceImplementation implements PersonService {
     private final PersonRepository personRepository;
 
     @Override
-    public Person readById(Long id) {
+    public Person readById(UUID id) {
         return personRepository.findFirstById(id);
     }
 
@@ -34,7 +35,8 @@ public class PersonServiceImplementation implements PersonService {
 
     @Override
     public void register(Person person) {
-        personRepository.save(person);
+        Person newPerson=new Person(UUID.randomUUID(),person.getName(),person.getAddress(),person.getPhone(),person.getRole(), person.isActive(), null);
+        personRepository.save(newPerson);
         String message = "Username-ul tau este " + person.getRole().getUsername() + " si parola" + person.getRole().getPassword();
         sendEmail(person.getRole().getEmail(), message, "New Account");
     }
@@ -90,7 +92,7 @@ public class PersonServiceImplementation implements PersonService {
     }
 
     @Override
-    public Person addPersonImage(Long id, MultipartFile image) {
+    public Person addPersonImage(UUID id, MultipartFile image) {
         byte[] imagePerson = null;
         try {
             imagePerson = image.getBytes();

@@ -1,7 +1,7 @@
 import { IIngredient } from "./IIngredient";
 
 export interface ICake {
-    id: number;
+    id: string;
     name: string;
     price: number;
     weight: number;

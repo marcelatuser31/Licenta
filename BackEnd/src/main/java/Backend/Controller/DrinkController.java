@@ -10,6 +10,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.UUID;
+
 @Controller
 @CrossOrigin
 @Validated
@@ -19,7 +21,7 @@ public class DrinkController {
     private DrinkServiceImplementation drinkServiceImplementation;
 
     @PostMapping("/getById")
-    public ResponseEntity getById(@RequestBody Long id) {
+    public ResponseEntity getById(@RequestBody UUID id) {
         return ResponseEntity.status(HttpStatus.OK).body(drinkServiceImplementation.getById(id));
     }
 
@@ -33,7 +35,7 @@ public class DrinkController {
         return ResponseEntity.status(HttpStatus.OK).body(drinkServiceImplementation.addDrink(drink));
     }
     @PostMapping(value="/addImage", consumes={"multipart/form-data"})
-    public ResponseEntity addImage(@RequestParam (value="image", required = false) MultipartFile image, @RequestParam(value="id") String id){
-        return ResponseEntity.status(HttpStatus.OK).body(drinkServiceImplementation.addDrinkImage(Long.parseLong(id), image));
+    public ResponseEntity addImage(@RequestParam (value="image", required = false) MultipartFile image, @RequestParam(value="id") UUID id){
+        return ResponseEntity.status(HttpStatus.OK).body(drinkServiceImplementation.addDrinkImage(id, image));
     }
 }

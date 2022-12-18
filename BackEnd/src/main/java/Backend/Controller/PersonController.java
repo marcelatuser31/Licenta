@@ -9,6 +9,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @RestController
 @CrossOrigin
@@ -18,7 +20,7 @@ public class PersonController {
     private final PersonServiceImplementation personServiceImplementation;
 
  @PostMapping("/readById")
- public ResponseEntity readbyId(@RequestBody Long id){
+ public ResponseEntity readbyId(@RequestBody UUID id){
      return ResponseEntity.status(HttpStatus.OK).body(personServiceImplementation.readById(id));
  }
 
@@ -38,7 +40,7 @@ public class PersonController {
     }
 
     @PostMapping(value="/addImage", consumes={"multipart/form-data"})
-    public ResponseEntity addImage(@RequestParam (value="image", required = false) MultipartFile image, @RequestParam(value="id") String id){
-        return ResponseEntity.status(HttpStatus.OK).body(personServiceImplementation.addPersonImage(Long.parseLong(id), image));
+    public ResponseEntity addImage(@RequestParam (value="image", required = false) MultipartFile image, @RequestParam(value="id") UUID id){
+        return ResponseEntity.status(HttpStatus.OK).body(personServiceImplementation.addPersonImage(id, image));
     }
 }

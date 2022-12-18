@@ -5,10 +5,12 @@ import Backend.DTO.OrderResponseDTO;
 import Backend.Model.Order;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public interface OrderService {
-    Order readById(Long id);
+    Order readById(UUID id);
     OrderResponseDTO addOrder(OrderDTO orderDTO);
     Order update(Order order);
-    void cancelOrder(Long id);
+    void cancelOrder(UUID id);
 }

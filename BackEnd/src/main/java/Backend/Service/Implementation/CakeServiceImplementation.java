@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -20,13 +21,13 @@ public class CakeServiceImplementation implements CakeService {
 
     private final CakeRepository cakeRepository;
 
-    public Cake getById(Long id) {
+    public Cake getById(UUID id) {
         Cake cake = cakeRepository.findFirstById(id);
         return cake;
     }
 
     @Override
-    public List<Ingredient> getIngredientsByCakeId(Long id) {
+    public List<Ingredient> getIngredientsByCakeId(UUID id) {
         Cake cake = cakeRepository.findFirstById(id);
         if (cake == null) {
             return new ArrayList<>();
@@ -40,11 +41,11 @@ public class CakeServiceImplementation implements CakeService {
     }
 
     @Override
-    public Float getTotalPrice(List<Long> cakeIds) {
+    public Float getTotalPrice(List<UUID> cakeIds) {
         List<Cake> cakeList = new ArrayList<>();
 
         for (int i = 0; i < cakeIds.size(); i++) {
-            Long id = cakeIds.get(i);
+            UUID id = cakeIds.get(i);
             Cake cake = cakeRepository.findFirstById(id);
             cakeList.add(cake);
         }
@@ -87,7 +88,7 @@ public class CakeServiceImplementation implements CakeService {
     }
 
     @Override
-    public void deleteCake(Long id) {
+    public void deleteCake(UUID id) {
         Cake cake = cakeRepository.findFirstById(id);
         if (cake != null) {
             cakeRepository.delete(cake);
@@ -106,7 +107,7 @@ public class CakeServiceImplementation implements CakeService {
     }
 
     @Override
-    public Cake addCakeImage(Long id, MultipartFile image) {
+    public Cake addCakeImage(UUID id, MultipartFile image) {
         byte[] imageCake = null;
         try {
             imageCake = image.getBytes();
@@ -125,7 +126,7 @@ public class CakeServiceImplementation implements CakeService {
 
     @Override
     public Cake addCake(Cake cake) {
-        Cake newCake = new Cake(cake.getId(), cake.getName(), cake.getPrice(), cake.getWeight(), cake.getAmount(), cake.getIngredients(), cake.getType(), cake.getExpirationDate(), null);
+        Cake newCake = new Cake(UUID.randomUUID(), cake.getName(), cake.getPrice(), cake.getWeight(), cake.getAmount(), cake.getIngredients(), cake.getType(), cake.getExpirationDate(), null);
         cakeRepository.save(newCake);
         return newCake;
     }

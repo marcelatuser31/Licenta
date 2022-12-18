@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @RestController
 @CrossOrigin
@@ -17,22 +19,13 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     private final OrderServiceImplementation orderServiceImplementation;
 
-    @GetMapping("/getName")
-    public String getName() {
-        return "vfcdx";
-    }
-
     @PostMapping("/addOrder")
     public ResponseEntity addOrder(@RequestBody OrderDTO orderDTO){
         return ResponseEntity.status(HttpStatus.OK).body(orderServiceImplementation.addOrder(orderDTO));
     }
 
-    @PostMapping("/update")
-    public ResponseEntity update(@RequestBody Order order){
-        return ResponseEntity.status(HttpStatus.OK).body(orderServiceImplementation.update(order));
-    }
     @PostMapping("/cancelOrder")
-    public void cancelOrder(@RequestBody Long id){
+    public void cancelOrder(@RequestBody UUID id){
         orderServiceImplementation.cancelOrder(id);
     }
 }

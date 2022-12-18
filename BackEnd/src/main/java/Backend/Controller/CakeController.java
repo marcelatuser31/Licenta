@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,28 +24,18 @@ public class CakeController {
     private CakeServiceImplementation cakeServiceImplementation;
 
     @PostMapping("/getById")
-    public ResponseEntity getById(@RequestBody Long id) {
+    public ResponseEntity getById(@RequestBody UUID id) {
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getById(id));
     }
 
     @PostMapping("/getIngredientsByCakeId")
-    public ResponseEntity getIngredientsByCakeId(@RequestBody Long id) {
+    public ResponseEntity getIngredientsByCakeId(@RequestBody UUID id) {
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getIngredientsByCakeId(id));
-    }
-
-    @GetMapping("/getName")
-    public String getName() {
-        return "Cake";
     }
 
     @GetMapping("/getAll")
     public ResponseEntity getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getAll());
-    }
-
-    @PostMapping("/getTotalPrice")
-    public ResponseEntity getTotalPrice(@RequestBody List<Long> cakeIds) {
-        return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getTotalPrice(cakeIds));
     }
 
     @PostMapping("/update")
@@ -59,13 +50,8 @@ public class CakeController {
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getByType(type));
     }
 
-    @GetMapping("/getExpiredCakes")
-    public ResponseEntity getExpiredCakes() {
-        return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getExpiredCakes());
-    }
-
     @PostMapping("/deleteCake")
-    public void deleteCake(@RequestBody Long id) {
+    public void deleteCake(@RequestBody UUID id) {
         cakeServiceImplementation.deleteCake(id);
     }
 
@@ -75,8 +61,8 @@ public class CakeController {
     }
 
     @PostMapping(value="/addImage", consumes={"multipart/form-data"})
-    public ResponseEntity addImage(@RequestParam (value="image", required = false) MultipartFile image, @RequestParam(value="id") String id){
-        return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.addCakeImage(Long.parseLong(id), image));
+    public ResponseEntity addImage(@RequestParam (value="image", required = false) MultipartFile image, @RequestParam(value="id") UUID id){
+        return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.addCakeImage(id, image));
     }
 
     @PostMapping("/addCake")

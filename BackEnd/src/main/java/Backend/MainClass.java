@@ -1,19 +1,11 @@
 package Backend;
 
-import Backend.Model.*;
-import Backend.Repository.*;
-import Backend.Utils.CakeType;
-import Backend.Utils.RoleType;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.validation.annotation.Validated;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 @Validated
@@ -22,9 +14,9 @@ public class MainClass extends SpringBootServletInitializer {
         SpringApplication.run(MainClass.class, args);
     }
 
-    @Bean
-    CommandLineRunner init(CakeRepository cakeRepository, IngredientRepository ingredientRepository, OrderRepository orderRepository, PersonRepository personRepository, RoleRepository roleRepository, DrinkRepository drinkRepository) {
-        return args -> {
+//    @Bean
+//    CommandLineRunner init(CakeRepository cakeRepository, IngredientRepository ingredientRepository, OrderRepository orderRepository, PersonRepository personRepository, RoleRepository roleRepository, DrinkRepository drinkRepository) {
+//        return args -> {
 //
 //            Ingredient i = new Ingredient(1L, "ciocolata");
 //            Ingredient i1 = new Ingredient(2L, "vanilie");
@@ -87,6 +79,6 @@ public class MainClass extends SpringBootServletInitializer {
 //            drinkRepository.save(drink2);
 
 
-        };
-    }
+//        };
+//    }
 }

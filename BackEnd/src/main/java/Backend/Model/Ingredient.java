@@ -1,9 +1,11 @@
 package Backend.Model;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 @Builder
@@ -13,7 +15,8 @@ import java.io.Serializable;
 @Data
 public class Ingredient implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+    @GenericGenerator(name="UUID2", strategy = "uuid2")
+    @GeneratedValue(generator = "UUID2")
+    private UUID id;
     private String name;
 }
