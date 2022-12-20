@@ -20,7 +20,7 @@ import { Pages } from "../../Utils/enums"
 export const Input = styled('input')({ display: 'none' })
 const getCard = (cake: ICake, index: number): JSX.Element => {
     const favoriteList: IFavoriteItem[] = JSON.parse(localStorage.getItem(FAVORITE_ITEMS_LIST_KEY) as string)
-    const favoriteItem = favoriteList.find((item: IFavoriteItem) => item.id === cake.id && item.name === cake.name);
+    const favoriteItem: IFavoriteItem | undefined = favoriteList.find((item: IFavoriteItem) => item.id === cake.id && item.name === cake.name);
     return <div className={customCardStyle} key={index}>
         <CustomCard
             id={cake.id}

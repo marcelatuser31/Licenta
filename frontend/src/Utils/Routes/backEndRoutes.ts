@@ -1,4 +1,4 @@
-export const serverURL: string = "http://localhost:8080";
+export const serverURL: string = "http://localhost:8081";
 
 export namespace RoleRoutes {
     export const LogIn: string = `${serverURL}/Role/LogIn`;
@@ -28,4 +28,9 @@ export namespace DrinkRoutes {
     export const GetAll: string = `${serverURL}/Drink/getAll`
     export const AddDrink: string = `${serverURL}/Drink/addDrink`
     export const AddImage: string = `${serverURL}/Drink/addImage`
+}
+
+export namespace IngredientRoutes {
+    export const GetAll: string = `${serverURL}/Ingredient/getAll`
+    export const AddIngredient: string = `${serverURL}/Ingredient/insert`
 }

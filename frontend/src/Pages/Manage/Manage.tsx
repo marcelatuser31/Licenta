@@ -1,8 +1,10 @@
 import { ChoiceGroup, IChoiceGroupOption, Stack, StackItem } from "@fluentui/react"
-import { Box, TextField } from "@mui/material"
+import { Box, IconButton, TextField } from "@mui/material"
 import { GridColDef } from "@mui/x-data-grid"
 import axios from "axios"
+import React from "react"
 import { useEffect, useState } from "react"
+import { IngredientsList } from "../../components/IngredientsList/IngredientsList"
 import { GroupedList } from "../../components/List/GroupedList"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { ADD_CAKE, ADD_DRINK, ADD_MESSAGE, CAKE, DRINK, SUCCESSFULLY } from "../../Utils/constants"
@@ -10,9 +12,11 @@ import { ItemField, SweetAlertIcon } from "../../Utils/enums"
 import { getMessage } from "../../Utils/methods"
 import { ICake } from "../../Utils/Models/ICake"
 import { IDrink } from "../../Utils/Models/IDrink"
-import { CakeRoutes, DrinkRoutes } from "../../Utils/Routes/backEndRoutes"
+import { IIngredient } from "../../Utils/Models/IIngredient"
+import { CakeRoutes, DrinkRoutes, IngredientRoutes } from "../../Utils/Routes/backEndRoutes"
 import { choiceGroupStyle } from "../SelectedItem/SelectedCake.styles"
 import { boxStyle, innerDiv, listStyle, outerDiv } from "../ShoppingCart/ShoppingCart.Styles"
+import AddCircleTwoToneIcon from '@mui/icons-material/AddCircleTwoTone';
 
 const options: IChoiceGroupOption[] = [
     { key: CAKE, text: CAKE, styles: { root: { marginLeft: 20 } } },
@@ -34,14 +38,22 @@ export const defaultCake: ICake = {
     expirationDate: undefined,
 }
 
+const defaultIngredient: IIngredient = {
+    id: "",
+    name: ""
+}
+
 export const Manage = (): JSX.Element => {
     const [cakes, setCakes] = useState<ICake[]>([])
     const [drinks, setDrinks] = useState<IDrink[]>([])
     const [selectedCake, setSelectedCake] = useState<ICake>(defaultCake);
     const [selectedDrink, setSelectedDrink] = useState<IDrink>(defaultDrink);
     const [addSelectedOption, setAddSelectedOption] = useState<IChoiceGroupOption | undefined>();
-    const drinkFields: string[] = [ItemField.Name, ItemField.Price, ItemField.Weight, ItemField.Amount]
-    const cakeFields: string[] = [...drinkFields, ItemField.Ingredients]
+    const [ingredients, setIngredients] = useState<IIngredient[]>([])
+    const [addIngredient, setAddIngredient] = React.useState<boolean>(false)
+    const [newIngredient, setNewIngredient] = React.useState<IIngredient>(defaultIngredient)
+    const [isAdded, setIsAdded] = React.useState<boolean>(false)
+    const itemFields: string[] = [ItemField.Name, ItemField.Price, ItemField.Weight, ItemField.Amount]
 
     useEffect(() => {
         const getData = async (): Promise<void> => {
@@ -125,7 +137,13 @@ export const Manage = (): JSX.Element => {
         }
     }
 
+    const onChangeIngredient = (event: any): void => {
+        const value: string = event.target.value
+        setNewIngredient({ ...newIngredient, name: value })
+    }
+
     const onSaveCake = async (): Promise<void> => {
+        setSelectedCake({ ...selectedCake, ingredients: ingredients })
         await axios.post(CakeRoutes.AddCake, selectedCake);
         getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE)
     }
@@ -135,20 +153,42 @@ export const Manage = (): JSX.Element => {
         getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE)
     }
 
+    const onSaveNewIngredient = async (): Promise<void> => {
+        await axios.post(IngredientRoutes.AddIngredient, newIngredient)
+        setAddIngredient(false)
+        setIsAdded(true)
+    }
+
     const onCheckBoxGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
         setAddSelectedOption(option)
     }
+
     const isCakeSelected = (): boolean | undefined => {
         if (addSelectedOption?.key === CAKE)
             return true
     }
 
-    const getItemList = (): string[] => {
-        if (addSelectedOption?.key === CAKE)
-            return cakeFields
-        else
-            return drinkFields
-    }
+    const addIngredientContent: JSX.Element =
+        <Stack horizontal={true}>
+            <StackItem>
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    id="Ingredient"
+                    label="Ingredient"
+                    fullWidth
+                    variant="standard"
+                    name="Ingredient"
+                    type="text"
+                    onChange={onChangeIngredient}
+                />
+            </StackItem>
+            <StackItem>
+                <IconButton onClick={onSaveNewIngredient} style={{ top: 20 }}>
+                    <AddCircleTwoToneIcon />
+                </IconButton>
+            </StackItem>
+        </Stack>
 
     const dialogContent: JSX.Element =
         <div>
@@ -156,7 +196,7 @@ export const Manage = (): JSX.Element => {
                 options={options}
                 styles={choiceGroupStyle}
             />
-            {getItemList().map((label: string) =>
+            {itemFields.map((label: string) =>
                 <TextField
                     autoFocus
                     margin="dense"
@@ -169,7 +209,11 @@ export const Manage = (): JSX.Element => {
                     type={label === ItemField.Name ? 'text' : 'Number'}
                     InputProps={{ inputProps: { min: 1, max: 100 } }}
                 />)}
-        </div>
+            {(isCakeSelected())
+                && <IngredientsList setIngredients={setIngredients} setAddIngredient={setAddIngredient} isAdded={isAdded} />
+            }
+            {(addIngredient) && addIngredientContent}
+        </div >
 
     return <>
         <Stack>

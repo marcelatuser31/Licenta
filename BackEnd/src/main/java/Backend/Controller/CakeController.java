@@ -45,8 +45,6 @@ public class CakeController {
 
     @PostMapping("/getByType")
     public ResponseEntity getByType(@RequestBody CakeType type) {
-        if (type.ordinal() == -1)
-            type = CakeType.Car;
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getByType(type));
     }
 

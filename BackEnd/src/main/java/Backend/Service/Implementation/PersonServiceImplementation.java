@@ -37,6 +37,7 @@ public class PersonServiceImplementation implements PersonService {
     public void register(Person person) {
         Person newPerson=new Person(UUID.randomUUID(),person.getName(),person.getAddress(),person.getPhone(),person.getRole(), person.isActive(), null);
         personRepository.save(newPerson);
+        
         String message = "Username-ul tau este " + person.getRole().getUsername() + " si parola" + person.getRole().getPassword();
         sendEmail(person.getRole().getEmail(), message, "New Account");
     }

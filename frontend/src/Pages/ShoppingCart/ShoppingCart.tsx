@@ -9,7 +9,6 @@ import { Section } from "../../components/Section/Section";
 import { ADD_ORDER_MESSAGE, CAKE, DRINK, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants";
 import { Pages, SweetAlertIcon } from "../../Utils/enums";
 import { getMessage, reloadPage } from "../../Utils/methods";
-import { ICake } from "../../Utils/Models/ICake";
 import { IPerson } from "../../Utils/Models/IPerson";
 import { OrderRoutes } from "../../Utils/Routes/backEndRoutes";
 import { emptyShoppingCart } from "../LogIn/LogIn";
@@ -56,7 +55,7 @@ export const ShoppingCart = (): JSX.Element => {
             return
 
         const orderData: IOrderData = {
-            id: person.id?.toString(),
+            id: person.id,
             cakes: mapToIItemDTO(shoppingList.cakes),
             drinks: mapToIItemDTO(shoppingList.drinks),
         };
@@ -66,7 +65,7 @@ export const ShoppingCart = (): JSX.Element => {
         localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(emptyShoppingCart))
     }
 
-    const onDeleteItems = (items: any[]): void => {
+    const deletedItems = (items: IItem[]): void => {
         let newCakes: IItem[] = shoppingList.cakes
         let newDrinks: IItem[] = shoppingList.drinks
         items.forEach((item) => {
@@ -76,7 +75,6 @@ export const ShoppingCart = (): JSX.Element => {
             else {
                 newCakes = newCakes.filter((f) => item.id !== f.id)
             }
-
         })
         localStorage.setItem(ORDER_LIST_KEY, JSON.stringify({ cakes: newCakes, drinks: newDrinks }))
         reloadPage()
@@ -103,7 +101,7 @@ export const ShoppingCart = (): JSX.Element => {
         <StackItem>
             <div className={outerDiv}>
                 <Box className={`${listStyle} ${innerDiv}`} sx={boxStyle}>
-                    <GroupedList groupByColumn={'type'} items={rows} columns={columns} onDeleteItems={onDeleteItems} width={1200} />
+                    <GroupedList groupByColumn={'type'} items={rows} columns={columns} onDeleteItems={deletedItems} width={1200} />
                     <Stack horizontal={true} >
                         <Section name={"TOTAL:"} contentValue={totalPrice + ' RON'} isHorizontal={true} gap={-20}></Section>
                         <StackItem >

@@ -6,6 +6,7 @@ import Backend.Service.IngredientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -28,14 +29,20 @@ public class IngredientServiceImplementation implements IngredientService {
         Ingredient dbIngredient = ingredientRepository.findFirstById(ingredient.getId());
         if (dbIngredient == null)
             return null;
+
         dbIngredient.setName(ingredient.getName());
         ingredientRepository.save(dbIngredient);
         return dbIngredient;
     }
 
-    public void insert(String name) {
+    public void insert(Ingredient ingredient) {
         UUID uid = UUID.randomUUID();
-        Ingredient ingredient = new Ingredient(uid, name);
-        ingredientRepository.save(ingredient);
+        Ingredient newIngredient = new Ingredient(uid, ingredient.getName());
+        ingredientRepository.save(newIngredient);
+    }
+
+    @Override
+    public List<Ingredient> getAll() {
+        return (List<Ingredient>) ingredientRepository.findAll();
     }
 }

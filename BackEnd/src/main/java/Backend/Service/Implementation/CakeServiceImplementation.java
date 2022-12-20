@@ -75,6 +75,8 @@ public class CakeServiceImplementation implements CakeService {
 
     @Override
     public List<Cake> getByType(CakeType type) {
+        if (type.ordinal() == -1)
+            type = CakeType.Car;
         return cakeRepository.findAllByType(type);
     }
 

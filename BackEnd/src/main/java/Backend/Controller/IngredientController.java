@@ -25,8 +25,8 @@ public class IngredientController {
     }
 
     @PostMapping("/insert")
-    public ResponseEntity insert(@RequestBody String name){
-        ingredientServiceImplementation.insert(name);
+    public ResponseEntity insert(@RequestBody Ingredient ingredient){
+        ingredientServiceImplementation.insert(ingredient);
         return  null;
     }
 
@@ -38,5 +38,10 @@ public class IngredientController {
     @PostMapping("/update")
     public ResponseEntity update(@RequestBody Ingredient ingredient){
         return ResponseEntity.status(HttpStatus.OK).body(ingredientServiceImplementation.update(ingredient));
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity getAll(){
+        return ResponseEntity.status(HttpStatus.OK).body(ingredientServiceImplementation.getAll());
     }
 }

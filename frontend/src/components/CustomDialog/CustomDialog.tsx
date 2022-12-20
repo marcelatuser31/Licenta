@@ -12,7 +12,7 @@ export const CustomDialog = (props: IDialogComponentProps): JSX.Element => {
 
     return (<Dialog open={props.openDialog} onClose={props.onClose} >
         <DialogTitle>{props.title}</DialogTitle>
-        <DialogContent style={{ width: "450px", }} >
+        <DialogContent style={{ width: "550px", }} >
             {props.content}
         </DialogContent>
         <DialogActions>
