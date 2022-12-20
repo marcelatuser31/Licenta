@@ -16,7 +16,7 @@ import { IIngredient } from "../../Utils/Models/IIngredient"
 import { CakeRoutes, DrinkRoutes, IngredientRoutes } from "../../Utils/Routes/backEndRoutes"
 import { choiceGroupStyle } from "../SelectedItem/SelectedCake.styles"
 import { boxStyle, innerDiv, listStyle, outerDiv } from "../ShoppingCart/ShoppingCart.Styles"
-import AddCircleTwoToneIcon from '@mui/icons-material/AddCircleTwoTone';
+import AddIcon from '@mui/icons-material/Add';
 
 const options: IChoiceGroupOption[] = [
     { key: CAKE, text: CAKE, styles: { root: { marginLeft: 20 } } },
@@ -50,7 +50,7 @@ export const Manage = (): JSX.Element => {
     const [selectedDrink, setSelectedDrink] = useState<IDrink>(defaultDrink);
     const [addSelectedOption, setAddSelectedOption] = useState<IChoiceGroupOption | undefined>();
     const [ingredients, setIngredients] = useState<IIngredient[]>([])
-    const [addIngredient, setAddIngredient] = React.useState<boolean>(false)
+    const [shouldDisplayNewIngredient, setShouldDisplayNewIngredient] = React.useState<boolean>(false)
     const [newIngredient, setNewIngredient] = React.useState<IIngredient>(defaultIngredient)
     const [isAdded, setIsAdded] = React.useState<boolean>(false)
     const itemFields: string[] = [ItemField.Name, ItemField.Price, ItemField.Weight, ItemField.Amount]
@@ -155,8 +155,8 @@ export const Manage = (): JSX.Element => {
 
     const onSaveNewIngredient = async (): Promise<void> => {
         await axios.post(IngredientRoutes.AddIngredient, newIngredient)
-        setAddIngredient(false)
-        setIsAdded(true)
+        setShouldDisplayNewIngredient(false)
+        setIsAdded(!isAdded)
     }
 
     const onCheckBoxGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
@@ -185,7 +185,7 @@ export const Manage = (): JSX.Element => {
             </StackItem>
             <StackItem>
                 <IconButton onClick={onSaveNewIngredient} style={{ top: 20 }}>
-                    <AddCircleTwoToneIcon />
+                    <AddIcon />
                 </IconButton>
             </StackItem>
         </Stack>
@@ -210,9 +210,9 @@ export const Manage = (): JSX.Element => {
                     InputProps={{ inputProps: { min: 1, max: 100 } }}
                 />)}
             {(isCakeSelected())
-                && <IngredientsList setIngredients={setIngredients} setAddIngredient={setAddIngredient} isAdded={isAdded} />
+                && <IngredientsList setIngredients={setIngredients} setShouldDisplayNewIngredient={setShouldDisplayNewIngredient} isAdded={isAdded} />
             }
-            {(addIngredient) && addIngredientContent}
+            {(shouldDisplayNewIngredient) && addIngredientContent}
         </div >
 
     return <>

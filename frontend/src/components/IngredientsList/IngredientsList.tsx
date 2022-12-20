@@ -3,77 +3,79 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { IIngredient } from "../../Utils/Models/IIngredient";
 import { IngredientRoutes } from "../../Utils/Routes/backEndRoutes";
-import { IIngredientsList } from "./IngredientaList.types";
-import AddCircleTwoToneIcon from '@mui/icons-material/AddCircleTwoTone';
+import { IIngredientsListProps } from "./IngredientaList.types";
+import AddIcon from '@mui/icons-material/Add';
+import { buttonStyle, paperStyle } from "./IngredientsList.styles";
 
-export const IngredientsList = (props: IIngredientsList): JSX.Element => {
-    const [checked, setChecked] = React.useState<IIngredient[]>([])
-    const [right, setRight] = React.useState<IIngredient[]>([]);
-    const [left, setLeft] = React.useState<IIngredient[]>([]);
+export const IngredientsList = (props: IIngredientsListProps): JSX.Element => {
+    const [checkedIngredients, setCheckedIngredients] = React.useState<IIngredient[]>([])
+    const [selectedIngredients, setSelectedIngredients] = React.useState<IIngredient[]>([]);
+    const [availableIngredients, setAvailableIngredients] = React.useState<IIngredient[]>([]);
 
-    const not = (a: IIngredient[], b: IIngredient[]): IIngredient[] => {
-        return a.filter((value) => b.indexOf(value) === -1);
-    }
+    useEffect(() => {
+        props.setIngredients(selectedIngredients)
+    }, [selectedIngredients])
 
-    const intersection = (a: IIngredient[], b: IIngredient[]): IIngredient[] => {
-        return a.filter((value) => b.indexOf(value) !== -1);
-    }
 
     useEffect(() => {
         const getIngredients = async (): Promise<void> => {
             const response = await axios.get(IngredientRoutes.GetAll)
-            setLeft(response.data)
+            setAvailableIngredients(response.data)
         }
         getIngredients()
     }, [props.isAdded])
 
-    const leftChecked = intersection(checked, left);
-    const rightChecked = intersection(checked, right);
-
-    const handleToggle = (ingredient: IIngredient) => () => {
-        const currentIndex = checked.indexOf(ingredient);
-        const newChecked = [...checked];
-
-        if (currentIndex === -1) {
-            newChecked.push(ingredient);
-        } else {
-            newChecked.splice(currentIndex, 1);
-        }
-        setChecked(newChecked);
-    };
-
-    const handleAllRight = () => {
-        setRight(right.concat(left));
-        setLeft([]);
-    };
-
-    const handleCheckedRight = () => {
-        setRight(right.concat(leftChecked));
-        setLeft(not(left, leftChecked));
-        setChecked(not(checked, leftChecked));
-    };
-
-    const handleCheckedLeft = () => {
-        setLeft(left.concat(rightChecked));
-        setRight(not(right, rightChecked));
-        setChecked(not(checked, rightChecked));
-    };
-
-    const handleAllLeft = () => {
-        setLeft(left.concat(right));
-        setRight([]);
-    };
-
-    useEffect(() => {
-        props.setIngredients(right)
-    }, [right])
-
-    const onAddIngredient = (): void => {
-        props.setAddIngredient(true)
+    const getRemainingIngredients = (a: IIngredient[], b: IIngredient[]): IIngredient[] => {
+        return a.filter((value) => b.indexOf(value) === -1);
     }
 
-    const customList = (items: IIngredient[]) => (
-        <Paper sx={{ width: 200, height: 230, overflow: 'auto' }}>
+    const getIntersection = (a: IIngredient[], b: IIngredient[]): IIngredient[] => {
+        return a.filter((value) => b.indexOf(value) !== -1);
+    }
+
+    const leftChecked: IIngredient[] = getIntersection(checkedIngredients, availableIngredients);
+    const rightChecked: IIngredient[] = getIntersection(checkedIngredients, selectedIngredients);
+
+    const onToggleIngredient = (ingredient: IIngredient) => (): void => {
+        const ingredientIndex: number = checkedIngredients.indexOf(ingredient);
+        const newChecked: IIngredient[] = [...checkedIngredients];
+
+        if (ingredientIndex === -1) {
+            newChecked.push(ingredient);
+        } else {
+            newChecked.splice(ingredientIndex, 1);
+        }
+        setCheckedIngredients(newChecked);
+    };
+
+    const onSelectAll = (): void => {
+        setSelectedIngredients(selectedIngredients.concat(availableIngredients));
+        setAvailableIngredients([]);
+    };
+
+    const onSelectIngredients = (): void => {
+        setSelectedIngredients(selectedIngredients.concat(leftChecked));
+        setAvailableIngredients(getRemainingIngredients(availableIngredients, leftChecked));
+        setCheckedIngredients(getRemainingIngredients(checkedIngredients, leftChecked));
+    };
+
+    const onRemoveIngredients = (): void => {
+        setAvailableIngredients(availableIngredients.concat(rightChecked));
+        setSelectedIngredients(getRemainingIngredients(selectedIngredients, rightChecked));
+        setCheckedIngredients(getRemainingIngredients(checkedIngredients, rightChecked));
+    };
+
+    const onRemoveAll = (): void => {
+        setAvailableIngredients(availableIngredients.concat(selectedIngredients));
+        setSelectedIngredients([]);
+    };
+
+    const onAddIngredient = (): void => {
+        props.setShouldDisplayNewIngredient(true)
+    }
+
+    const customList = (items: IIngredient[]): JSX.Element => (
+        <Paper sx={paperStyle}>
             <List dense component="div" role="list">
                 {items.map((ingredient: IIngredient) => {
                     const labelId = ingredient.id;
@@ -83,11 +85,11 @@ export const IngredientsList = (props: IIngredientsList): JSX.Element => {
                             key={ingredient.id}
                             role="listitem"
                             button
-                            onClick={handleToggle(ingredient)}
+                            onClick={onToggleIngredient(ingredient)}
                         >
                             <ListItemIcon>
                                 <Checkbox
-                                    checked={checked.indexOf(ingredient) !== -1}
+                                    checked={checkedIngredients.indexOf(ingredient) !== -1}
                                     tabIndex={-1}
                                     disableRipple
                                     inputProps={{
@@ -98,10 +100,10 @@ export const IngredientsList = (props: IIngredientsList): JSX.Element => {
                             <ListItemText id={labelId} primary={ingredient.name} />
                         </ListItem>
                     );
-                })}{items === left &&
+                })}{items === availableIngredients &&
                     <ListItem>
                         <IconButton onClick={onAddIngredient}>
-                            <AddCircleTwoToneIcon />
+                            <AddIcon />
                         </IconButton></ListItem>
                 }
             </List>
@@ -110,52 +112,52 @@ export const IngredientsList = (props: IIngredientsList): JSX.Element => {
 
     return (
         <Grid container spacing={2} justifyContent="center" alignItems="center">
-            <Grid item>{customList(left)}</Grid>
+            <Grid item>{customList(availableIngredients)}</Grid>
             <Grid item>
                 <Grid container direction="column" alignItems="center">
                     <Button
-                        sx={{ my: 0.5 }}
+                        sx={buttonStyle}
                         variant="outlined"
                         size="small"
-                        onClick={handleAllRight}
-                        disabled={left.length === 0}
+                        onClick={onSelectAll}
+                        disabled={availableIngredients.length === 0}
                         aria-label="move all right"
                     >
                         ≫
                     </Button>
                     <Button
-                        sx={{ my: 0.5 }}
+                        sx={buttonStyle}
                         variant="outlined"
                         size="small"
-                        onClick={handleCheckedRight}
+                        onClick={onSelectIngredients}
                         disabled={leftChecked.length === 0}
                         aria-label="move selected right"
                     >
                         &gt;
                     </Button>
                     <Button
-                        sx={{ my: 0.5 }}
+                        sx={buttonStyle}
                         variant="outlined"
                         size="small"
-                        onClick={handleCheckedLeft}
+                        onClick={onRemoveIngredients}
                         disabled={rightChecked.length === 0}
                         aria-label="move selected left"
                     >
                         &lt;
                     </Button>
                     <Button
-                        sx={{ my: 0.5 }}
+                        sx={buttonStyle}
                         variant="outlined"
                         size="small"
-                        onClick={handleAllLeft}
-                        disabled={right.length === 0}
+                        onClick={onRemoveAll}
+                        disabled={selectedIngredients.length === 0}
                         aria-label="move all left"
                     >
                         ≪
                     </Button>
                 </Grid>
             </Grid>
-            <Grid item>{customList(right)}</Grid>
+            <Grid item>{customList(selectedIngredients)}</Grid>
         </Grid>
     );
 }

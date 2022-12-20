@@ -68,12 +68,12 @@ export const ShoppingCart = (): JSX.Element => {
     const deletedItems = (items: IItem[]): void => {
         let newCakes: IItem[] = shoppingList.cakes
         let newDrinks: IItem[] = shoppingList.drinks
-        items.forEach((item) => {
+        items.forEach((item: IItem) => {
             if (item.type === DRINK) {
-                newDrinks = newDrinks.filter((f) => item.id !== f.id)
+                newDrinks = newDrinks.filter((drink: IItem) => item.id !== drink.id)
             }
             else {
-                newCakes = newCakes.filter((f) => item.id !== f.id)
+                newCakes = newCakes.filter((cake: IItem) => item.id !== cake.id)
             }
         })
         localStorage.setItem(ORDER_LIST_KEY, JSON.stringify({ cakes: newCakes, drinks: newDrinks }))

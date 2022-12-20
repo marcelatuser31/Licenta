@@ -1,7 +1,7 @@
 import { IIngredient } from "../../Utils/Models/IIngredient";
 
-export interface IIngredientsList {
+export interface IIngredientsListProps {
     setIngredients: (state: IIngredient[]) => void,
-    setAddIngredient: (state: boolean) => void
+    setShouldDisplayNewIngredient: (state: boolean) => void
     isAdded: boolean
 }
