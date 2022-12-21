@@ -1,5 +1,6 @@
 import { mergeStyles } from "@fluentui/merge-styles";
 import { CSSProperties } from "@mui/styled-engine";
+import { DEFAULT_COLOR } from "../../Utils/constants";
 
 export const listStyle: string = mergeStyles({
     position: 'relative',
@@ -34,3 +35,27 @@ export const addOrderButtonStyle: string = mergeStyles({
 export const deleteButtonStyle: React.CSSProperties = {
     fontSize: "0.8125rem"
 }
+
+export const addressLabelStyle: string = mergeStyles({
+    fontSize: "20px",
+    position: "relative",
+    top: "30px",
+    fontWeight: 600,
+    color: DEFAULT_COLOR,
+    width: 200
+})
+
+export const addressValueStyle: string = mergeStyles({
+    fontSize: "20px",
+    position: "relative",
+    top: "30px",
+    fontWeight: 600,
+    color: "Black",
+    left: 30,
+    width: 500
+})
+
+export const textFieldStyle: string = mergeStyles({
+    position: 'relative',
+    top: 10
+})

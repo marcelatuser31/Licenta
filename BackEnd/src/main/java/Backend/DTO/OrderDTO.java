@@ -11,4 +11,5 @@ public class OrderDTO {
     UUID id;
     List<CakeDTO> cakes;
     List<DrinkDTO> drinks;
+    String address;
 }

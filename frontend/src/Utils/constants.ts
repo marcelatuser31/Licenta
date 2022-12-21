@@ -35,3 +35,5 @@ export const DISCOVER_LOGO: string = "https://www.discover.com/company/images/ne
 export const AMEX_LOGO: string = "https://s1.q4cdn.com/692158879/files/design/svg/american-express-logo.svg"
 export const DINERS_LOGO: string = "https://cdn4.iconfinder.com/data/icons/simple-peyment-methods/512/diners_club-512.png"
 export const JCB_LOGO: string = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/JCB_logo.svg/1280px-JCB_logo.svg.png"
+export const DEFAULT_ADDRESS: string = "Default Address"
+export const CUSTOM_ADDRESS: string = "Custom Address"

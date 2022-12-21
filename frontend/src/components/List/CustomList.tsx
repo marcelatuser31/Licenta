@@ -1,6 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button } from '@mui/material';
 import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton } from '@mui/x-data-grid';
+import { GridInitialStateCommunity } from '@mui/x-data-grid/models/gridStateCommunity';
 import { useState } from "react";
 import { ARE_YOU_SURE, NO, QUESTION_MESSAGE, YES } from '../../Utils/constants';
 import { SweetAlertIcon } from '../../Utils/enums';
@@ -12,6 +13,7 @@ import { ICustomListProps } from "./CustomList.types";
 export const CustomList = (props: ICustomListProps): JSX.Element => {
     const [selectedItems, setSelectedItems] = useState<number[]>([]);
     const [items, setItems] = useState<any[]>(props.items);
+    const initialState: GridInitialStateCommunity = { columns: { columnVisibilityModel: { id: false } } }
 
     const onDeleteItems = (): void => {
         const newItems: any[] = items.filter((item: any) => !selectedItems.includes(item.id));
@@ -42,6 +44,7 @@ export const CustomList = (props: ICustomListProps): JSX.Element => {
     }
 
     return <DataGrid
+        initialState={initialState}
         style={dataGridStyle(props?.heigth, props?.width)}
         components={{ Toolbar: CustomToolbar }}
         componentsProps={{ toolbar: { left: 2 } }}

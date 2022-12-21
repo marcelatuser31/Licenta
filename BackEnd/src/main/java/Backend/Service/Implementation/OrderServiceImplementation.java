@@ -88,7 +88,7 @@ private final PersonServiceImplementation personServiceImplementation;
         }
 
         Person person = personRepository.findFirstById(orderDTO.getId());
-        Order order = new Order(UUID.randomUUID(), person, cakeList, drinkList, LocalDateTime.now());
+        Order order = new Order(UUID.randomUUID(), person, cakeList, drinkList, LocalDateTime.now(), orderDTO.getAddress());
         orderRepository.save(order);
 
         Float suma;

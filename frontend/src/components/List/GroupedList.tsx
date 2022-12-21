@@ -63,6 +63,9 @@ export const GroupedList = (props: ICustomListProps): JSX.Element => {
             rowGrouping: {
                 model: [props.groupByColumn || ''],
             },
+            columns: {
+                columnVisibilityModel: { id: false }
+            }
         },
     });
 

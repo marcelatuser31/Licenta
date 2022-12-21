@@ -9,7 +9,8 @@ export interface IItemDTO {
 export interface IOrderData {
     cakes?: IItemDTO[],
     id: string,
-    drinks?: IItemDTO[]
+    drinks?: IItemDTO[],
+    address: string
 }
 
 export interface IShoppingList {

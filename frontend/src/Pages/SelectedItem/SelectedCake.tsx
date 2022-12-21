@@ -40,7 +40,7 @@ export const SelectedCake = (): JSX.Element => {
         const cake: IItem | undefined = shoppingList.cakes.find((a: IItem) => a.id.substring(0, 36) === location.state.id && a.cakeMessage === cakeMessage && a.weight === selectedWeight)
         if (!cake) {
             const newCake: IItem = {
-                id: location.state.id + (location.state.price * selectedWeight) + cakeMessage + selectedWeight,
+                id: location.state.id,
                 name: location.state.title,
                 price: location.state.price * selectedWeight,
                 cakeMessage: cakeMessage,

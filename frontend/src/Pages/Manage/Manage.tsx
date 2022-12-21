@@ -48,7 +48,7 @@ export const Manage = (): JSX.Element => {
     const [drinks, setDrinks] = useState<IDrink[]>([])
     const [selectedCake, setSelectedCake] = useState<ICake>(defaultCake);
     const [selectedDrink, setSelectedDrink] = useState<IDrink>(defaultDrink);
-    const [addSelectedOption, setAddSelectedOption] = useState<IChoiceGroupOption | undefined>();
+    const [addSelectedOption, setAddSelectedOption] = useState<string>(CAKE);
     const [ingredients, setIngredients] = useState<IIngredient[]>([])
     const [shouldDisplayNewIngredient, setShouldDisplayNewIngredient] = React.useState<boolean>(false)
     const [newIngredient, setNewIngredient] = React.useState<IIngredient>(defaultIngredient)
@@ -159,12 +159,15 @@ export const Manage = (): JSX.Element => {
         setIsAdded(!isAdded)
     }
 
-    const onCheckBoxGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
-        setAddSelectedOption(option)
+    const onChoiceGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
+        if (option === undefined)
+            return
+
+        setAddSelectedOption(option.text)
     }
 
     const isCakeSelected = (): boolean | undefined => {
-        if (addSelectedOption?.key === CAKE)
+        if (addSelectedOption === CAKE)
             return true
     }
 
@@ -192,9 +195,10 @@ export const Manage = (): JSX.Element => {
 
     const dialogContent: JSX.Element =
         <div>
-            <ChoiceGroup onChange={onCheckBoxGroupChange}
+            <ChoiceGroup onChange={onChoiceGroupChange}
                 options={options}
                 styles={choiceGroupStyle}
+                defaultSelectedKey={addSelectedOption}
             />
             {itemFields.map((label: string) =>
                 <TextField

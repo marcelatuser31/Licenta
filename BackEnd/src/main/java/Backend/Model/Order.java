@@ -31,6 +31,8 @@ public class Order implements Serializable {
 
     private LocalDateTime date;
 
+    private String address;
+
     public Order(Person p, List<Cake> c){
         this.person=p;
         this.cakes=c;

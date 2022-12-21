@@ -8,4 +8,5 @@ export interface IOrder {
     cakes: ICake[];
     drinks: IDrink[];
     date: Date;
+    address: string;
 }
