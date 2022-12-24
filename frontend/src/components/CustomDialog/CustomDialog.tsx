@@ -1,4 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material"
+import { dialogContentStyle } from "./CustomDialog.styles";
 import { IDialogComponentProps } from "./CustomDialog.types";
 
 export const CustomDialog = (props: IDialogComponentProps): JSX.Element => {
@@ -12,7 +13,7 @@ export const CustomDialog = (props: IDialogComponentProps): JSX.Element => {
 
     return (<Dialog open={props.openDialog} onClose={props.onClose} >
         <DialogTitle>{props.title}</DialogTitle>
-        <DialogContent style={{ width: "550px", height: "1000px" }} >
+        <DialogContent style={dialogContentStyle(props.width, props.height)} >
             {props.content}
         </DialogContent>
         <DialogActions>

@@ -34,3 +34,8 @@ export namespace IngredientRoutes {
     export const GetAll: string = `${serverURL}/Ingredient/getAll`
     export const AddIngredient: string = `${serverURL}/Ingredient/insert`
 }
+
+export namespace CreditCardRoutes {
+    export const addCreditCard: string = `${serverURL}/CreditCard/addCreditCard`
+    export const getCreditCard: string = `${serverURL}/CreditCard/getByPerson`
+}

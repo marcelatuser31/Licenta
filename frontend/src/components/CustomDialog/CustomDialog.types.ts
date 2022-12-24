@@ -5,4 +5,6 @@ export interface IDialogComponentProps {
     onSubmit?: () => void;
     onClose: () => void;
     addButton?: boolean;
+    width?: number;
+    height?: number;
 }

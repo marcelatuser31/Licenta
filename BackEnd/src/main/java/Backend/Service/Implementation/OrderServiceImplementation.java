@@ -11,19 +11,12 @@ import Backend.Repository.DrinkRepository;
 import Backend.Repository.OrderRepository;
 import Backend.Repository.PersonRepository;
 import Backend.Service.OrderService;
-import Backend.Utils.Methods;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.UUID;
 
 @Service
@@ -33,7 +26,8 @@ public class OrderServiceImplementation implements OrderService {
     private final CakeRepository cakeRepository;
     private final PersonRepository personRepository;
     private final DrinkRepository drinkRepository;
-private final PersonServiceImplementation personServiceImplementation;
+    private final PersonServiceImplementation personServiceImplementation;
+
     @Override
     public Order readById(UUID id) {
         return orderRepository.findFirstById(id);

@@ -27,7 +27,6 @@ const options: IChoiceGroupOption[] = [
 export const ShoppingCart = (): JSX.Element => {
     const shoppingList: IShoppingList = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
-    const defaultAddress: string = person.address
     const navigate: NavigateFunction = useNavigate()
     const [selectedAddress, setSelectedAddress] = useState<string>(DEFAULT_ADDRESS);
     const [openDialog, setOpenDialog] = useState<boolean>(false)
@@ -71,7 +70,6 @@ export const ShoppingCart = (): JSX.Element => {
 
     const onChangeAddress = (event: any): void => {
         const value: string = event.target.value
-        console.log(value)
         setCustomAddress(value)
     }
 
@@ -91,7 +89,7 @@ export const ShoppingCart = (): JSX.Element => {
                 variant="outlined"
                 name={selectedAddress}
                 type="text"
-                defaultValue={defaultAddress}
+                defaultValue={person.address}
                 disabled={selectedAddress === DEFAULT_ADDRESS ? true : false}
                 className={textFieldStyle}
                 onChange={onChangeAddress}
@@ -112,7 +110,7 @@ export const ShoppingCart = (): JSX.Element => {
             id: person.id,
             cakes: mapToIItemDTO(shoppingList.cakes),
             drinks: mapToIItemDTO(shoppingList.drinks),
-            address: selectedAddress === CUSTOM_ADDRESS ? customAddress : defaultAddress
+            address: selectedAddress === CUSTOM_ADDRESS ? customAddress : person.address
         };
 
         await axios.post(OrderRoutes.AddOrder, orderData);

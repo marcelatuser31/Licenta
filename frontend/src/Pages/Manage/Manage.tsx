@@ -167,8 +167,7 @@ export const Manage = (): JSX.Element => {
     }
 
     const isCakeSelected = (): boolean | undefined => {
-        if (addSelectedOption === CAKE)
-            return true
+        return addSelectedOption === CAKE
     }
 
     const addIngredientContent: JSX.Element =

@@ -134,9 +134,10 @@ export const Navbar = () => {
                     </Box>
                     <div>
                         <Box sx={settingsBoxStyle}>
-                            <Badge color="error" badgeContent={shoppingList?.cakes?.length + shoppingList?.drinks.length} className={myCartButtonStyle} onClick={() => navigate(Pages.ShoppingCart)}>
-                                <ShoppingCartIcon />
-                            </Badge>
+                            {person.role.type == RoleType.Client
+                                && <Badge color="error" badgeContent={shoppingList?.cakes?.length + shoppingList?.drinks.length} className={myCartButtonStyle} onClick={() => navigate(Pages.ShoppingCart)}>
+                                    <ShoppingCartIcon />
+                                </Badge>}
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                     <img width={48} height={48} src={getImageURLfromByteArray(person.image) || DEFAULT_PROFILE_PHOTO} className={imageStyle}></img>
