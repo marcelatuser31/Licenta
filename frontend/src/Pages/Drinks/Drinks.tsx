@@ -94,6 +94,16 @@ export const Drinks = (): JSX.Element => {
             name={SORT_BY_NAME} />
     }
 
+    const getDrinksContent = (): JSX.Element => {
+        return <Stack>
+            <StackItem className={itemsContainerStyle}>
+                {
+                    drinks.length > 0 && drinks.map((drink: IDrink, index: number) => getCard(drink, index))
+                }
+            </StackItem>
+        </Stack>
+    }
+
     return <div>
         <Navbar />
         <Stack horizontal={true} gap='80'>
@@ -104,11 +114,7 @@ export const Drinks = (): JSX.Element => {
                 </Stack>
             </StackItem>
             <div className={dividerStyle} />
-            <StackItem className={itemsContainerStyle}>
-                {
-                    drinks.length > 0 && drinks.map((drink: IDrink, index: number) => getCard(drink, index))
-                }
-            </StackItem>
+            <Section name={"All"} contentValue={getDrinksContent()}></Section>
         </Stack >
     </div >
 }

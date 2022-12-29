@@ -141,6 +141,16 @@ export const Cakes = (): JSX.Element => {
         </div>
     }
 
+    const getCakesContent = (): JSX.Element => {
+        return <Stack>
+            <StackItem className={itemsContainerStyle}>
+                {
+                    getFilteredCakes().map((cake: ICake, index: number) => getCard(cake, index))
+                }
+            </StackItem>
+        </Stack>
+    }
+
     return <>
         <Navbar />
         <Stack horizontal={true} gap='80'>
@@ -152,11 +162,7 @@ export const Cakes = (): JSX.Element => {
                 </Stack>
             </StackItem>
             <div className={dividerStyle} />
-            <StackItem className={itemsContainerStyle}>
-                {
-                    cakes.length > 0 && getFilteredCakes().map((cake: ICake, index: number) => getCard(cake, index))
-                }
-            </StackItem>
+            <Section name={"Type: " + selectedType} contentValue={getCakesContent()}></Section>
         </Stack >
     </>
 }
