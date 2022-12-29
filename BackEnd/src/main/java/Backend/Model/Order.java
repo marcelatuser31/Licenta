@@ -25,16 +25,9 @@ public class Order implements Serializable {
     private Person person;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     private List<Cake> cakes;
-
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private List<Drink> drinks;
-
     private LocalDateTime date;
-
     private String address;
-
-    public Order(Person p, List<Cake> c){
-        this.person=p;
-        this.cakes=c;
-    }
+    private String paymentMethod;
 }

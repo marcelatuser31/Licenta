@@ -36,7 +36,7 @@ export const deleteButtonStyle: React.CSSProperties = {
     fontSize: "0.8125rem"
 }
 
-export const addressLabelStyle: string = mergeStyles({
+export const labelStyle: string = mergeStyles({
     fontSize: "20px",
     position: "relative",
     top: "30px",
@@ -45,7 +45,7 @@ export const addressLabelStyle: string = mergeStyles({
     width: 200
 })
 
-export const addressValueStyle: string = mergeStyles({
+export const valueStyle: string = mergeStyles({
     fontSize: "20px",
     position: "relative",
     top: "30px",

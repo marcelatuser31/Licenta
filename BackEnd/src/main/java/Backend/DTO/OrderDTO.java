@@ -8,8 +8,9 @@ import java.util.UUID;
 
 @Data
 public class OrderDTO {
-    UUID id;
-    List<CakeDTO> cakes;
-    List<DrinkDTO> drinks;
-    String address;
+    private UUID id;
+    private List<CakeDTO> cakes;
+    private List<DrinkDTO> drinks;
+    private String address;
+    private String paymentMethod;
 }

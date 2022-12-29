@@ -19,15 +19,17 @@ public class CreditCardServiceImplementation implements CreditCardService {
 
     @Override
     public void addCreditCard(CreditCardDTO creditCardDTO) {
-        Person person = personRepository.findFirstById(creditCardDTO.getPersonId());
-        CreditCard creditCard = new CreditCard(UUID.randomUUID(), person, creditCardDTO.getCardNumber(), creditCardDTO.getCardHolder(), creditCardDTO.getExpireMonth(), creditCardDTO.getExpireYear());
-        creditCardRepository.save(creditCard);
+        CreditCard dbCreditCard = creditCardRepository.findFirstByCardNumber(creditCardDTO.getCardNumber());
+        if (dbCreditCard == null) {
+            Person person = personRepository.findFirstById(creditCardDTO.getPersonId());
+            CreditCard creditCard = new CreditCard(UUID.randomUUID(), person, creditCardDTO.getCardNumber(), creditCardDTO.getCardHolder(), creditCardDTO.getExpireMonth(), creditCardDTO.getExpireYear());
+            creditCardRepository.save(creditCard);
+        }
     }
 
     @Override
-    public CreditCard getByPerson(UUID id) {
-        Person person=personRepository.findFirstById(id);
-        CreditCard creditCard=creditCardRepository.findFirstByPerson(person);
+    public CreditCard getByPerson(Person person) {
+        CreditCard creditCard = creditCardRepository.findFirstByPerson(person);
         return creditCard;
     }
 }

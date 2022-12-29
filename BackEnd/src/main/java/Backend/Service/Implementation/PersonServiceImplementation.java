@@ -39,7 +39,7 @@ public class PersonServiceImplementation implements PersonService {
         personRepository.save(newPerson);
 
         String message = "Username-ul tau este " + person.getRole().getUsername() + " si parola" + person.getRole().getPassword();
-        sendEmail(person.getRole().getEmail(), message, "New Account");
+//        sendEmail(person.getRole().getEmail(), message, "New Account");
     }
 
     @Override
@@ -110,4 +110,3 @@ public class PersonServiceImplementation implements PersonService {
         return person;
     }
 }
-

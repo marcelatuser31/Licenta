@@ -11,6 +11,7 @@ export interface IOrderData {
     id: string,
     drinks?: IItemDTO[],
     address: string
+    paymentMethod: string
 }
 
 export interface IShoppingList {

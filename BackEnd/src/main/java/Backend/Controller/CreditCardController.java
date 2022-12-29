@@ -1,6 +1,7 @@
 package Backend.Controller;
 
 import Backend.DTO.CreditCardDTO;
+import Backend.Model.Person;
 import Backend.Service.Implementation.CreditCardServiceImplementation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class CreditCardController {
     }
 
     @PostMapping("/getByPerson")
-    public ResponseEntity getByPerson(@RequestBody UUID id) {
-        return ResponseEntity.status(HttpStatus.OK).body(creditCardServiceImplementation.getByPerson(id));
+    public ResponseEntity getByPerson(@RequestBody Person person) {
+        return ResponseEntity.status(HttpStatus.OK).body(creditCardServiceImplementation.getByPerson(person));
     }
 }

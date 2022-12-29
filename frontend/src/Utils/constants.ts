@@ -37,3 +37,5 @@ export const DINERS_LOGO: string = "https://cdn4.iconfinder.com/data/icons/simpl
 export const JCB_LOGO: string = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/JCB_logo.svg/1280px-JCB_logo.svg.png"
 export const DEFAULT_ADDRESS: string = "Default Address"
 export const CUSTOM_ADDRESS: string = "Custom Address"
+export const CASH_ON_DELIVERY: string = "Cash on delivery"
+export const ONLINE_PAYMENT: string = "Online Payment"

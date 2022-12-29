@@ -9,4 +9,5 @@ export interface IOrder {
     drinks: IDrink[];
     date: Date;
     address: string;
+    paymentMethod: string;
 }

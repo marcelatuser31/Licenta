@@ -4,24 +4,31 @@ import { GridColDef } from "@mui/x-data-grid";
 import axios from "axios";
 import { useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
+import { CreditCard } from "../../components/CreditCard/CreditCard";
+import { ICreditCardData } from "../../components/CreditCard/CreditCard.types";
 import { CustomDialog } from "../../components/CustomDialog/CustomDialog";
 import { GroupedList } from "../../components/List/GroupedList";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { Section } from "../../components/Section/Section";
-import { ADD_ORDER_MESSAGE, CAKE, CUSTOM_ADDRESS, DEFAULT_ADDRESS, DRINK, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants";
+import { ADD_ORDER_MESSAGE, CAKE, CASH_ON_DELIVERY, CUSTOM_ADDRESS, DEFAULT_ADDRESS, DRINK, ONLINE_PAYMENT, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants";
 import { Pages, SweetAlertIcon } from "../../Utils/enums";
 import { getMessage, reloadPage } from "../../Utils/methods";
 import { IPerson } from "../../Utils/Models/IPerson";
-import { OrderRoutes } from "../../Utils/Routes/backEndRoutes";
+import { CreditCardRoutes, OrderRoutes } from "../../Utils/Routes/backEndRoutes";
 import { emptyShoppingCart } from "../LogIn/LogIn";
 import { choiceGroupStyle } from "../SelectedItem/SelectedCake.styles";
 import { IItem } from "../SelectedItem/SelectedCake.types";
-import { addOrderButtonStyle, addressLabelStyle, addressValueStyle, boxStyle, innerDiv, listStyle, outerDiv, textFieldStyle } from "./ShoppingCart.Styles";
+import { addOrderButtonStyle, labelStyle, valueStyle, boxStyle, innerDiv, listStyle, outerDiv, textFieldStyle } from "./ShoppingCart.Styles";
 import { IItemDTO, IOrderData, IShoppingList } from "./ShoppingCart.types";
 
-const options: IChoiceGroupOption[] = [
+const addressOptions: IChoiceGroupOption[] = [
     { key: DEFAULT_ADDRESS, text: DEFAULT_ADDRESS, styles: { root: { marginLeft: 20 } } },
     { key: CUSTOM_ADDRESS, text: CUSTOM_ADDRESS, styles: { root: { marginLeft: 20 } } },
+];
+
+const paymentMethodOptions: IChoiceGroupOption[] = [
+    { key: CASH_ON_DELIVERY, text: CASH_ON_DELIVERY, styles: { root: { marginLeft: 20 } } },
+    { key: ONLINE_PAYMENT, text: ONLINE_PAYMENT, styles: { root: { marginLeft: 20 } } },
 ];
 
 export const ShoppingCart = (): JSX.Element => {
@@ -29,8 +36,13 @@ export const ShoppingCart = (): JSX.Element => {
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
     const navigate: NavigateFunction = useNavigate()
     const [selectedAddress, setSelectedAddress] = useState<string>(DEFAULT_ADDRESS);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>(CASH_ON_DELIVERY)
     const [openDialog, setOpenDialog] = useState<boolean>(false)
     const [customAddress, setCustomAddress] = useState<string>("")
+    const [cardNumber, setCardNumber] = useState<string>("#### #### #### ####");
+    const [cardHolder, setCardHolder] = useState<string>("");
+    const [expireMonth, setExpireMonth] = useState<string>("January");
+    const [expireYear, setExpireYear] = useState<string>('2023');
 
     const mapToIItemDTO = (items: IItem[]): IItemDTO[] => {
         return items.map((order: IItem) => { return { id: order.id, amount: order.amount, price: order.price } })
@@ -61,11 +73,18 @@ export const ShoppingCart = (): JSX.Element => {
 
     const rows: any = [...cakes, ...drinks]
 
-    const onChoiceGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
+    const onAddressChoiceGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
         if (option === undefined)
             return
 
         setSelectedAddress(option.text)
+    }
+
+    const onPaymentMethodChoiceGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
+        if (option === undefined)
+            return
+
+        setSelectedPaymentMethod(option.text)
     }
 
     const onChangeAddress = (event: any): void => {
@@ -75,8 +94,8 @@ export const ShoppingCart = (): JSX.Element => {
 
     const getAddressContent = (): JSX.Element => {
         return <div>
-            <ChoiceGroup onChange={onChoiceGroupChange}
-                options={options}
+            <ChoiceGroup onChange={onAddressChoiceGroupChange}
+                options={addressOptions}
                 defaultSelectedKey={selectedAddress}
                 styles={choiceGroupStyle}
             />
@@ -97,10 +116,31 @@ export const ShoppingCart = (): JSX.Element => {
         </div>
     }
 
-    const dialogContent: JSX.Element =
-        <div>
-            <Section name={"Address:"} contentValue={getAddressContent()} labelStyle={addressLabelStyle} valueStyle={addressValueStyle} />
+    const getPaymentMethodContent = (): JSX.Element => {
+        return <div>
+            <ChoiceGroup onChange={onPaymentMethodChoiceGroupChange}
+                options={paymentMethodOptions}
+                defaultSelectedKey={selectedPaymentMethod}
+                styles={choiceGroupStyle}
+            />
+            {selectedPaymentMethod === ONLINE_PAYMENT
+                && <CreditCard
+                    setCardHolder={setCardHolder}
+                    setCardNumber={setCardNumber}
+                    setExpireMonth={setExpireMonth}
+                    setExpireYear={setExpireYear}
+                    cardHolder={cardHolder}
+                    cardNumber={cardNumber}
+                    expireMonth={expireMonth}
+                    expireYear={expireYear} />}
         </div>
+    }
+
+    const dialogContent: JSX.Element =
+        <Stack gap={30}>
+            <Section name={"Address:"} contentValue={getAddressContent()} labelStyle={labelStyle} valueStyle={valueStyle} gap={10} />
+            <Section name={"Payment Method"} contentValue={getPaymentMethodContent()} labelStyle={labelStyle} valueStyle={valueStyle} gap={10} />
+        </Stack>
 
     const onSave = async (): Promise<void> => {
         if (person.id === undefined)
@@ -110,13 +150,24 @@ export const ShoppingCart = (): JSX.Element => {
             id: person.id,
             cakes: mapToIItemDTO(shoppingList.cakes),
             drinks: mapToIItemDTO(shoppingList.drinks),
-            address: selectedAddress === CUSTOM_ADDRESS ? customAddress : person.address
+            address: selectedAddress === CUSTOM_ADDRESS ? customAddress : person.address,
+            paymentMethod: selectedPaymentMethod
         };
 
         await axios.post(OrderRoutes.AddOrder, orderData);
         getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_ORDER_MESSAGE)
         navigate(Pages.Home)
         localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(emptyShoppingCart))
+
+        const creditCardData: ICreditCardData = {
+            personId: person.id,
+            cardNumber: cardNumber,
+            cardHolder: cardHolder,
+            expireMonth: expireMonth,
+            expireYear: expireYear
+        }
+
+        await axios.post(CreditCardRoutes.addCreditCard, creditCardData);
     }
 
     const deletedItems = (items: IItem[]): void => {
