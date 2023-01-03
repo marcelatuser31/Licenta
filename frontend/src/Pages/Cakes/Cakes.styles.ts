@@ -1,13 +1,13 @@
 import { mergeStyles } from "@fluentui/merge-styles";
-import { borderRadius } from "@mui/system";
+
 import { DEFAULT_COLOR } from "../../Utils/constants";
 
 export const itemsContainerStyle: string = mergeStyles({
-    display: "grid",
-    gap: "100px",
-    gridTemplateColumns: "repeat(4, 1fr)",
+    display: "flex",
+    flexWrap: "wrap",
+    width: "75vw",
+    gap: "60px",
     position: 'relative',
-    left: 20,
     top: 30
 })
 
