@@ -22,6 +22,7 @@
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
     "animate.css": "^4.1.1",
+    "antd": "^5.1.2",
     "atob": "^2.1.2",
     "axios": "^0.27.2",
     "buffer": "^6.0.3",

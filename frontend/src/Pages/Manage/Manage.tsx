@@ -201,7 +201,7 @@ export const Manage = (): JSX.Element => {
             />
             {itemFields.map((label: string) =>
                 <TextField
-                    autoFocus
+                    autoFocus={true}
                     margin="dense"
                     id={label}
                     label={label}

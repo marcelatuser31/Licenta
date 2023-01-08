@@ -1,5 +1,5 @@
 import { ChoiceGroup, IChoiceGroupOption, IDropdownOption, Stack, StackItem } from "@fluentui/react"
-import { styled } from "@mui/material"
+import { styled, TextField } from "@mui/material"
 import axios from "axios"
 import * as React from 'react'
 import { useEffect, useState } from "react"
@@ -16,6 +16,7 @@ import { CakeRoutes } from "../../Utils/Routes/backEndRoutes"
 import { choiceGroupStyle } from "./Cakes.styles"
 import { IFavoriteItem } from "../../components/CustomCard/CustomCard.types"
 import { Pages } from "../../Utils/enums"
+import { IIngredient } from "../../Utils/Models/IIngredient"
 
 export const Input = styled('input')({ display: 'none' })
 const getCard = (cake: ICake, index: number): JSX.Element => {
@@ -41,6 +42,7 @@ export const Cakes = (): JSX.Element => {
     const [selectedType, setSelectedType] = useState<string>('All');
     const [selectedSortPriceOption, setSelectedSortPriceOption] = useState<string>("");
     const [selectedSortNameOption, setSelectedSortNameOption] = useState<string>("");
+    const [searchedCake, setSearchedCake] = useState<string>("")
 
     const sortByPrice = (): void => {
         let sortCakeList: ICake[] = []
@@ -87,6 +89,15 @@ export const Cakes = (): JSX.Element => {
         if (selectedType === 'All')
             return cakes;
         return cakes.filter((cake: ICake) => cake.type === selectedType)
+    }
+
+    const onSearch = (event: any): void => {
+        const value: string = event.target.value
+        setSearchedCake(value)
+    }
+
+    const getSearchedCakes = (): ICake[] => {
+        return cakes.filter((cake: ICake) => cake.name.includes(searchedCake))
     }
 
     const onChoiceGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
@@ -145,14 +156,15 @@ export const Cakes = (): JSX.Element => {
         return <Stack>
             <StackItem className={itemsContainerStyle}>
                 {
-                    getFilteredCakes().map((cake: ICake, index: number) => getCard(cake, index))
+                    ((searchedCake) ? getSearchedCakes() : getFilteredCakes()).map((cake: ICake, index: number) => getCard(cake, index))
                 }
             </StackItem>
         </Stack>
     }
 
     return <>
-        <Navbar />
+        <Navbar onSearch={onSearch} searchedItem={searchedCake} displaySearch={true} />
+        {/* <TextField id="standard-basic" label="Standard" variant="standard" onChange={onSearch} /> */}
         <Stack horizontal={true} gap='80'>
             <StackItem >
                 <Stack gap='60'>
@@ -163,6 +175,7 @@ export const Cakes = (): JSX.Element => {
             </StackItem>
             <div className={dividerStyle} />
             <Section name={"Type: " + selectedType} contentValue={getCakesContent()}></Section>
+
         </Stack >
     </>
 }

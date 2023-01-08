@@ -31,6 +31,13 @@ const paymentMethodOptions: IChoiceGroupOption[] = [
     { key: ONLINE_PAYMENT, text: ONLINE_PAYMENT, styles: { root: { marginLeft: 20 } } },
 ];
 
+const defaultCreditCardData: ICreditCardData = {
+    cardNumber: "#### #### #### ####",
+    cardHolder: "",
+    expireMonth: "March",
+    expireYear: "2025"
+}
+
 export const ShoppingCart = (): JSX.Element => {
     const shoppingList: IShoppingList = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
@@ -39,10 +46,7 @@ export const ShoppingCart = (): JSX.Element => {
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>(CASH_ON_DELIVERY)
     const [openDialog, setOpenDialog] = useState<boolean>(false)
     const [customAddress, setCustomAddress] = useState<string>("")
-    const [cardNumber, setCardNumber] = useState<string>("#### #### #### ####");
-    const [cardHolder, setCardHolder] = useState<string>("");
-    const [expireMonth, setExpireMonth] = useState<string>("January");
-    const [expireYear, setExpireYear] = useState<string>('2023');
+    const [creditCardData, setCreditCardData] = useState<ICreditCardData>(defaultCreditCardData)
 
     const mapToIItemDTO = (items: IItem[]): IItemDTO[] => {
         return items.map((order: IItem) => { return { id: order.id, amount: order.amount, price: order.price } })
@@ -74,14 +78,14 @@ export const ShoppingCart = (): JSX.Element => {
     const rows: any = [...cakes, ...drinks]
 
     const onAddressChoiceGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
-        if (option === undefined)
+        if (!option)
             return
 
         setSelectedAddress(option.text)
     }
 
     const onPaymentMethodChoiceGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
-        if (option === undefined)
+        if (!option)
             return
 
         setSelectedPaymentMethod(option.text)
@@ -124,15 +128,8 @@ export const ShoppingCart = (): JSX.Element => {
                 styles={choiceGroupStyle}
             />
             {selectedPaymentMethod === ONLINE_PAYMENT
-                && <CreditCard
-                    setCardHolder={setCardHolder}
-                    setCardNumber={setCardNumber}
-                    setExpireMonth={setExpireMonth}
-                    setExpireYear={setExpireYear}
-                    cardHolder={cardHolder}
-                    cardNumber={cardNumber}
-                    expireMonth={expireMonth}
-                    expireYear={expireYear} />}
+                && <CreditCard setCreditCardData={setCreditCardData}
+                    creditCardData={creditCardData} />}
         </div>
     }
 
@@ -143,7 +140,7 @@ export const ShoppingCart = (): JSX.Element => {
         </Stack>
 
     const onSave = async (): Promise<void> => {
-        if (person.id === undefined)
+        if (!person.id)
             return
 
         const orderData: IOrderData = {
@@ -159,15 +156,20 @@ export const ShoppingCart = (): JSX.Element => {
         navigate(Pages.Home)
         localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(emptyShoppingCart))
 
-        const creditCardData: ICreditCardData = {
-            personId: person.id,
-            cardNumber: cardNumber,
-            cardHolder: cardHolder,
-            expireMonth: expireMonth,
-            expireYear: expireYear
-        }
+        if (selectedPaymentMethod === ONLINE_PAYMENT) {
+            if (!creditCardData)
+                return
 
-        await axios.post(CreditCardRoutes.addCreditCard, creditCardData);
+            const newCreditCardData: ICreditCardData = {
+                personId: person.id,
+                cardNumber: creditCardData.cardNumber,
+                cardHolder: creditCardData.cardHolder,
+                expireMonth: creditCardData.expireMonth,
+                expireYear: creditCardData.expireYear
+            }
+
+            await axios.post(CreditCardRoutes.addCreditCard, newCreditCardData);
+        }
     }
 
     const deletedItems = (items: IItem[]): void => {

@@ -1,4 +1,7 @@
-export interface IHeaderProps {
-    cakeTypes?: string[],
-    setSelectedType?: (state: string) => void,
+import { ICake } from "../../Utils/Models/ICake";
+
+export interface INavbarProps {
+    onSearch?: (event: any) => any;
+    searchedItem?: string
+    displaySearch?: boolean
 }
