@@ -17,6 +17,7 @@ import { CakeRoutes, DrinkRoutes, IngredientRoutes } from "../../Utils/Routes/ba
 import { choiceGroupStyle } from "../SelectedItem/SelectedCake.styles"
 import { boxStyle, innerDiv, listStyle, outerDiv } from "../ShoppingCart/ShoppingCart.Styles"
 import AddIcon from '@mui/icons-material/Add';
+import { CustomDialog } from "../../components/CustomDialog/CustomDialog"
 
 const options: IChoiceGroupOption[] = [
     { key: CAKE, text: CAKE, styles: { root: { marginLeft: 20 } } },
@@ -44,16 +45,20 @@ const defaultIngredient: IIngredient = {
 }
 
 export const Manage = (): JSX.Element => {
-    const [cakes, setCakes] = useState<ICake[]>([])
-    const [drinks, setDrinks] = useState<IDrink[]>([])
+    const [cakes, setCakes] = useState<ICake[]>([]);
+    const [drinks, setDrinks] = useState<IDrink[]>([]);
     const [selectedCake, setSelectedCake] = useState<ICake>(defaultCake);
     const [selectedDrink, setSelectedDrink] = useState<IDrink>(defaultDrink);
     const [addSelectedOption, setAddSelectedOption] = useState<string>(CAKE);
-    const [ingredients, setIngredients] = useState<IIngredient[]>([])
-    const [shouldDisplayNewIngredient, setShouldDisplayNewIngredient] = React.useState<boolean>(false)
-    const [newIngredient, setNewIngredient] = React.useState<IIngredient>(defaultIngredient)
-    const [isAdded, setIsAdded] = React.useState<boolean>(false)
-    const itemFields: string[] = [ItemField.Name, ItemField.Price, ItemField.Weight, ItemField.Amount]
+    const [ingredients, setIngredients] = useState<IIngredient[]>([]);
+    const [allIngredients, setAllIngredients] = useState<IIngredient[]>([]);
+    const [shouldDisplayNewIngredient, setShouldDisplayNewIngredient] = React.useState<boolean>(false);
+    const [newIngredient, setNewIngredient] = React.useState<IIngredient>(defaultIngredient);
+    const [isAdded, setIsAdded] = React.useState<boolean>(false);
+    const itemFields: ItemField[] = [ItemField.Name, ItemField.Price, ItemField.Weight, ItemField.Amount];
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
+    const [selectedItems, setSelectedItems] = useState<number[]>([]);
+    const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
     useEffect(() => {
         const getData = async (): Promise<void> => {
@@ -62,6 +67,9 @@ export const Manage = (): JSX.Element => {
 
             response = await axios.get(DrinkRoutes.GetAll)
             setDrinks(response.data)
+
+            response = await axios.get(IngredientRoutes.GetAll)
+            setIngredients(response.data)
         }
         getData()
     }, [])
@@ -143,14 +151,19 @@ export const Manage = (): JSX.Element => {
     }
 
     const onSaveCake = async (): Promise<void> => {
-        setSelectedCake({ ...selectedCake, ingredients: ingredients })
-        await axios.post(CakeRoutes.AddCake, selectedCake);
+        await axios.post(CakeRoutes.AddCake, { ...selectedCake, ingredients: ingredients });
         getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE)
+
+        let response = await axios.get(CakeRoutes.GetAll)
+        setCakes(response.data)
     }
 
     const onSaveDrink = async (): Promise<void> => {
         await axios.post(DrinkRoutes.AddDrink, selectedDrink);
         getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE)
+
+        let response = await axios.get(DrinkRoutes.GetAll)
+        setDrinks(response.data)
     }
 
     const onSaveNewIngredient = async (): Promise<void> => {
@@ -192,31 +205,95 @@ export const Manage = (): JSX.Element => {
             </StackItem>
         </Stack>
 
-    const dialogContent: JSX.Element =
-        <div>
-            <ChoiceGroup onChange={onChoiceGroupChange}
-                options={options}
-                styles={choiceGroupStyle}
-                defaultSelectedKey={addSelectedOption}
-            />
-            {itemFields.map((label: string) =>
-                <TextField
+    const getValue = (field: ItemField, item: any): string | IIngredient[] => {
+        if (!item)
+            return "";
+
+        switch (field) {
+            case ItemField.Amount:
+                return item.amount;
+            case ItemField.Name:
+                return item.name;
+            case ItemField.Price:
+                return item.price;
+            case ItemField.Weight:
+                return item.weight;
+        }
+        return "";
+    }
+
+    const getFields = (item: any): JSX.Element => {
+        return <div>
+            {itemFields.map((label: ItemField) =>
+                isEditMode ? <TextField
                     autoFocus={true}
                     margin="dense"
                     id={label}
                     label={label}
                     fullWidth
+                    defaultValue={isEditMode ? getValue(label, item) : ""}
                     variant="standard"
                     name={label}
                     onChange={(isCakeSelected()) ? onChangeCake : onChangeDrink}
                     type={label === ItemField.Name ? 'text' : 'Number'}
                     InputProps={{ inputProps: { min: 1, max: 100 } }}
-                />)}
-            {(isCakeSelected())
-                && <IngredientsList setIngredients={setIngredients} setShouldDisplayNewIngredient={setShouldDisplayNewIngredient} isAdded={isAdded} />
+                /> :
+                    <TextField
+                        autoFocus={true}
+                        margin="dense"
+                        id={label}
+                        label={label}
+                        fullWidth
+                        variant="standard"
+                        name={label}
+                        onChange={(isCakeSelected()) ? onChangeCake : onChangeDrink}
+                        type={label === ItemField.Name ? 'text' : 'Number'}
+                        InputProps={{ inputProps: { min: 1, max: 100 } }}
+                    />)}
+        </div>
+    }
+
+    const getDialogContent = (): JSX.Element => {
+        const item = rows.find((i: any) => i.id === selectedItems[0]);
+
+        let ingredientsList: IIngredient[] = [];
+        const cake: ICake | undefined = cakes.find((i: any) => i.id === item?.id);
+
+        if (cake)
+            ingredientsList = cake.ingredients;
+
+        return <div>
+            {!isEditMode && <ChoiceGroup onChange={onChoiceGroupChange}
+                options={options}
+                styles={choiceGroupStyle}
+                defaultSelectedKey={addSelectedOption}
+            />}
+            {getFields(item)}
+
+            {isCakeSelected() && <IngredientsList
+                availableIngredients={allIngredients.filter((ingredient: IIngredient) => !ingredientsList.includes(ingredient))}
+                selectedIngredients={ingredientsList}
+                setIngredients={setIngredients}
+                setShouldDisplayNewIngredient={setShouldDisplayNewIngredient}
+                isAdded={isAdded} />
             }
             {(shouldDisplayNewIngredient) && addIngredientContent}
         </div >
+    }
+
+    const onManage = (isEditMode: boolean): void => {
+        setOpenDialog(true)
+        setIsEditMode(isEditMode);
+    }
+
+    const onDeleteItems = async (deletedItems: any): Promise<void> => {
+        deletedItems.forEach(async (item: any) =>
+            await axios.post(CakeRoutes.DeleteCake, deletedItems[0].id as string)
+        )
+
+        const response = await axios.get(CakeRoutes.GetAll);
+        setCakes(response.data);
+    }
 
     return <>
         <Stack>
@@ -230,14 +307,22 @@ export const Manage = (): JSX.Element => {
                             <GroupedList groupByColumn={'type'}
                                 items={rows}
                                 columns={columns}
-                                addButton={true}
-                                dialogContent={dialogContent}
-                                dialogTitle={(isCakeSelected()) ? ADD_CAKE : ADD_DRINK}
-                                onSave={(isCakeSelected()) ? onSaveCake : onSaveDrink}
-                                width={1150} />
+                                showManageButtons={true}
+                                onManage={onManage}
+                                setSelectedItems={setSelectedItems}
+                                width={1150}
+                                onDeleteItems={onDeleteItems}
+                            />
                         </Box>
                     </div>
                 </div>
+                <CustomDialog
+                    openDialog={openDialog}
+                    content={getDialogContent()}
+                    title={isCakeSelected() ? isEditMode ? "Edit Cake" : ADD_CAKE : isEditMode ? "Edit Drink" : ADD_DRINK}
+                    onSubmit={isCakeSelected() ? onSaveCake : onSaveDrink}
+                    onClose={() => setOpenDialog(false)}
+                    addButton={true}></CustomDialog>
             </StackItem>
         </Stack >
     </>

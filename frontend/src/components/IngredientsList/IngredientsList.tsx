@@ -8,14 +8,23 @@ import AddIcon from '@mui/icons-material/Add';
 import { buttonStyle, paperStyle } from "./IngredientsList.styles";
 
 export const IngredientsList = (props: IIngredientsListProps): JSX.Element => {
-    const [checkedIngredients, setCheckedIngredients] = React.useState<IIngredient[]>([])
-    const [selectedIngredients, setSelectedIngredients] = React.useState<IIngredient[]>([]);
+    const [checkedIngredients, setCheckedIngredients] = React.useState<IIngredient[]>(props.availableIngredients ? props.availableIngredients : [])
+    const [selectedIngredients, setSelectedIngredients] = React.useState<IIngredient[]>(props.selectedIngredients ? props.selectedIngredients : []);
     const [availableIngredients, setAvailableIngredients] = React.useState<IIngredient[]>([]);
 
     useEffect(() => {
         props.setIngredients(selectedIngredients)
     }, [selectedIngredients])
 
+    useEffect(() => {
+
+        if (props.selectedIngredients)
+            setAvailableIngredients(props.selectedIngredients);
+
+        if (props.availableIngredients)
+            setAvailableIngredients(props.availableIngredients);
+
+    }, []);
 
     useEffect(() => {
         const getIngredients = async (): Promise<void> => {

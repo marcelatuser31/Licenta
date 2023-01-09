@@ -8,9 +8,8 @@ export interface ICustomListProps {
     heigth?: number;
     width?: number;
     groupByColumn?: string;
-    addButton?: boolean
-    dialogContent?: JSX.Element
-    dialogTitle?: string
+    showManageButtons?: boolean;
+    onManage?: any;
     onSave?: () => void;
 }
 

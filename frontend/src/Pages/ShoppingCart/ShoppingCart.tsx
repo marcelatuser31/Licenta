@@ -127,9 +127,7 @@ export const ShoppingCart = (): JSX.Element => {
                 defaultSelectedKey={selectedPaymentMethod}
                 styles={choiceGroupStyle}
             />
-            {selectedPaymentMethod === ONLINE_PAYMENT
-                && <CreditCard setCreditCardData={setCreditCardData}
-                    creditCardData={creditCardData} />}
+            {selectedPaymentMethod === ONLINE_PAYMENT && <CreditCard setCreditCardData={setCreditCardData} creditCardData={creditCardData} />}
         </div>
     }
 
