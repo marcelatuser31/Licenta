@@ -8,6 +8,7 @@ export const ingredientsNameStyle: string = mergeStyles({
 export const customCardStyle: string = mergeStyles({
     margin: "15px",
     width: "300px"
+
 })
 
 export const cardStyle: SxProps<Theme> = {

@@ -2,14 +2,17 @@ import { mergeStyles } from "@fluentui/merge-styles";
 import { DEFAULT_COLOR } from "../../Utils/constants";
 
 export const descriptionStyle: string = mergeStyles({
-    width: 750,
+    width: "45vw",
     fontFamily: 'Brush Script MT',
-    fontSize: "23px"
+    fontSize: "1.75vw",
+    position: "relative",
+    left: 50,
+    textAlign: "center"
 })
 
 export const aboutUsContentStyle: string = mergeStyles({
     position: "relative",
-    top: "40px",
+    top: "50px",
     fontWeight: 600,
     color: "Black",
     left: 100,
@@ -17,11 +20,12 @@ export const aboutUsContentStyle: string = mergeStyles({
 })
 
 export const aboutUsLabelStyle: string = mergeStyles({
-    fontSize: "30px",
+    fontSize: "3.5vw",
     position: "relative",
     top: "30px",
-    left: 50,
+    left: 80,
     fontWeight: 600,
     color: DEFAULT_COLOR,
-    width: 1200
+    width: 1200,
+    fontFamily: 'Brush Script MT',
 })
