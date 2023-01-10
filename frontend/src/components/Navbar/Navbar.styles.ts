@@ -48,6 +48,7 @@ export const expandedLogoStyle: SxProps<Theme> = {
     letterSpacing: '.3rem',
     color: 'inherit',
     textDecoration: 'none',
+    cursor: "pointer"
 }
 
 export const cakeIconStyle: SxProps<Theme> = {
@@ -63,6 +64,7 @@ export const logoStyle: SxProps<Theme> = {
     letterSpacing: '.3rem',
     color: 'inherit',
     textDecoration: 'none',
+    cursor: "pointer"
 }
 
 export const expandedMenuBoxStyle: SxProps<Theme> = {

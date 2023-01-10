@@ -101,12 +101,13 @@ export const Navbar = (props: INavbarProps): JSX.Element => {
         <AppBar position="sticky" >
             <Container maxWidth="xl" style={containerStyle}>
                 <Toolbar disableGutters >
-                    <CakeIcon sx={expandedCakeIconStyle} />
+                    <CakeIcon sx={expandedCakeIconStyle} onClick={() => navigate(Pages.Home)} />
                     <Typography
                         variant="h6"
                         noWrap
                         component="a"
                         sx={expandedLogoStyle}
+                        onClick={() => navigate(Pages.Home)}
                     >
                         SWEET
                     </Typography>
@@ -142,23 +143,22 @@ export const Navbar = (props: INavbarProps): JSX.Element => {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page.substring(1)}</Typography>
+                                    <Typography textAlign="center" onClick={() => navigate(page)}>{page.substring(1)} </Typography>
                                 </MenuItem>
                             ))}
                             <MenuItem onClick={() => navigate(Pages.Manage)}>Manage</MenuItem>
                         </Menu>
                     </Box>
-
                     <CakeIcon sx={cakeIconStyle} />
                     <Typography
                         variant="h5"
                         noWrap
                         component="a"
                         sx={logoStyle}
+                        onClick={() => navigate(Pages.Home)}
                     >
                         SWEET
                     </Typography>
-
                     <Box sx={menuBoxStyle}>
                         {pages.map((page) => (
                             <Button

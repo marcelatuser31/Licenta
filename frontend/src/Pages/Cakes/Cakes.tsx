@@ -1,5 +1,5 @@
 import { ChoiceGroup, IChoiceGroupOption, IDropdownOption, Stack, StackItem } from "@fluentui/react"
-import { styled, TextField } from "@mui/material"
+import { styled } from "@mui/material"
 import axios from "axios"
 import * as React from 'react'
 import { useEffect, useState } from "react"
@@ -97,7 +97,12 @@ export const Cakes = (): JSX.Element => {
     }
 
     const getSearchedCakes = (): ICake[] => {
-        return cakes.filter((cake: ICake) => cake.name.includes(searchedCake))
+        const searchedByName: ICake[] = cakes.filter((cake: ICake) => cake.name.toLowerCase().includes(searchedCake.toLowerCase()))
+        const searchedByIngredient: ICake[] = cakes.filter((cake: ICake) => cake.ingredients.find((ingredient: IIngredient) => {
+            return ingredient.name.toLowerCase().includes(searchedCake.toLowerCase())
+        }))
+        const searchedCakes: ICake[] = [...searchedByIngredient, ...searchedByName]
+        return searchedCakes.filter((item: ICake, index: number) => searchedCakes.indexOf(item) === index)
     }
 
     const onChoiceGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
@@ -162,9 +167,8 @@ export const Cakes = (): JSX.Element => {
         </Stack>
     }
 
-    return <>
+    return <div>
         <Navbar onSearch={onSearch} searchedItem={searchedCake} displaySearch={true} />
-        {/* <TextField id="standard-basic" label="Standard" variant="standard" onChange={onSearch} /> */}
         <Stack horizontal={true} gap='80'>
             <StackItem >
                 <Stack gap='60'>
@@ -175,7 +179,6 @@ export const Cakes = (): JSX.Element => {
             </StackItem>
             <div className={dividerStyle} />
             <Section name={"Type: " + selectedType} contentValue={getCakesContent()}></Section>
-
         </Stack >
-    </>
+    </div>
 }
