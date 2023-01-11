@@ -36,8 +36,9 @@ public class CakeController {
     }
 
     @PostMapping("/update")
-    public void update(@RequestBody Cake cake) {
-        cakeServiceImplementation.update(cake);
+    public ResponseEntity update(@RequestBody Cake cake) {
+        cakeServiceImplementation.update((Cake) cake);
+        return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getAll());
     }
 
     @PostMapping("/getByType")
@@ -46,8 +47,8 @@ public class CakeController {
     }
 
     @PostMapping("/deleteCake")
-    public void deleteCake(@RequestBody UUID id) {
-        cakeServiceImplementation.deleteCake(id);
+    public void deleteCake(@RequestBody String id) {
+        cakeServiceImplementation.deleteCake(UUID.fromString(id.substring(0, id.length() - 1)));
     }
 
     @GetMapping("/getCakeTypes")

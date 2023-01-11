@@ -24,9 +24,9 @@ export enum SweetAlertIcon {
 }
 
 export enum ItemField {
-    Name = 'Name',
-    Price = 'Price',
-    Weight = 'Weight',
-    Amount = 'Amount',
-    Ingredients = 'Ingredients'
+    Name = 'name',
+    Price = 'price',
+    Weight = 'weight',
+    Amount = 'amount',
+    Ingredients = 'ingredients'
 }

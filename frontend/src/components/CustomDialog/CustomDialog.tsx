@@ -18,7 +18,7 @@ export const CustomDialog = (props: IDialogComponentProps): JSX.Element => {
         </DialogContent>
         <DialogActions>
             <Button onClick={props.onClose}>Cancel</Button>
-            <Button onClick={Add}>Add</Button>
+            <Button onClick={Add}>{props.submitButtonLabel || "Add"}</Button>
         </DialogActions>
     </Dialog>)
 }

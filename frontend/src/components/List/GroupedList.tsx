@@ -10,11 +10,12 @@ import { SweetAlertIcon } from "../../Utils/enums";
 import { ARE_YOU_SURE, QUESTION_MESSAGE } from "../../Utils/constants";
 import { CustomDialog } from "../CustomDialog/CustomDialog";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import { IItem } from "../../Pages/SelectedItem/SelectedCake.types";
 
 export const GroupedList = (props: ICustomListProps): JSX.Element => {
-    const [items, setItems] = useState<any[]>(props.items);
-    const [selectedItems, setSelectedItems] = useState<number[]>([]);
-    const [openDialog, setOpenDialog] = useState<boolean>(false)
+    const [items, setItems] = useState<IItem[]>(props.items);
+    const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
     useEffect(() => {
         setItems(props.items)
@@ -40,9 +41,11 @@ export const GroupedList = (props: ICustomListProps): JSX.Element => {
                 <GridToolbarFilterButton />
                 <GridToolbarDensitySelector />
                 <GridToolbarExport />
-                <Button variant="text" onClick={onDelete} startIcon={<DeleteIcon />} style={deleteButtonStyle}>Delete</Button>
-                {props.addButton
-                    && <Button variant="text" onClick={() => setOpenDialog(true)} startIcon={<AddCircleOutlineIcon />} style={addButtonStyle}>Add</Button>}
+                {props.showManageButtons
+                    && <Button variant="text" onClick={() => props.onManage(false)} startIcon={<AddCircleOutlineIcon />} style={addButtonStyle}>Add</Button>}
+                <Button variant="text" onClick={onDelete} disabled={selectedItems.length == 0} startIcon={<DeleteIcon />} style={deleteButtonStyle}>Delete</Button>
+                {props.showManageButtons
+                    && <Button variant="text" disabled={selectedItems.length !== 1} onClick={() => props.onManage(true)} startIcon={<ManageSearchIcon style={{ position: "relative", bottom: 1, left: 2 }} />} style={{ ...addButtonStyle }}>Edit</Button>}
             </GridToolbarContainer>
         );
     }
@@ -69,8 +72,11 @@ export const GroupedList = (props: ICustomListProps): JSX.Element => {
         },
     });
 
-    const onSelectionModelChange = (selectedItems: any[]): void => {
+    const onSelectionModelChange = (selectedItems: string[]): void => {
         setSelectedItems(selectedItems)
+
+        if (props.setSelectedItems)
+            props.setSelectedItems(selectedItems);
     }
 
     return <div>
@@ -86,6 +92,5 @@ export const GroupedList = (props: ICustomListProps): JSX.Element => {
             experimentalFeatures={{ newEditingApi: true }}
             onSelectionModelChange={onSelectionModelChange}
         />
-        <CustomDialog openDialog={openDialog} content={props.dialogContent} title={props.dialogTitle} onSubmit={props.onSave} onClose={() => setOpenDialog(false)} addButton={true}></CustomDialog>
     </div>
 }

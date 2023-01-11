@@ -3,14 +3,13 @@ import { BaseButton, IIconProps } from "@fluentui/react";
 export interface ICustomListProps {
     items: any[];
     columns: any[];
-    setSelectedItems?: (items: any[]) => void;
+    setSelectedItems?: (items: string[]) => void;
     onDeleteItems?: (items: any[]) => void;
     heigth?: number;
     width?: number;
     groupByColumn?: string;
-    addButton?: boolean
-    dialogContent?: JSX.Element
-    dialogTitle?: string
+    showManageButtons?: boolean;
+    onManage?: any;
     onSave?: () => void;
 }
 
