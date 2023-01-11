@@ -11,10 +11,11 @@ import { ARE_YOU_SURE, QUESTION_MESSAGE } from "../../Utils/constants";
 import { CustomDialog } from "../CustomDialog/CustomDialog";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import { IItem } from "../../Pages/SelectedItem/SelectedCake.types";
 
 export const GroupedList = (props: ICustomListProps): JSX.Element => {
-    const [items, setItems] = useState<any[]>(props.items);
-    const [selectedItems, setSelectedItems] = useState<number[]>([]);
+    const [items, setItems] = useState<IItem[]>(props.items);
+    const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
     useEffect(() => {
         setItems(props.items)
@@ -71,7 +72,7 @@ export const GroupedList = (props: ICustomListProps): JSX.Element => {
         },
     });
 
-    const onSelectionModelChange = (selectedItems: any[]): void => {
+    const onSelectionModelChange = (selectedItems: string[]): void => {
         setSelectedItems(selectedItems)
 
         if (props.setSelectedItems)

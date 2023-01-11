@@ -12,6 +12,7 @@ export namespace CakeRoutes {
     export const AddImage: string = `${serverURL}/Cake/addImage`
     export const AddCake: string = `${serverURL}/Cake/addCake`
     export const DeleteCake: string = `${serverURL}/Cake/deleteCake`
+    export const Update: string = `${serverURL}/Cake/update`
 }
 
 export namespace PersonRoutes {
@@ -29,6 +30,7 @@ export namespace DrinkRoutes {
     export const GetAll: string = `${serverURL}/Drink/getAll`
     export const AddDrink: string = `${serverURL}/Drink/addDrink`
     export const AddImage: string = `${serverURL}/Drink/addImage`
+    export const Update: string = `${serverURL}/Drink/update`
 }
 
 export namespace IngredientRoutes {

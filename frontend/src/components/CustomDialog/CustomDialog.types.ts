@@ -7,4 +7,5 @@ export interface IDialogComponentProps {
     addButton?: boolean;
     width?: number;
     height?: number;
+    submitButtonLabel?: string;
 }

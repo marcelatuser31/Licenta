@@ -34,6 +34,13 @@ public class DrinkController {
     public ResponseEntity addDrink(@RequestBody Drink drink) {
         return ResponseEntity.status(HttpStatus.OK).body(drinkServiceImplementation.addDrink(drink));
     }
+
+    @PostMapping("/update")
+    public ResponseEntity update(@RequestBody Drink drink){
+        drinkServiceImplementation.update(drink);
+        return ResponseEntity.status(HttpStatus.OK).body(drinkServiceImplementation.getAll());
+    }
+
     @PostMapping(value="/addImage", consumes={"multipart/form-data"})
     public ResponseEntity addImage(@RequestParam (value="image", required = false) MultipartFile image, @RequestParam(value="id") UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(drinkServiceImplementation.addDrinkImage(id, image));

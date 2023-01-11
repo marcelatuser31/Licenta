@@ -14,4 +14,5 @@ public interface DrinkService {
     List<Drink> getAll();
     Drink addDrink(Drink drink);
     Drink addDrinkImage(UUID id, MultipartFile image);
+    void update(Drink drink);
 }

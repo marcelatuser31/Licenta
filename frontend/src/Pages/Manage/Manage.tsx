@@ -1,23 +1,25 @@
 import { ChoiceGroup, IChoiceGroupOption, Stack, StackItem } from "@fluentui/react"
-import { Box, IconButton, TextField } from "@mui/material"
+import AddIcon from '@mui/icons-material/Add'
+import { Box, Button, IconButton, TextField, TextFieldProps } from "@mui/material"
 import { GridColDef } from "@mui/x-data-grid"
 import axios from "axios"
-import React from "react"
-import { useEffect, useState } from "react"
-import { IngredientsList } from "../../components/IngredientsList/IngredientsList"
-import { GroupedList } from "../../components/List/GroupedList"
-import { Navbar } from "../../components/Navbar/Navbar"
-import { ADD_CAKE, ADD_DRINK, ADD_MESSAGE, CAKE, DRINK, SUCCESSFULLY } from "../../Utils/constants"
-import { ItemField, SweetAlertIcon } from "../../Utils/enums"
-import { getMessage } from "../../Utils/methods"
+import React, { useEffect, useState } from "react"
 import { ICake } from "../../Utils/Models/ICake"
 import { IDrink } from "../../Utils/Models/IDrink"
 import { IIngredient } from "../../Utils/Models/IIngredient"
 import { CakeRoutes, DrinkRoutes, IngredientRoutes } from "../../Utils/Routes/backEndRoutes"
-import { choiceGroupStyle } from "../SelectedItem/SelectedCake.styles"
-import { boxStyle, innerDiv, listStyle, outerDiv } from "../ShoppingCart/ShoppingCart.Styles"
-import AddIcon from '@mui/icons-material/Add';
+import { ADD_MESSAGE, CAKE, DRINK, SUCCESSFULLY } from "../../Utils/constants"
+import { ItemField, SweetAlertIcon } from "../../Utils/enums"
+import { getMessage, onUploadPhoto } from "../../Utils/methods"
 import { CustomDialog } from "../../components/CustomDialog/CustomDialog"
+import { CustomDropdown } from "../../components/CustomDropdown/CustomDropdown"
+import { IngredientsList } from "../../components/IngredientsList/IngredientsList"
+import { GroupedList } from "../../components/List/GroupedList"
+import { Navbar } from "../../components/Navbar/Navbar"
+import { Input } from "../Cakes/Cakes"
+import { choiceGroupStyle } from "../SelectedItem/SelectedCake.styles"
+import { IItem } from "../SelectedItem/SelectedCake.types"
+import { boxStyle, innerDiv, listStyle, outerDiv } from "../ShoppingCart/ShoppingCart.Styles"
 
 const options: IChoiceGroupOption[] = [
     { key: CAKE, text: CAKE, styles: { root: { marginLeft: 20 } } },
@@ -57,7 +59,7 @@ export const Manage = (): JSX.Element => {
     const [isAdded, setIsAdded] = React.useState<boolean>(false);
     const itemFields: ItemField[] = [ItemField.Name, ItemField.Price, ItemField.Weight, ItemField.Amount];
     const [openDialog, setOpenDialog] = useState<boolean>(false);
-    const [selectedItems, setSelectedItems] = useState<number[]>([]);
+    const [selectedItems, setSelectedItems] = useState<string[]>([]);
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
     useEffect(() => {
@@ -74,18 +76,17 @@ export const Manage = (): JSX.Element => {
         getData()
     }, [])
 
-    const cakeRows: any[] = cakes.map((cake: ICake) => {
+    const cakeRows: IItem[] = cakes?.map((cake: ICake) => {
         return {
-            id: cake.id,
-            price: cake.price,
-            name: cake.name,
+            id: cake.id, price: cake.price, name: cake.name,
             weight: cake.weight,
             amount: cake.amount,
+            cakeType: cake.type,
             type: CAKE
         }
     })
 
-    const drinkRows: any[] = drinks.map((drink: IDrink) => {
+    const drinkRows: IItem[] = drinks?.map((drink: IDrink) => {
         return {
             id: drink.id,
             price: drink.price,
@@ -104,65 +105,59 @@ export const Manage = (): JSX.Element => {
         { field: 'price', headerName: 'Price', type: 'number', width: 110 },
         { field: 'weight', headerName: 'Weight', width: 150, type: 'number' },
         { field: 'amount', headerName: 'Amount', type: 'number' },
-        { field: 'type', headerName: 'Type' }
+        { field: 'type', headerName: 'Type' },
+        { field: 'cakeType', headerName: 'Type' }
     ];
 
-    const onChangeCake = (event: any): void => {
+    const onChangeField = (event: any, [state, setState]: [ICake | IDrink | IIngredient, (s: any) => void]): void => {
         const value: any = event.target.value;
         const name: string = event.target.name;
-        switch (name) {
-            case ItemField.Name:
-                setSelectedCake({ ...selectedCake, name: value })
-                break
-            case ItemField.Price:
-                setSelectedCake({ ...selectedCake, price: value })
-                break
-            case ItemField.Amount:
-                setSelectedCake({ ...selectedCake, amount: value })
-                break
-            case ItemField.Weight:
-                setSelectedCake({ ...selectedCake, weight: value })
-                break
+        setState({ ...state, [name]: value })
+    }
+
+    const getSelectedItem = (): IItem => {
+        return rows.find((i: IItem) => i.id === selectedItems[0]);
+    }
+
+    const getDifferentField = (item: IDrink | ICake) => {
+        let object = {};
+        if (item.amount !== defaultCake.amount) {
+            object = { ...object, amount: item.amount }
         }
-    }
-
-    const onChangeDrink = (event: any): void => {
-        const value: any = event.target.value;
-        const name: string = event.target.name;
-        switch (name) {
-            case ItemField.Name:
-                setSelectedDrink({ ...selectedDrink, name: value })
-                break
-            case ItemField.Price:
-                setSelectedDrink({ ...selectedDrink, price: value })
-                break
-            case ItemField.Amount:
-                setSelectedDrink({ ...selectedDrink, amount: value })
-                break
-            case ItemField.Weight:
-                setSelectedDrink({ ...selectedDrink, weight: value })
-                break
+        if (item.name !== defaultCake.name) {
+            object = { ...object, name: item.name }
         }
+        if (item.price !== defaultCake.price) {
+            object = { ...object, price: item.price }
+        }
+        if (item.weight !== defaultCake.weight) {
+            object = { ...object, weight: item.weight }
+        }
+        return object;
     }
 
-    const onChangeIngredient = (event: any): void => {
-        const value: string = event.target.value
-        setNewIngredient({ ...newIngredient, name: value })
-    }
+    const onCakeAction = async (): Promise<void> => {
+        const path: string = isEditMode ? CakeRoutes.Update : CakeRoutes.AddCake;
 
-    const onSaveCake = async (): Promise<void> => {
-        await axios.post(CakeRoutes.AddCake, { ...selectedCake, ingredients: ingredients });
+        const cake: any = {
+            ...getSelectedItem(),
+            ...getDifferentField(selectedCake),
+            ingredients: ingredients,
+            image: "",
+            id: isEditMode ? getSelectedItem().id : "",
+            type: localStorage.getItem("cakeTypes")?.split(",").indexOf(selectedCake?.type || "")
+        }
+        const response = await axios.post(path, cake);
         getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE)
-
-        let response = await axios.get(CakeRoutes.GetAll)
         setCakes(response.data)
     }
 
-    const onSaveDrink = async (): Promise<void> => {
-        await axios.post(DrinkRoutes.AddDrink, selectedDrink);
-        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE)
+    const onDrinkAction = async (): Promise<void> => {
+        const path: string = isEditMode ? DrinkRoutes.Update : DrinkRoutes.AddDrink;
 
-        let response = await axios.get(DrinkRoutes.GetAll)
+        const drink: any = { ...getSelectedItem(), ...getDifferentField(selectedDrink), id: isEditMode ? getSelectedItem().id : "" }
+        const response = await axios.post(path, drink);
+
         setDrinks(response.data)
     }
 
@@ -180,7 +175,9 @@ export const Manage = (): JSX.Element => {
     }
 
     const isCakeSelected = (): boolean | undefined => {
-        return addSelectedOption === CAKE
+        if (getSelectedItem() === undefined)
+            return addSelectedOption === CAKE;
+        return addSelectedOption === CAKE && getSelectedItem()?.type === CAKE;
     }
 
     const addIngredientContent: JSX.Element =
@@ -195,7 +192,7 @@ export const Manage = (): JSX.Element => {
                     variant="standard"
                     name="Ingredient"
                     type="text"
-                    onChange={onChangeIngredient}
+                    onChange={(event: any) => onChangeField(event, [newIngredient, setNewIngredient])}
                 />
             </StackItem>
             <StackItem>
@@ -205,71 +202,46 @@ export const Manage = (): JSX.Element => {
             </StackItem>
         </Stack>
 
-    const getValue = (field: ItemField, item: any): string | IIngredient[] => {
+    const getValue = (field: ItemField, item: IItem): string => {
         if (!item)
             return "";
 
         switch (field) {
             case ItemField.Amount:
-                return item.amount;
+                return item.amount.toString();
             case ItemField.Name:
                 return item.name;
             case ItemField.Price:
-                return item.price;
+                return item.price.toString();
             case ItemField.Weight:
-                return item.weight;
+                return item.weight.toString();
         }
         return "";
     }
 
     const getFields = (item: any): JSX.Element => {
-        return <div>
-            {itemFields.map((label: ItemField) =>
-                isEditMode ? <TextField
-                    autoFocus={true}
-                    margin="dense"
-                    id={label}
-                    label={label}
-                    fullWidth
-                    defaultValue={isEditMode ? getValue(label, item) : ""}
-                    variant="standard"
-                    name={label}
-                    onChange={(isCakeSelected()) ? onChangeCake : onChangeDrink}
-                    type={label === ItemField.Name ? 'text' : 'Number'}
-                    InputProps={{ inputProps: { min: 1, max: 100 } }}
-                /> :
-                    <TextField
-                        autoFocus={true}
-                        margin="dense"
-                        id={label}
-                        label={label}
-                        fullWidth
-                        variant="standard"
-                        name={label}
-                        onChange={(isCakeSelected()) ? onChangeCake : onChangeDrink}
-                        type={label === ItemField.Name ? 'text' : 'Number'}
-                        InputProps={{ inputProps: { min: 1, max: 100 } }}
-                    />)}
+        const object = (label: string): TextFieldProps => {
+            return {
+                autoFocus: true,
+                margin: "normal",
+                id: label,
+                fullWidth: true,
+                variant: "standard",
+                name: label,
+                onChange: (event: any) => (isCakeSelected()) ? onChangeField(event, [selectedCake, setSelectedCake]) : onChangeField(event, [selectedDrink, setSelectedDrink]),
+                type: label === ItemField.Name ? 'text' : 'Number',
+                InputProps: { inputProps: { min: 1, max: 100 } }
+            }
+        };
+        return <div>{itemFields.map((label: ItemField) =>
+            isEditMode
+                ? <TextField {...object(label)} defaultValue={isEditMode ? getValue(label, item) : ""} />
+                : <TextField {...object(label)} />)}
         </div>
     }
 
-    const getDialogContent = (): JSX.Element => {
-        const item = rows.find((i: any) => i.id === selectedItems[0]);
-
-        let ingredientsList: IIngredient[] = [];
-        const cake: ICake | undefined = cakes.find((i: any) => i.id === item?.id);
-
-        if (cake)
-            ingredientsList = cake.ingredients;
-
+    const getIngredientsList = (ingredientsList: IIngredient[]): JSX.Element => {
         return <div>
-            {!isEditMode && <ChoiceGroup onChange={onChoiceGroupChange}
-                options={options}
-                styles={choiceGroupStyle}
-                defaultSelectedKey={addSelectedOption}
-            />}
-            {getFields(item)}
-
             {isCakeSelected() && <IngredientsList
                 availableIngredients={allIngredients.filter((ingredient: IIngredient) => !ingredientsList.includes(ingredient))}
                 selectedIngredients={ingredientsList}
@@ -277,7 +249,55 @@ export const Manage = (): JSX.Element => {
                 setShouldDisplayNewIngredient={setShouldDisplayNewIngredient}
                 isAdded={isAdded} />
             }
-            {(shouldDisplayNewIngredient) && addIngredientContent}
+        </div>
+    }
+
+    const getCakeTypeSection = (): JSX.Element => {
+        return <div>
+            {isCakeSelected() && <CustomDropdown
+                options={localStorage.getItem("cakeTypes")?.split(",") || []}
+                setDefaultValue={(option: string) => setSelectedCake({ ...selectedCake, type: option })}
+                defaultValue={!selectedCake.type ? getSelectedItem()?.cakeType || "" : selectedCake?.type || ""}
+                name={"Cake Type"} />}
+        </div>
+    }
+
+    const getChoiseGroupSection = (): JSX.Element => {
+        return <div>
+            {!isEditMode && <ChoiceGroup onChange={onChoiceGroupChange}
+                options={options}
+                styles={choiceGroupStyle}
+                defaultSelectedKey={addSelectedOption}
+            />}
+        </div>
+    }
+
+    const getUploadImageSection = (): JSX.Element => {
+        return <Button variant="contained" component="label">
+            Upload
+            <Input
+                accept='image/*'
+                id='contained-button-file'
+                multiple
+                type='file'
+                onChange={(event: any) => onUploadPhoto(
+                    event,
+                    getSelectedItem().id || "",
+                    getSelectedItem().type === CAKE ? CakeRoutes.AddImage : DrinkRoutes.AddImage)} />
+        </Button>
+    }
+
+    const getDialogContent = (): JSX.Element => {
+        const item: IItem = getSelectedItem();
+        let ingredientsList: IIngredient[] = cakes.find((i: any) => i.id === item?.id)?.ingredients || [];
+
+        return <div>
+            {getChoiseGroupSection()}
+            {getFields(item)}
+            {getIngredientsList(ingredientsList)}
+            {getCakeTypeSection()}
+            {getUploadImageSection()}
+            {shouldDisplayNewIngredient && addIngredientContent}
         </div >
     }
 
@@ -288,7 +308,7 @@ export const Manage = (): JSX.Element => {
 
     const onDeleteItems = async (deletedItems: any): Promise<void> => {
         deletedItems.forEach(async (item: any) =>
-            await axios.post(CakeRoutes.DeleteCake, deletedItems[0].id as string)
+            await axios.post(CakeRoutes.DeleteCake, item.id as string)
         )
 
         const response = await axios.get(CakeRoutes.GetAll);
@@ -319,10 +339,13 @@ export const Manage = (): JSX.Element => {
                 <CustomDialog
                     openDialog={openDialog}
                     content={getDialogContent()}
-                    title={isCakeSelected() ? isEditMode ? "Edit Cake" : ADD_CAKE : isEditMode ? "Edit Drink" : ADD_DRINK}
-                    onSubmit={isCakeSelected() ? onSaveCake : onSaveDrink}
+                    title={isCakeSelected() ? isEditMode ? "Edit Cake" : "Add" : isEditMode ? "Edit Drink" : "Add"}
+                    onSubmit={isCakeSelected() ? onCakeAction : onDrinkAction}
                     onClose={() => setOpenDialog(false)}
-                    addButton={true}></CustomDialog>
+                    addButton={true}
+                    submitButtonLabel={isEditMode ? "Update" : "Add"}
+                ></CustomDialog>
+
             </StackItem>
         </Stack >
     </>

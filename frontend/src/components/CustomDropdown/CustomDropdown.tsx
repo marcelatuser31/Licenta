@@ -17,7 +17,8 @@ export const CustomDropdown = (props: ICustomDropdownProps): JSX.Element => {
 
     const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>, index: number) => {
         props.setDefaultValue(props.options[index]);
-        props.onSelectItem()
+        if (props.onSelectItem)
+            props.onSelectItem()
         setAnchorEl(null);
     };
 

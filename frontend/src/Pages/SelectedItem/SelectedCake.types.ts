@@ -5,5 +5,6 @@ export interface IItem {
     cakeMessage?: string,
     weight: number,
     amount: number,
+    cakeType?: string,
     type: string
 }

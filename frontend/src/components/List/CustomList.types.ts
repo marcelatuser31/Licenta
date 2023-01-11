@@ -3,7 +3,7 @@ import { BaseButton, IIconProps } from "@fluentui/react";
 export interface ICustomListProps {
     items: any[];
     columns: any[];
-    setSelectedItems?: (items: any[]) => void;
+    setSelectedItems?: (items: string[]) => void;
     onDeleteItems?: (items: any[]) => void;
     heigth?: number;
     width?: number;

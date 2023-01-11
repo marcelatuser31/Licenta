@@ -72,6 +72,7 @@ export const Cakes = (): JSX.Element => {
             response = await axios.get(CakeRoutes.GetTypes);
             const types: string[] = response.data
             types.push('All');
+            localStorage.setItem("cakeTypes", types.join(','));
             setCakeTypes(types)
         }
         getData()
