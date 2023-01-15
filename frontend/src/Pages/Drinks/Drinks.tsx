@@ -5,15 +5,16 @@ import { CustomCard } from "../../components/CustomCard/CustomCard";
 import { customCardStyle } from "../../components/CustomCard/CustomCard.styles";
 import { IFavoriteItem } from "../../components/CustomCard/CustomCard.types";
 import { CustomDropdown } from "../../components/CustomDropdown/CustomDropdown";
+import { Footer } from "../../components/Footer/Footer";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { Section } from "../../components/Section/Section";
-import { ASCENDING, DEFAULT_PRODUCT_PHOTO, DESCENDING, FAVORITE_ITEMS_LIST_KEY, SORT_BY_NAME, SORT_BY_PRICE } from "../../Utils/constants";
+import { ASCENDING, DESCENDING, FAVORITE_ITEMS_LIST_KEY, SORT_BY_NAME, SORT_BY_PRICE } from "../../Utils/constants";
 import { Pages } from "../../Utils/enums";
+import { DEFAULT_PRODUCT_PHOTO } from "../../Utils/images";
 import { getImageURLfromByteArray } from "../../Utils/methods";
 import { IDrink } from "../../Utils/Models/IDrink"
 import { DrinkRoutes } from "../../Utils/Routes/backEndRoutes";
 import { dividerStyle, itemsContainerStyle, labelSectionStyle } from "../Cakes/Cakes.styles";
-
 
 const getCard = (drink: IDrink, index: number): JSX.Element => {
     const favoriteList: IFavoriteItem[] = JSON.parse(localStorage.getItem(FAVORITE_ITEMS_LIST_KEY) as string)
@@ -116,5 +117,6 @@ export const Drinks = (): JSX.Element => {
             <div className={dividerStyle} />
             <Section name={"All"} contentValue={getDrinksContent()}></Section>
         </Stack >
+        <Footer />
     </div >
 }
