@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Cleave from 'cleave.js/react';
 import 'animate.css';
 import './CreditCard.css';
-import { AMEX_LOGO, DINERS_LOGO, DISCOVER_LOGO, HEADERS, IMAGE_HEADERS, JCB_LOGO, MASTERCARD_LOGO, ORDER_LIST_KEY, PERSON_KEY, VISA_LOGO } from '../../Utils/constants';
+import { HEADERS, PERSON_KEY } from '../../Utils/constants';
 import { ICreditCardProps } from './CreditCard.types';
 import { IPerson } from '../../Utils/Models/IPerson';
 import axios from 'axios';
 import { CreditCardRoutes } from '../../Utils/Routes/backEndRoutes';
 import { ICreditCard } from '../../Utils/Models/ICreditCard';
+import { AMEX_LOGO, DINERS_LOGO, DISCOVER_LOGO, JCB_LOGO, MASTERCARD_LOGO, VISA_LOGO } from '../../Utils/images';
 
 const creditCardImages: string[] = [VISA_LOGO, MASTERCARD_LOGO, DISCOVER_LOGO, AMEX_LOGO, DINERS_LOGO, JCB_LOGO]
 const expireMonths: string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -17,36 +18,36 @@ export const CreditCard = (props: ICreditCardProps): JSX.Element => {
     const [defaultCreditCard, setDefaultCreditCard] = useState<ICreditCard>()
 
     const [cardImage, setCardImage] = useState<string>(VISA_LOGO);
-    const [cardType, setCardType] = useState<string>("")
+    const [creditCardType, setCreditCardType] = useState<string>("")
 
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
 
     useEffect(() => {
-        const getDefaultCreditCard = async (): Promise<void> => {
+        const setDefaultCard = async (): Promise<void> => {
             const response = await axios.post(CreditCardRoutes.getCreditCard, person, HEADERS)
             setDefaultCreditCard(response.data)
         }
-        getDefaultCreditCard()
+        setDefaultCard()
     }, [])
 
     useEffect(() => {
-        const getDefaultCreditCardData = (): void => {
+        const setDefaultCreditCardData = (): void => {
             if (!defaultCreditCard)
                 return
 
             props.setCreditCardData(defaultCreditCard)
         }
-        getDefaultCreditCardData()
+        setDefaultCreditCardData()
     }, [defaultCreditCard])
 
-    const getCardNumber = (e: { target: { rawValue: string; }; }): void => {
+    const setCardNumber = (e: { target: { rawValue: string; }; }): void => {
         if (!props.creditCardData)
             return
         props.setCreditCardData({ ...props.creditCardData, cardNumber: e.target.rawValue });
     }
 
-    const getCardType = (type: React.SetStateAction<string>): void => {
-        setCardType(type);
+    const setCardType = (type: React.SetStateAction<string>): void => {
+        setCreditCardType(type);
 
         switch (type) {
             case "visa":
@@ -70,19 +71,19 @@ export const CreditCard = (props: ICreditCardProps): JSX.Element => {
         }
     }
 
-    const getCardName = (e: { target: { value: string; }; }): void => {
+    const setCardName = (e: { target: { value: string; }; }): void => {
         if (!props.creditCardData)
             return
         props.setCreditCardData({ ...props.creditCardData, cardHolder: e.target.value })
     }
 
-    const getExpMonth = (e: { target: { value: string; }; }): void => {
+    const setExpMonth = (e: { target: { value: string; }; }): void => {
         if (!props.creditCardData)
             return
         props.setCreditCardData({ ...props.creditCardData, expireMonth: e.target.value })
     }
 
-    const getExpYear = (e: { target: { value: string }; }): void => {
+    const setExpYear = (e: { target: { value: string }; }): void => {
         if (!props.creditCardData)
             return
         props.setCreditCardData({ ...props.creditCardData, cardHolder: e.target.value });
@@ -117,21 +118,21 @@ export const CreditCard = (props: ICreditCardProps): JSX.Element => {
                     <Cleave
                         options={{
                             creditCard: true,
-                            onCreditCardTypeChanged: getCardType,
+                            onCreditCardTypeChanged: setCardType,
                             delimiter: "-"
                         }}
-                        onChange={getCardNumber}
+                        onChange={setCardNumber}
                         placeholder={defaultCreditCard?.cardNumber}
                     />
                 </div>
                 <div className="input-container">
                     <h4>Card Holder</h4>
-                    <input onChange={getCardName} type="text" placeholder={defaultCreditCard?.cardHolder} required />
+                    <input onChange={setCardName} type="text" placeholder={defaultCreditCard?.cardHolder} required />
                 </div>
                 <div className="input-grp">
                     <div className="input-container">
                         <h4>Expiration Year</h4>
-                        <select value={props.creditCardData?.expireYear} defaultValue={defaultCreditCard?.expireYear} onChange={getExpYear}>
+                        <select value={props.creditCardData?.expireYear} defaultValue={defaultCreditCard?.expireYear} onChange={setExpYear}>
                             {expireYears.map((year: string) => {
                                 return <option value={year}>{year}</option>
                             })}
@@ -139,7 +140,7 @@ export const CreditCard = (props: ICreditCardProps): JSX.Element => {
                     </div>
                     <div className="input-container">
                         <h4>Month</h4>
-                        <select value={props.creditCardData?.expireMonth} defaultValue={defaultCreditCard?.expireMonth} onChange={getExpMonth}>
+                        <select value={props.creditCardData?.expireMonth} defaultValue={defaultCreditCard?.expireMonth} onChange={setExpMonth}>
                             {expireMonths.map((month: string) => {
                                 return <option value={month}>{month}</option>
                             })}

@@ -159,11 +159,7 @@ export const ShoppingCart = (): JSX.Element => {
                 return
 
             const newCreditCardData: ICreditCardData = {
-                personId: person.id,
-                cardNumber: creditCardData.cardNumber,
-                cardHolder: creditCardData.cardHolder,
-                expireMonth: creditCardData.expireMonth,
-                expireYear: creditCardData.expireYear
+                personId: person.id, ...creditCardData
             }
 
             await axios.post(CreditCardRoutes.addCreditCard, newCreditCardData);

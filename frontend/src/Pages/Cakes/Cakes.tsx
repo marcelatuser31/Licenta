@@ -9,7 +9,7 @@ import { CustomDropdown } from "../../components/CustomDropdown/CustomDropdown"
 import { Navbar } from "../../components/Navbar/Navbar"
 import { Section } from "../../components/Section/Section"
 import { dividerStyle, itemsContainerStyle, labelSectionStyle, selectedMenuStyle } from './Cakes.styles'
-import { ASCENDING, DEFAULT_PRODUCT_PHOTO, DESCENDING, FAVORITE_ITEMS_LIST_KEY, FILTER_BY_TYPE, HEADERS, SORT_BY_NAME, SORT_BY_PRICE } from "../../Utils/constants"
+import { ASCENDING, DESCENDING, FAVORITE_ITEMS_LIST_KEY, FILTER_BY_TYPE, HEADERS, SORT_BY_NAME, SORT_BY_PRICE } from "../../Utils/constants"
 import { getImageURLfromByteArray } from "../../Utils/methods"
 import { ICake } from "../../Utils/Models/ICake"
 import { CakeRoutes } from "../../Utils/Routes/backEndRoutes"
@@ -17,6 +17,8 @@ import { choiceGroupStyle } from "./Cakes.styles"
 import { IFavoriteItem } from "../../components/CustomCard/CustomCard.types"
 import { Pages } from "../../Utils/enums"
 import { IIngredient } from "../../Utils/Models/IIngredient"
+import { DEFAULT_PRODUCT_PHOTO } from "../../Utils/images"
+import { Footer } from "../../components/Footer/Footer"
 
 export const Input = styled('input')({ display: 'none' })
 const getCard = (cake: ICake, index: number): JSX.Element => {
@@ -98,11 +100,12 @@ export const Cakes = (): JSX.Element => {
     }
 
     const getSearchedCakes = (): ICake[] => {
-        const searchedByName: ICake[] = cakes.filter((cake: ICake) => cake.name.toLowerCase().includes(searchedCake.toLowerCase()))
-        const searchedByIngredient: ICake[] = cakes.filter((cake: ICake) => cake.ingredients.find((ingredient: IIngredient) => {
+        const filteredCakesByName: ICake[] = getFilteredCakes().filter((cake: ICake) => cake.name.toLowerCase().includes(searchedCake.toLowerCase()))
+        const filteredCakesByIngredient: ICake[] = getFilteredCakes().filter((cake: ICake) => cake.ingredients.find((ingredient: IIngredient) => {
             return ingredient.name.toLowerCase().includes(searchedCake.toLowerCase())
         }))
-        const searchedCakes: ICake[] = [...searchedByIngredient, ...searchedByName]
+
+        const searchedCakes: ICake[] = [...filteredCakesByIngredient, ...filteredCakesByName]
         return searchedCakes.filter((item: ICake, index: number) => searchedCakes.indexOf(item) === index)
     }
 
@@ -162,7 +165,7 @@ export const Cakes = (): JSX.Element => {
         return <Stack>
             <StackItem className={itemsContainerStyle}>
                 {
-                    ((searchedCake) ? getSearchedCakes() : getFilteredCakes()).map((cake: ICake, index: number) => getCard(cake, index))
+                    (searchedCake ? getSearchedCakes() : getFilteredCakes()).map((cake: ICake, index: number) => getCard(cake, index))
                 }
             </StackItem>
         </Stack>
@@ -181,5 +184,6 @@ export const Cakes = (): JSX.Element => {
             <div className={dividerStyle} />
             <Section name={"Type: " + selectedType} contentValue={getCakesContent()}></Section>
         </Stack >
+        <Footer />
     </div>
 }

@@ -10,20 +10,21 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { Pages, RoleType } from '../../Utils/enums';
+import { Pages, RoleType, SweetAlertIcon } from '../../Utils/enums';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import CakeIcon from '@mui/icons-material/Cake';
 import { alpha, Badge, InputBase, styled } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { cakeIconStyle, containerStyle, expandedCakeIconStyle, expandedLogoStyle, expandedMenuBoxStyle, imageStyle, logoStyle, menuBoxStyle, myCartButtonStyle, pageButtonStyle, settingsBoxStyle } from './Navbar.styles';
-import { DEFAULT_PROFILE_PHOTO, HEADERS, ORDER_LIST_KEY, PERSON_KEY } from '../../Utils/constants';
+import { cakeIconStyle, containerStyle, expandedCakeIconStyle, expandedLogoStyle, expandedMenuBoxStyle, imageStyle, logoStyle, menuBoxStyle, myCartButtonStyle, pageButtonStyle, searchComponentStyle, searchIconStyle, searchStyle, settingsBoxStyle } from './Navbar.styles';
+import { ARE_YOU_SURE, HEADERS, ORDER_LIST_KEY, PERSON_KEY, QUESTION_MESSAGE } from '../../Utils/constants';
 import axios from 'axios';
 import { RoleRoutes } from '../../Utils/Routes/backEndRoutes';
 import { IPerson } from '../../Utils/Models/IPerson';
-import { getImageURLfromByteArray } from '../../Utils/methods';
+import { getImageURLfromByteArray, getMessage } from '../../Utils/methods';
 import { IShoppingList } from '../../Pages/ShoppingCart/ShoppingCart.types';
 import SearchIcon from '@mui/icons-material/Search';
 import { INavbarProps } from './Navbar.types';
+import { DEFAULT_PROFILE_PHOTO } from '../../Utils/images';
 
 const pages = [Pages.Cakes, Pages.Drinks];
 const settings = [Pages.Profile];
@@ -35,7 +36,11 @@ export const Navbar = (props: INavbarProps): JSX.Element => {
     const shoppingList: IShoppingList = JSON.parse(localStorage.getItem(ORDER_LIST_KEY) as string)
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
 
-    const onLogout = async (event: any): Promise<void> => {
+    const onLogout = async (): Promise<void> => {
+        getMessage(SweetAlertIcon.Question, QUESTION_MESSAGE, ARE_YOU_SURE, onLogoutConfirm)
+    }
+
+    const onLogoutConfirm = async (): Promise<void> => {
         const response = await axios.post(RoleRoutes.Logout, person.id, { headers: HEADERS });
         navigate(Pages.LogIn)
         localStorage.removeItem(PERSON_KEY)
@@ -58,43 +63,15 @@ export const Navbar = (props: INavbarProps): JSX.Element => {
     };
 
     const Search = styled('div')(({ theme }) => ({
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: alpha(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: alpha(theme.palette.common.white, 0.25),
-        },
-        marginRight: theme.spacing(5),
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
-            width: 'auto',
-        },
+        ...searchStyle(theme)
     }));
 
     const SearchIconWrapper = styled('div')(({ theme }) => ({
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        ...searchIconStyle(theme)
     }));
 
-    const StyledInputBase = styled(InputBase)(({ theme }) => ({
-        color: 'inherit',
-        '& .MuiInputBase-input': {
-            padding: theme.spacing(1, 1, 1, 0),
-            // vertical padding + font size from searchIcon
-            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-            transition: theme.transitions.create('width'),
-            width: '100%',
-            [theme.breakpoints.up('md')]: {
-                width: '20ch',
-            },
-        },
+    const SearchComponent = styled(InputBase)(({ theme }) => ({
+        ...searchComponentStyle(theme)
     }));
 
     return (
@@ -182,7 +159,7 @@ export const Navbar = (props: INavbarProps): JSX.Element => {
                             <SearchIconWrapper>
                                 <SearchIcon />
                             </SearchIconWrapper>
-                            <StyledInputBase
+                            <SearchComponent
                                 placeholder="Search…"
                                 inputProps={{ 'aria-label': 'search' }}
                                 onChange={props.onSearch}

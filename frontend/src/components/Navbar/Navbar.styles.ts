@@ -1,5 +1,5 @@
 import { mergeStyles } from "@fluentui/merge-styles";
-import { SxProps, Theme } from "@mui/material";
+import { alpha, SxProps, Theme } from "@mui/material";
 import React from "react";
 
 export const logOutButtonStyle: string = mergeStyles({
@@ -91,3 +91,42 @@ export const pageButtonStyle: SxProps<Theme> = {
     color: 'white',
     display: 'block'
 }
+
+export const searchStyle = (theme: any): any => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+        backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(5),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(3),
+        width: 'auto',
+    },
+});
+
+export const searchIconStyle = (theme: any): any => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+})
+
+export const searchComponentStyle = (theme: any): any => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+        padding: theme.spacing(1, 1, 1, 0),
+        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        transition: theme.transitions.create('width'),
+        width: '100%',
+        [theme.breakpoints.up('md')]: {
+            width: '20ch',
+        },
+    }
+})

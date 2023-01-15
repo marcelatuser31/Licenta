@@ -4,11 +4,11 @@ import { DEFAULT_COLOR } from "../../Utils/constants";
 export const itemsContainerStyle: string = mergeStyles({
     display: "flex",
     flexWrap: "wrap",
+    justifyContent: "space-around",
     width: "75vw",
     gap: "40px",
     position: 'relative',
-    top: 30,
-    justifyContent: "space-around"
+    top: 30
 })
 
 export const choiceGroupStyle: string = mergeStyles({
@@ -36,7 +36,7 @@ export const labelSectionStyle: string = mergeStyles({
 export const dividerStyle: string = mergeStyles({
     display: "inline-block",
     borderLeft: "4px solid #ccc",
-    height: "3000",
+    height: "5000",
     weight: "10px",
     position: "relative",
     top: 20,

@@ -7,7 +7,7 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { addToCartStyle, choiceGroupStyle, imageStyle, labelStyle, textFieldStyle, titleStyle, valueStyle } from "./SelectedCake.styles"
 import { useState } from "react"
 import { IItem } from "./SelectedCake.types"
-import { ADD_MESSAGE, CAKE, DEFAULT_PRODUCT_PHOTO, OK, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants"
+import { ADD_MESSAGE, CAKE, ORDER_LIST_KEY, PERSON_KEY, SUCCESSFULLY } from "../../Utils/constants"
 import { IPerson } from "../../Utils/Models/IPerson"
 import { RoleType, SweetAlertIcon } from "../../Utils/enums"
 import { Input } from "../Cakes/Cakes"
@@ -124,9 +124,6 @@ export const SelectedCake = (): JSX.Element => {
                         : <StackItem align="center">
                             <Button variant="contained" className={addToCartStyle} endIcon={<ShoppingCartCheckoutIcon />} onClick={onAddToCart} >Add to cart</Button>
                         </StackItem>}
-                    <StackItem>
-
-                    </StackItem>
                 </Stack>
             </StackItem>
         </Stack >

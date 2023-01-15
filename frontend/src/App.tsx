@@ -6,4 +6,3 @@ export const App = (): React.ReactElement<any, string | React.JSXElementConstruc
       const navBarRoutes = useRoutes(routes)
       return navBarRoutes
 }
-

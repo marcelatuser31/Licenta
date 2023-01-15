@@ -1,5 +1,5 @@
 export interface ISectionProps {
-    name: string,
+    name: string | JSX.Element,
     contentValue: JSX.Element | string,
     isHorizontal?: boolean,
     gap?: number,
