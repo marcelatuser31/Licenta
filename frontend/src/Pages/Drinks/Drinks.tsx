@@ -37,6 +37,7 @@ export const Drinks = (): JSX.Element => {
     const [drinks, setDrinks] = useState<IDrink[]>([]);
     const [selectedSortPriceOption, setSelectedSortPriceOption] = useState<string>("");
     const [selectedSortNameOption, setSelectedSortNameOption] = useState<string>("");
+    const [searchedDrink, setSearchedDrink] = useState<string>("")
 
     useEffect(() => {
         const getData = async (): Promise<void> => {
@@ -78,6 +79,15 @@ export const Drinks = (): JSX.Element => {
         setSelectedSortNameOption(option?.text)
     }
 
+    const onSearch = (event: any): void => {
+        const value: string = event.target.value
+        setSearchedDrink(value)
+    }
+
+    const getSearchedDrinks = (): IDrink[] => {
+        return drinks.filter((drink: IDrink) => drink.name.toLowerCase().includes(searchedDrink.toLowerCase()))
+    }
+
     const getSortByPriceContent = (): JSX.Element => {
         return <CustomDropdown
             options={[ASCENDING, DESCENDING]}
@@ -99,14 +109,14 @@ export const Drinks = (): JSX.Element => {
         return <Stack>
             <StackItem className={itemsContainerStyle}>
                 {
-                    drinks.length > 0 && drinks.map((drink: IDrink, index: number) => getCard(drink, index))
+                    (searchedDrink ? getSearchedDrinks() : drinks).map((drink: IDrink, index: number) => getCard(drink, index))
                 }
             </StackItem>
         </Stack>
     }
 
     return <div>
-        <Navbar />
+        <Navbar displaySearch={true} onSearch={onSearch} searchedItem={searchedDrink} />
         <Stack horizontal={true} gap='80'>
             <StackItem>
                 <Stack gap='60'>
