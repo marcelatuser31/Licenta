@@ -1,6 +1,6 @@
 import { IStyleFunctionOrObject, mergeStyles } from "@fluentui/merge-styles";
 import { IChoiceGroupStyleProps, IChoiceGroupStyles } from "@fluentui/react";
-import { DEFAULT_COLOR } from "../../Utils/constants";
+import { DEFAULT_COLOR, DEFAULT_FONT } from "../../Utils/constants";
 
 export const titleStyle: string = mergeStyles({
     fontSize: "50px",
@@ -35,7 +35,8 @@ export const labelStyle: string = mergeStyles({
     position: "relative",
     top: "30px",
     fontWeight: 600,
-    color: DEFAULT_COLOR
+    color: DEFAULT_COLOR,
+    fontFamily: DEFAULT_FONT
 })
 
 export const imageStyle: string = mergeStyles({

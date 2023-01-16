@@ -1,13 +1,16 @@
 import { ThemeProvider } from "@emotion/react"
-import { Avatar, Box, Button, Checkbox, Container, createTheme, CssBaseline, FormControlLabel, Grid, TextField, Typography } from "@mui/material"
+import { Box, Button, createTheme, CssBaseline, Grid, Paper, TextField, Typography } from "@mui/material"
 import axios from "axios"
 import { useState } from "react"
 import { NavigateFunction, useNavigate } from "react-router-dom"
-import { Pages, RoleType } from "../../Utils/enums"
+import { ERROR_MESSAGE } from "../../Utils/constants"
+import { Pages, RoleType, SweetAlertIcon } from "../../Utils/enums"
+import { getMessage } from "../../Utils/methods"
 import { IPerson } from "../../Utils/Models/IPerson"
 import { PersonRoutes } from "../../Utils/Routes/backEndRoutes"
+import { backgroundStyle, signUpBoxStyle, signUpButtonStyle, signUpLabelStyle, textfieldBoxStyle } from "./Register.style"
 
-const registerFields: string[] = ["name", "address", "phone", "email", "username", "password"];
+const registerFields: string[] = ["Name", "Address", "Phone", "Email", "Username", "Password"];
 const defaultPerson: IPerson = {
     name: "",
     address: "",
@@ -20,6 +23,7 @@ const defaultPerson: IPerson = {
     },
     isActive: false
 }
+
 export const Register = (): JSX.Element => {
     const navigate: NavigateFunction = useNavigate()
     const [person, setPerson] = useState<IPerson>(defaultPerson);
@@ -38,11 +42,16 @@ export const Register = (): JSX.Element => {
         </Grid>
     }
 
-    const onClick = async (event: any): Promise<void> => {
-        const response = await axios.post(PersonRoutes.Register, person);
+    const onClick = async (): Promise<void> => {
+        if ((person.name === "") || (person.address === "") || (person.phone === "") || (person.role.username === "") || (person.role.password === "") || (person.role.email == "")) {
+            getMessage(SweetAlertIcon.Error, ERROR_MESSAGE, "All fields requierd")
+        }
+        else {
+            const response = await axios.post(PersonRoutes.Register, person);
 
-        if (response.status == 200) {
-            navigate(Pages.LogIn);
+            if (response.status == 200) {
+                navigate(Pages.LogIn);
+            }
         }
     }
 
@@ -50,22 +59,22 @@ export const Register = (): JSX.Element => {
         const value: string = event.target.value;
         const name: string = event.target.name;
         switch (name) {
-            case "name":
+            case "Name":
                 setPerson({ ...person, name: value })
                 break
-            case "address":
+            case "Address":
                 setPerson({ ...person, address: value })
                 break
-            case "phone":
+            case "Phone":
                 setPerson({ ...person, phone: value })
                 break
-            case "username":
+            case "Username":
                 setPerson({ ...person, role: { ...person.role, username: value } })
                 break;
-            case "password":
+            case "Password":
                 setPerson({ ...person, role: { ...person.role, password: value } })
                 break
-            case "email":
+            case "Email":
                 setPerson({ ...person, role: { ...person.role, email: value } })
                 break
         }
@@ -73,37 +82,34 @@ export const Register = (): JSX.Element => {
 
     return <>
         <ThemeProvider theme={createTheme()}>
-            <Container component="main" maxWidth="xs">
+            <Grid container component="main" sx={{ height: '100vh' }}>
                 <CssBaseline />
-                <Box
-                    sx={{
-                        marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center',
-                    }}
-                >
-                    <Typography component="h1" variant="h5">
-                        Sign up
-                    </Typography>
-                    <Box sx={{ mt: 3 }}>
-                        <Grid container spacing={2}>
-                            {registerFields.map((field: string) => getTextField(field))}
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                    label="I want to receive inspiration, marketing promotions and updates via email."
-                                />
+                <Grid
+                    item
+                    xs={false}
+                    sm={4}
+                    md={7}
+                    sx={backgroundStyle}
+                />
+                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                    <Box
+                        sx={signUpBoxStyle}
+                    >
+                        <Typography component="h1" variant="h5" sx={signUpLabelStyle}>
+                            Sign up
+                        </Typography>
+                        <Box sx={textfieldBoxStyle}>
+                            <Grid container spacing={2}>
+                                {registerFields.map((field: string) => getTextField(field))}
                             </Grid>
-                        </Grid>
-                        <Button
-                            onClick={onClick} type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}
-                        >
-                            Sign Up
-                        </Button>
-                        <Grid container justifyContent="flex-end">
-                            <Grid item>
-                            </Grid>
-                        </Grid>
+                            <Button
+                                onClick={onClick} type="submit" fullWidth variant="contained" sx={signUpButtonStyle}
+                            >
+                                Sign Up
+                            </Button>
+                        </Box>
                     </Box>
-                </Box>
-            </Container>
+                </Grid>
+            </Grid>
         </ThemeProvider></>
 }

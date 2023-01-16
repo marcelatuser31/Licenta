@@ -4,6 +4,7 @@ export const IMAGE_HEADERS: any = {
   "Access-Control-Allow-Origin": "*"
 }
 export const DEFAULT_COLOR: string = "rgb(0, 90, 158)"
+export const DEFAULT_FONT: string = "Georgia"
 export const ORDER_LIST_KEY: string = 'shoppingList'
 export const PERSON_KEY: string = 'person'
 export const FAVORITE_ITEMS_LIST_KEY: string = 'favorite'
@@ -19,6 +20,7 @@ export const ERROR_MESSAGE: string = '...Ooops'
 export const ADD_ORDER_MESSAGE: string = 'Your order has been placed'
 export const ADD_MESSAGE: string = 'Item has been added'
 export const LOGIN_MESSAGE: string = "Username or password didn't match"
+export const REGISTER_MESSAGE: string = "All fields are requierd"
 export const YES: string = 'YES'
 export const NO: string = 'NO'
 export const QUESTION_MESSAGE: string = '...Hmmm'

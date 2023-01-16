@@ -1,13 +1,15 @@
-import { Box, Button, Checkbox, CssBaseline, FormControlLabel, Grid, Paper, TextField, ThemeProvider, Typography } from "@mui/material"
+import { Box, Button, CssBaseline, Grid, Paper, TextField, ThemeProvider, Typography } from "@mui/material"
 import { createTheme } from '@mui/material/styles'
 import axios from "axios"
 import { Fragment, useState } from "react"
 import { NavigateFunction, useNavigate } from "react-router-dom"
-import { CANCEL, ERROR_MESSAGE, FAVORITE_ITEMS_LIST_KEY, LOGIN_MESSAGE, OK, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
+import { ERROR_MESSAGE, FAVORITE_ITEMS_LIST_KEY, LOGIN_MESSAGE, ORDER_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
 import { Pages, SweetAlertIcon } from "../../Utils/enums"
 import { getMessage } from "../../Utils/methods"
 import { RoleRoutes } from "../../Utils/Routes/backEndRoutes"
+import { logInBoxStyle } from "../Register/Register.style"
 import { IShoppingList } from "../ShoppingCart/ShoppingCart.types"
+import { backgroundStyle, buttonStyle, logInButtonStyle, logInLabelStyle, textFieldBoxStyle } from "./LogIn.styles"
 import { ILogIn } from "./LogIn.types"
 
 export const emptyShoppingCart: IShoppingList = { cakes: [], drinks: [] };
@@ -19,11 +21,11 @@ export const LogIn = (): JSX.Element => {
     localStorage.setItem(ORDER_LIST_KEY, JSON.stringify(emptyShoppingCart))
     localStorage.setItem(FAVORITE_ITEMS_LIST_KEY, JSON.stringify([]))
 
-    const onClickRegister = (event: any): void => {
+    const onClickRegister = (): void => {
         navigate(Pages.Register);
     }
 
-    const onClick = async (event: any): Promise<void> => {
+    const onLogIn = async (): Promise<void> => {
         const loginData: ILogIn = {
             username: username,
             password: password
@@ -59,29 +61,16 @@ export const LogIn = (): JSX.Element => {
                         xs={false}
                         sm={4}
                         md={7}
-                        sx={{
-                            backgroundImage: 'url(https://media.bakingo.com/sq-snicker-chocolate-cake0028choc-AA.jpg)',
-                            backgroundRepeat: 'no-repeat',
-                            backgroundColor: (t) =>
-                                t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                        }}
+                        sx={backgroundStyle}
                     />
                     <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                         <Box
-                            sx={{
-                                my: 8,
-                                mx: 4,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                            }}
+                            sx={logInBoxStyle}
                         >
-                            <Typography component="h1" variant="h5">
+                            <Typography component="h1" variant="h5" sx={logInLabelStyle}>
                                 Log In
                             </Typography>
-                            <Box>
+                            <Box style={textFieldBoxStyle}>
                                 <TextField onChange={onChange}
                                     margin="normal"
                                     required
@@ -102,24 +91,20 @@ export const LogIn = (): JSX.Element => {
                                     id="password"
                                     autoComplete="current-password"
                                 />
-                                <FormControlLabel
-                                    control={<Checkbox value="remember" color="primary" />}
-                                    label="Remember me"
-                                />
-                                <Button onClick={onClick}
+                                <Button onClick={onLogIn}
                                     type="submit"
                                     fullWidth
                                     variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
+                                    sx={logInButtonStyle}
                                 >
                                     Log In
                                 </Button>
                                 <Grid container>
                                     <Grid item xs>
-                                        <Button onClick={onClickRegister}>Create Account</Button>
+                                        <Button onClick={onClickRegister} style={buttonStyle}>Create Account</Button>
                                     </Grid>
                                     <Grid item>
-                                        <Button>Forgot password</Button>
+                                        <Button style={buttonStyle}>Forgot password</Button>
                                     </Grid>
                                 </Grid>
                             </Box>
