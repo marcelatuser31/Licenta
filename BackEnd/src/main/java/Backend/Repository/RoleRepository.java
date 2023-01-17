@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface RoleRepository extends CrudRepository<Role, Long> {
     Role findAllById(UUID id);
     Role findFirstByUsername(String username);
+    Role findFirstByEmail(String email);
 }

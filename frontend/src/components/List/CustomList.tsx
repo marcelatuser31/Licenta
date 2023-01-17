@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton } from '@mui/x-data-grid';
 import { GridInitialStateCommunity } from '@mui/x-data-grid/models/gridStateCommunity';
 import { useState } from "react";
-import { ARE_YOU_SURE, NO, QUESTION_MESSAGE, YES } from '../../Utils/constants';
+import { ARE_YOU_SURE, QUESTION_INFO_MESSAGE } from '../../Utils/constants';
 import { SweetAlertIcon } from '../../Utils/enums';
 import { getMessage } from '../../Utils/methods';
 import { dataGridStyle, deleteButtonStyle } from './CustomList.styles';
@@ -24,7 +24,7 @@ export const CustomList = (props: ICustomListProps): JSX.Element => {
     }
 
     const onClick = (event: any): void => {
-        getMessage(SweetAlertIcon.Question, QUESTION_MESSAGE, ARE_YOU_SURE, onDeleteItems)
+        getMessage(SweetAlertIcon.Question, QUESTION_INFO_MESSAGE, ARE_YOU_SURE, onDeleteItems)
     }
 
     const CustomToolbar = (): JSX.Element => {

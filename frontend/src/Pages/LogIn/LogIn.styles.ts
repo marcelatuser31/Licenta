@@ -30,5 +30,6 @@ export const logInButtonStyle: SxProps<Theme> = {
 
 export const buttonStyle: React.CSSProperties = {
     fontFamily: DEFAULT_FONT,
-    fontWeight: "300"
+    fontWeight: "200",
+    fontSize: "0.8vw"
 }

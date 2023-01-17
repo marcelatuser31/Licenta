@@ -16,7 +16,7 @@ import CakeIcon from '@mui/icons-material/Cake';
 import { alpha, Badge, InputBase, styled } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { cakeIconStyle, containerStyle, expandedCakeIconStyle, expandedLogoStyle, expandedMenuBoxStyle, imageStyle, logoStyle, menuBoxStyle, myCartButtonStyle, pageButtonStyle, searchComponentStyle, searchIconStyle, searchStyle, settingsBoxStyle } from './Navbar.styles';
-import { ARE_YOU_SURE, HEADERS, ORDER_LIST_KEY, PERSON_KEY, QUESTION_MESSAGE } from '../../Utils/constants';
+import { ARE_YOU_SURE, HEADERS, ORDER_LIST_KEY, PERSON_KEY, QUESTION_INFO_MESSAGE } from '../../Utils/constants';
 import axios from 'axios';
 import { RoleRoutes } from '../../Utils/Routes/backEndRoutes';
 import { IPerson } from '../../Utils/Models/IPerson';
@@ -37,7 +37,7 @@ export const Navbar = (props: INavbarProps): JSX.Element => {
     const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
 
     const onLogout = async (): Promise<void> => {
-        getMessage(SweetAlertIcon.Question, QUESTION_MESSAGE, ARE_YOU_SURE, onLogoutConfirm)
+        getMessage(SweetAlertIcon.Question, QUESTION_INFO_MESSAGE, ARE_YOU_SURE, onLogoutConfirm)
     }
 
     const onLogoutConfirm = async (): Promise<void> => {

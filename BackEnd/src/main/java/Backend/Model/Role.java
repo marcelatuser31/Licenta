@@ -25,5 +25,5 @@ public class Role implements Serializable {
     private String username;
     private String password;
     private RoleType type;
-    private String Email;
+    private String email;
 }

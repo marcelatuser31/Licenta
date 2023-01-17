@@ -21,6 +21,7 @@ public class RoleServiceImplementation implements RoleService {
     private final CakeRepository cakeRepository;
     private final OrderRepository orderRepository;
     private final PersonRepository personRepository;
+    private final PersonServiceImplementation personServiceImplementation;
 
     @Override
     public Role readById(UUID id) {
@@ -71,5 +72,17 @@ public class RoleServiceImplementation implements RoleService {
     public void LogOut(UUID id) {
         Person person = personRepository.findFirstById(id);
         person.setActive(false);
+    }
+
+    @Override
+    public Role forgotPassword(Role role) {
+        Role dbRole = roleRepository.findFirstByEmail(role.getEmail());
+        if (dbRole != null) {
+            String message = "Your password is:" + "<br/>" + dbRole.getPassword();
+            personServiceImplementation.sendEmail(role.getEmail(), message, "Forgot Password");
+            return dbRole;
+        } else {
+            return null;
+        }
     }
 }

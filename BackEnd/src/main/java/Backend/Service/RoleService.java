@@ -15,4 +15,5 @@ public interface RoleService {
     Person LogIn(LogInDTO logInDTO);
     Role update(Role role);
     void LogOut(UUID id);
+    Role forgotPassword(Role role);
 }
