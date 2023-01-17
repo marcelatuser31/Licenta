@@ -7,8 +7,7 @@ import { ICustomListProps } from "./CustomList.types"
 import DeleteIcon from '@mui/icons-material/Delete';
 import { getMessage } from "../../Utils/methods";
 import { SweetAlertIcon } from "../../Utils/enums";
-import { ARE_YOU_SURE, QUESTION_MESSAGE } from "../../Utils/constants";
-import { CustomDialog } from "../CustomDialog/CustomDialog";
+import { ARE_YOU_SURE, QUESTION_INFO_MESSAGE } from "../../Utils/constants";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import { IItem } from "../../Pages/SelectedItem/SelectedCake.types";
@@ -31,7 +30,7 @@ export const GroupedList = (props: ICustomListProps): JSX.Element => {
     }
 
     const onDelete = (event: any): void => {
-        getMessage(SweetAlertIcon.Question, QUESTION_MESSAGE, ARE_YOU_SURE, onDeleteItems)
+        getMessage(SweetAlertIcon.Question, QUESTION_INFO_MESSAGE, ARE_YOU_SURE, onDeleteItems)
     }
 
     const CustomToolbar = (): JSX.Element => {
