@@ -51,7 +51,6 @@ export const valueStyle: string = mergeStyles({
     top: "30px",
     fontWeight: 600,
     color: "Black",
-    left: 30,
     width: 500
 })
 

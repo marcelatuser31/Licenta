@@ -1,6 +1,6 @@
-export const dialogContentStyle = (width?: number, height?: number): React.CSSProperties => {
+export const dialogContentStyle = (width?: (number | string), height?: number | string): React.CSSProperties => {
     return {
-        width: width || 550,
-        height: height || 1000
+        width: width || 'initial',
+        height: height || 600
     }
 }

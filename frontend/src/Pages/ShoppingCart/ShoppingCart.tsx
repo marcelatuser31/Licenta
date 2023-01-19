@@ -22,12 +22,12 @@ import { addOrderButtonStyle, labelStyle, valueStyle, boxStyle, innerDiv, listSt
 import { IItemDTO, IOrderData, IShoppingList } from "./ShoppingCart.types";
 
 const addressOptions: IChoiceGroupOption[] = [
-    { key: DEFAULT_ADDRESS, text: DEFAULT_ADDRESS, styles: { root: { marginLeft: 20 } } },
+    { key: DEFAULT_ADDRESS, text: DEFAULT_ADDRESS },
     { key: CUSTOM_ADDRESS, text: CUSTOM_ADDRESS, styles: { root: { marginLeft: 20 } } },
 ];
 
 const paymentMethodOptions: IChoiceGroupOption[] = [
-    { key: CASH_ON_DELIVERY, text: CASH_ON_DELIVERY, styles: { root: { marginLeft: 20 } } },
+    { key: CASH_ON_DELIVERY, text: CASH_ON_DELIVERY },
     { key: ONLINE_PAYMENT, text: ONLINE_PAYMENT, styles: { root: { marginLeft: 20 } } },
 ];
 
