@@ -22,7 +22,7 @@ import { IItem } from "../SelectedItem/SelectedCake.types"
 import { boxStyle, innerDiv, listStyle, outerDiv } from "../ShoppingCart/ShoppingCart.Styles"
 
 const options: IChoiceGroupOption[] = [
-    { key: CAKE, text: CAKE, styles: { root: { marginLeft: 20 } } },
+    { key: CAKE, text: CAKE },
     { key: DRINK, text: DRINK, styles: { root: { marginLeft: 20 } } },
 ];
 
@@ -78,7 +78,8 @@ export const Manage = (): JSX.Element => {
 
     const cakeRows: IItem[] = cakes?.map((cake: ICake) => {
         return {
-            id: cake.id, price: cake.price, name: cake.name,
+            id: cake.id, price: cake.price,
+            name: cake.name,
             weight: cake.weight,
             amount: cake.amount,
             cakeType: cake.type,
@@ -345,7 +346,6 @@ export const Manage = (): JSX.Element => {
                     addButton={true}
                     submitButtonLabel={isEditMode ? "Update" : "Add"}
                 ></CustomDialog>
-
             </StackItem>
         </Stack >
     </>
