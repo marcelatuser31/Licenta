@@ -1,38 +1,42 @@
-import { Button, Checkbox, Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Paper, TextField } from "@mui/material";
-import axios from "axios";
+import AddIcon from '@mui/icons-material/Add';
+import { Button, Checkbox, Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Paper } from "@mui/material";
 import React, { useEffect } from "react";
 import { IIngredient } from "../../Utils/Models/IIngredient";
-import { IngredientRoutes } from "../../Utils/Routes/backEndRoutes";
 import { IIngredientsListProps } from "./IngredientaList.types";
-import AddIcon from '@mui/icons-material/Add';
 import { buttonStyle, paperStyle } from "./IngredientsList.styles";
 
 export const IngredientsList = (props: IIngredientsListProps): JSX.Element => {
-    const [checkedIngredients, setCheckedIngredients] = React.useState<IIngredient[]>(props.availableIngredients ? props.availableIngredients : [])
+    const [checkedIngredients, setCheckedIngredients] = React.useState<IIngredient[]>([])
     const [selectedIngredients, setSelectedIngredients] = React.useState<IIngredient[]>(props.selectedIngredients ? props.selectedIngredients : []);
-    const [availableIngredients, setAvailableIngredients] = React.useState<IIngredient[]>([]);
+    const [availableIngredients, setAvailableIngredients] = React.useState<IIngredient[]>(props.availableIngredients ? props.availableIngredients : []);
 
     useEffect(() => {
-        props.setIngredients(selectedIngredients)
+        if (selectedIngredients.length !== 0)
+            props.setIngredients(selectedIngredients)
     }, [selectedIngredients])
 
     useEffect(() => {
 
+        if (!props.availableIngredients || !props.selectedIngredients)
+            return;
+
         if (props.selectedIngredients)
-            setAvailableIngredients(props.selectedIngredients);
+            setSelectedIngredients(props.selectedIngredients);
+
+        const availableIng = props.availableIngredients.map(i => i.id).filter((id: string) => !props.selectedIngredients?.map(i => i.id).includes(id))
 
         if (props.availableIngredients)
-            setAvailableIngredients(props.availableIngredients);
+            setAvailableIngredients(props.availableIngredients.filter((ingredient: IIngredient) => availableIng.includes(ingredient.id)));
 
     }, []);
 
-    useEffect(() => {
-        const getIngredients = async (): Promise<void> => {
-            const response = await axios.get(IngredientRoutes.GetAll)
-            setAvailableIngredients(response.data)
-        }
-        getIngredients()
-    }, [props.isAdded])
+    // useEffect(() => {
+    //     const getIngredients = async (): Promise<void> => {
+    //         const response = await axios.get(IngredientRoutes.GetAll)
+    //         setAvailableIngredients(response.data)
+    //     }
+    //     getIngredients()
+    // }, [props.isAdded])
 
     const getRemainingIngredients = (a: IIngredient[], b: IIngredient[]): IIngredient[] => {
         return a.filter((value) => b.indexOf(value) === -1);

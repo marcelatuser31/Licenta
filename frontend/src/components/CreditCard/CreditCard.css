@@ -1,13 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
 .container {
-    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 2rem;
     max-width: 1200px;
     margin: auto;
+    position: relative;
+    top: 100px
 }
 
 #form {

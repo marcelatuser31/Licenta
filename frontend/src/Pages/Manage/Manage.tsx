@@ -39,6 +39,7 @@ export const defaultCake: ICake = {
     ...defaultDrink,
     ingredients: [],
     expirationDate: undefined,
+    type: "ana are mer"
 }
 
 const defaultIngredient: IIngredient = {
@@ -71,7 +72,8 @@ export const Manage = (): JSX.Element => {
             setDrinks(response.data)
 
             response = await axios.get(IngredientRoutes.GetAll)
-            setIngredients(response.data)
+            // setIngredients(response.data);
+            setAllIngredients(response.data)
         }
         getData()
     }, [])
@@ -140,13 +142,14 @@ export const Manage = (): JSX.Element => {
     const onCakeAction = async (): Promise<void> => {
         const path: string = isEditMode ? CakeRoutes.Update : CakeRoutes.AddCake;
 
+        const type = getSelectedItem().cakeType
         const cake: any = {
             ...getSelectedItem(),
             ...getDifferentField(selectedCake),
             ingredients: ingredients,
             image: "",
             id: isEditMode ? getSelectedItem().id : "",
-            type: localStorage.getItem("cakeTypes")?.split(",").indexOf(selectedCake?.type || "")
+            type: getSelectedItem().cakeType || ""
         }
         const response = await axios.post(path, cake);
         getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE)
@@ -209,13 +212,13 @@ export const Manage = (): JSX.Element => {
 
         switch (field) {
             case ItemField.Amount:
-                return item.amount.toString();
+                return item?.amount.toString();
             case ItemField.Name:
-                return item.name;
+                return item?.name;
             case ItemField.Price:
-                return item.price.toString();
+                return item?.price.toString();
             case ItemField.Weight:
-                return item.weight.toString();
+                return item?.weight?.toString();
         }
         return "";
     }
@@ -244,7 +247,7 @@ export const Manage = (): JSX.Element => {
     const getIngredientsList = (ingredientsList: IIngredient[]): JSX.Element => {
         return <div>
             {isCakeSelected() && <IngredientsList
-                availableIngredients={allIngredients.filter((ingredient: IIngredient) => !ingredientsList.includes(ingredient))}
+                availableIngredients={allIngredients}
                 selectedIngredients={ingredientsList}
                 setIngredients={setIngredients}
                 setShouldDisplayNewIngredient={setShouldDisplayNewIngredient}
@@ -258,7 +261,7 @@ export const Manage = (): JSX.Element => {
             {isCakeSelected() && <CustomDropdown
                 options={localStorage.getItem("cakeTypes")?.split(",") || []}
                 setDefaultValue={(option: string) => setSelectedCake({ ...selectedCake, type: option })}
-                defaultValue={!selectedCake.type ? getSelectedItem()?.cakeType || "" : selectedCake?.type || ""}
+                defaultValue={getSelectedItem()?.cakeType || ""}
                 name={"Cake Type"} />}
         </div>
     }

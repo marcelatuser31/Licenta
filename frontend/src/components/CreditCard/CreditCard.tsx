@@ -86,7 +86,23 @@ export const CreditCard = (props: ICreditCardProps): JSX.Element => {
     const setExpYear = (e: { target: { value: string }; }): void => {
         if (!props.creditCardData)
             return
-        props.setCreditCardData({ ...props.creditCardData, cardHolder: e.target.value });
+        props.setCreditCardData({ ...props.creditCardData, expireYear: e.target.value });
+    }
+
+    const getCardNumber = (): string => {
+        if (!props.creditCardData)
+            return ""
+
+        let number: string = "";
+        for (let i = 0; i < props.creditCardData?.cardNumber?.length; i++) {
+            if (i % 4 === 0 && i != 0) {
+                number = number + "-"
+            }
+
+            number = number + props.creditCardData.cardNumber[i]
+
+        }
+        return number
     }
 
     return (
@@ -100,7 +116,7 @@ export const CreditCard = (props: ICreditCardProps): JSX.Element => {
                         </div>
                     </div>
                     <div className="body">
-                        <h2 id="creditCardNumber">{props.creditCardData?.cardNumber}</h2>
+                        <h2 id="creditCardNumber">{getCardNumber()}</h2>
                     </div>
                     <div className="footer">
                         <div>
@@ -132,7 +148,7 @@ export const CreditCard = (props: ICreditCardProps): JSX.Element => {
                 <div className="input-grp">
                     <div className="input-container">
                         <h4>Expiration Year</h4>
-                        <select value={props.creditCardData?.expireYear} defaultValue={defaultCreditCard?.expireYear} onChange={setExpYear}>
+                        <select value={props.creditCardData?.expireYear} defaultValue={props.creditCardData?.expireYear} onChange={setExpYear}>
                             {expireYears.map((year: string) => {
                                 return <option value={year}>{year}</option>
                             })}

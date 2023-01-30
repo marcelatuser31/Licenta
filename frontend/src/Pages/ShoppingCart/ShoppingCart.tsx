@@ -32,10 +32,10 @@ const paymentMethodOptions: IChoiceGroupOption[] = [
 ];
 
 const defaultCreditCardData: ICreditCardData = {
-    cardNumber: "#### #### #### ####",
+    cardNumber: "",
     cardHolder: "",
-    expireMonth: "March",
-    expireYear: "2025"
+    expireMonth: "",
+    expireYear: ""
 }
 
 export const ShoppingCart = (): JSX.Element => {
@@ -121,7 +121,7 @@ export const ShoppingCart = (): JSX.Element => {
     }
 
     const getPaymentMethodContent = (): JSX.Element => {
-        return <div>
+        return <div >
             <ChoiceGroup onChange={onPaymentMethodChoiceGroupChange}
                 options={paymentMethodOptions}
                 defaultSelectedKey={selectedPaymentMethod}
@@ -212,6 +212,6 @@ export const ShoppingCart = (): JSX.Element => {
                 </Box>
             </div>
         </StackItem>
-        <CustomDialog openDialog={openDialog} title={"Add Order"} content={dialogContent} onClose={() => setOpenDialog(false)} onSubmit={onSave}></CustomDialog>
+        <CustomDialog height={selectedPaymentMethod === CASH_ON_DELIVERY ? 300 : 600} openDialog={openDialog} title={"Add Order"} content={dialogContent} onClose={() => setOpenDialog(false)} onSubmit={onSave}></CustomDialog>
     </Stack >
 }
