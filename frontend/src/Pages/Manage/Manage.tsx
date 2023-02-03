@@ -10,7 +10,7 @@ import { IIngredient } from "../../Utils/Models/IIngredient"
 import { CakeRoutes, DrinkRoutes, IngredientRoutes } from "../../Utils/Routes/backEndRoutes"
 import { ADD_MESSAGE, CAKE, DRINK, SUCCESSFULLY } from "../../Utils/constants"
 import { ItemField, SweetAlertIcon } from "../../Utils/enums"
-import { getMessage, onUploadPhoto } from "../../Utils/methods"
+import { getMessage, onUploadPhoto, reloadPage } from "../../Utils/methods"
 import { CustomDialog } from "../../components/CustomDialog/CustomDialog"
 import { CustomDropdown } from "../../components/CustomDropdown/CustomDropdown"
 import { IngredientsList } from "../../components/IngredientsList/IngredientsList"
@@ -20,6 +20,8 @@ import { Input } from "../Cakes/Cakes"
 import { choiceGroupStyle } from "../SelectedItem/SelectedCake.styles"
 import { IItem } from "../SelectedItem/SelectedCake.types"
 import { boxStyle, innerDiv, listStyle, outerDiv } from "../ShoppingCart/ShoppingCart.Styles"
+import { Section } from "../../components/Section/Section"
+import { sectionFieldStyle, sectionIngredientsStyle, sectionLabelFieldStyle, sectionLabelTypeStyle, sectionLabelUploadPhotoStyle, sectionTypeStyle, sectionUploadPhotoStyle } from "./Manage.styles"
 
 const options: IChoiceGroupOption[] = [
     { key: CAKE, text: CAKE },
@@ -39,7 +41,6 @@ export const defaultCake: ICake = {
     ...defaultDrink,
     ingredients: [],
     expirationDate: undefined,
-    type: "ana are mer"
 }
 
 const defaultIngredient: IIngredient = {
@@ -142,18 +143,23 @@ export const Manage = (): JSX.Element => {
     const onCakeAction = async (): Promise<void> => {
         const path: string = isEditMode ? CakeRoutes.Update : CakeRoutes.AddCake;
 
-        const type = getSelectedItem().cakeType
+        const type = isEditMode ? getSelectedItem().cakeType : selectedCake.type
         const cake: any = {
             ...getSelectedItem(),
             ...getDifferentField(selectedCake),
             ingredients: ingredients,
             image: "",
             id: isEditMode ? getSelectedItem().id : "",
-            type: getSelectedItem().cakeType || ""
+            type: type
         }
         const response = await axios.post(path, cake);
         getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE)
         setCakes(response.data)
+
+        const r = await axios.get(IngredientRoutes.GetAll);
+        setAllIngredients(r.data)
+
+        reloadPage()
     }
 
     const onDrinkAction = async (): Promise<void> => {
@@ -163,12 +169,20 @@ export const Manage = (): JSX.Element => {
         const response = await axios.post(path, drink);
 
         setDrinks(response.data)
+
+        reloadPage()
     }
 
     const onSaveNewIngredient = async (): Promise<void> => {
-        await axios.post(IngredientRoutes.AddIngredient, newIngredient)
+        setAllIngredients([...allIngredients, newIngredient])
         setShouldDisplayNewIngredient(false)
         setIsAdded(!isAdded)
+
+        setOpenDialog(false);
+
+        setTimeout(() => {
+            setOpenDialog(true);
+        }, 400)
     }
 
     const onChoiceGroupChange = (ev?: React.FormEvent<HTMLElement | HTMLInputElement> | undefined, option?: IChoiceGroupOption | undefined): void => {
@@ -185,26 +199,29 @@ export const Manage = (): JSX.Element => {
     }
 
     const addIngredientContent: JSX.Element =
-        <Stack horizontal={true}>
-            <StackItem>
-                <TextField
-                    autoFocus
-                    margin="dense"
-                    id="Ingredient"
-                    label="Ingredient"
-                    fullWidth
-                    variant="standard"
-                    name="Ingredient"
-                    type="text"
-                    onChange={(event: any) => onChangeField(event, [newIngredient, setNewIngredient])}
-                />
-            </StackItem>
-            <StackItem>
-                <IconButton onClick={onSaveNewIngredient} style={{ top: 20 }}>
-                    <AddIcon />
-                </IconButton>
-            </StackItem>
-        </Stack>
+        <div style={{ position: 'relative', top: 40 }}>
+            <Stack horizontal={true} >
+                <StackItem>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="Ingredient"
+                        label="Ingredient"
+                        fullWidth
+                        variant="standard"
+                        name="name"
+                        type="text"
+                        onChange={(event: any) => onChangeField(event, [newIngredient, setNewIngredient])}
+                    />
+                </StackItem>
+                <StackItem>
+                    <IconButton onClick={onSaveNewIngredient} style={{ top: 20 }}>
+                        <AddIcon />
+                    </IconButton>
+                </StackItem>
+            </Stack>
+        </div>
+
 
     const getValue = (field: ItemField, item: IItem): string => {
         if (!item)
@@ -239,30 +256,40 @@ export const Manage = (): JSX.Element => {
         };
         return <div>{itemFields.map((label: ItemField) =>
             isEditMode
-                ? <TextField {...object(label)} defaultValue={isEditMode ? getValue(label, item) : ""} />
-                : <TextField {...object(label)} />)}
+                ? <Section labelStyle={sectionLabelFieldStyle} valueStyle={sectionFieldStyle} contentValue={<TextField {...object(label)} defaultValue={isEditMode ? getValue(label, item) : ""} />} name={label[0].toUpperCase() + label.slice(1) + ':'} gap={20}></Section>
+                : <Section labelStyle={sectionLabelFieldStyle} valueStyle={sectionFieldStyle} contentValue={<TextField {...object(label)} />} name={label[0].toUpperCase() + label.slice(1) + ':'} gap={20}></Section>)}
         </div>
     }
 
     const getIngredientsList = (ingredientsList: IIngredient[]): JSX.Element => {
         return <div>
-            {isCakeSelected() && <IngredientsList
-                availableIngredients={allIngredients}
-                selectedIngredients={ingredientsList}
-                setIngredients={setIngredients}
-                setShouldDisplayNewIngredient={setShouldDisplayNewIngredient}
-                isAdded={isAdded} />
-            }
+            {isCakeSelected() && <Section
+                name={"Ingredients:"}
+                contentValue={
+                    <IngredientsList
+                        availableIngredients={allIngredients}
+                        selectedIngredients={ingredientsList}
+                        setIngredients={setIngredients}
+                        setShouldDisplayNewIngredient={setShouldDisplayNewIngredient}
+                        isAdded={isAdded} />}
+                valueStyle={sectionIngredientsStyle}
+            />}
         </div>
     }
 
     const getCakeTypeSection = (): JSX.Element => {
         return <div>
-            {isCakeSelected() && <CustomDropdown
-                options={localStorage.getItem("cakeTypes")?.split(",") || []}
-                setDefaultValue={(option: string) => setSelectedCake({ ...selectedCake, type: option })}
-                defaultValue={getSelectedItem()?.cakeType || ""}
-                name={"Cake Type"} />}
+            {isCakeSelected() && <Section name={"Cake Type:"}
+                contentValue={
+                    <CustomDropdown
+                        options={localStorage.getItem("cakeTypes")?.split(",") || []}
+                        setDefaultValue={(option: string) => setSelectedCake({ ...selectedCake, type: option })}
+                        defaultValue={getSelectedItem()?.cakeType || ""}
+                        name={"Cake Type"} />
+                }
+                labelStyle={sectionLabelTypeStyle}
+                valueStyle={sectionTypeStyle}
+            />}
         </div>
     }
 
@@ -277,18 +304,24 @@ export const Manage = (): JSX.Element => {
     }
 
     const getUploadImageSection = (): JSX.Element => {
-        return <Button variant="contained" component="label">
-            Upload
-            <Input
-                accept='image/*'
-                id='contained-button-file'
-                multiple
-                type='file'
-                onChange={(event: any) => onUploadPhoto(
-                    event,
-                    getSelectedItem().id || "",
-                    getSelectedItem().type === CAKE ? CakeRoutes.AddImage : DrinkRoutes.AddImage)} />
-        </Button>
+        return <Section name={"Upload Photo:"}
+            contentValue={
+                <Button variant="contained" component="label">
+                    Upload
+                    <Input
+                        accept='image/*'
+                        id='contained-button-file'
+                        multiple
+                        type='file'
+                        onChange={(event: any) => onUploadPhoto(
+                            event,
+                            getSelectedItem().id || "",
+                            getSelectedItem().type === CAKE ? CakeRoutes.AddImage : DrinkRoutes.AddImage)} />
+                </Button>
+            }
+            valueStyle={sectionUploadPhotoStyle}
+            labelStyle={sectionLabelUploadPhotoStyle}
+        />
     }
 
     const getDialogContent = (): JSX.Element => {
@@ -299,9 +332,10 @@ export const Manage = (): JSX.Element => {
             {getChoiseGroupSection()}
             {getFields(item)}
             {getIngredientsList(ingredientsList)}
+            {shouldDisplayNewIngredient && addIngredientContent}
             {getCakeTypeSection()}
             {getUploadImageSection()}
-            {shouldDisplayNewIngredient && addIngredientContent}
+
         </div >
     }
 
@@ -341,6 +375,7 @@ export const Manage = (): JSX.Element => {
                     </div>
                 </div>
                 <CustomDialog
+                    width={520}
                     openDialog={openDialog}
                     content={getDialogContent()}
                     title={isCakeSelected() ? isEditMode ? "Edit Cake" : "Add" : isEditMode ? "Edit Drink" : "Add"}

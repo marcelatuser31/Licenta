@@ -1,7 +1,9 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Button, Checkbox, Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Paper } from "@mui/material";
+import axios from 'axios';
 import React, { useEffect } from "react";
 import { IIngredient } from "../../Utils/Models/IIngredient";
+import { IngredientRoutes } from '../../Utils/Routes/backEndRoutes';
 import { IIngredientsListProps } from "./IngredientaList.types";
 import { buttonStyle, paperStyle } from "./IngredientsList.styles";
 
@@ -30,13 +32,10 @@ export const IngredientsList = (props: IIngredientsListProps): JSX.Element => {
 
     }, []);
 
-    // useEffect(() => {
-    //     const getIngredients = async (): Promise<void> => {
-    //         const response = await axios.get(IngredientRoutes.GetAll)
-    //         setAvailableIngredients(response.data)
-    //     }
-    //     getIngredients()
-    // }, [props.isAdded])
+    useEffect(() => {
+        const ing = [availableIngredients]
+
+    }, [props.isAdded])
 
     const getRemainingIngredients = (a: IIngredient[], b: IIngredient[]): IIngredient[] => {
         return a.filter((value) => b.indexOf(value) === -1);
@@ -124,53 +123,59 @@ export const IngredientsList = (props: IIngredientsListProps): JSX.Element => {
     );
 
     return (
-        <Grid container spacing={2} justifyContent="center" alignItems="center">
-            <Grid item>{customList(availableIngredients)}</Grid>
-            <Grid item>
-                <Grid container direction="column" alignItems="center">
-                    <Button
-                        sx={buttonStyle}
-                        variant="outlined"
-                        size="small"
-                        onClick={onSelectAll}
-                        disabled={availableIngredients.length === 0}
-                        aria-label="move all right"
-                    >
-                        ≫
-                    </Button>
-                    <Button
-                        sx={buttonStyle}
-                        variant="outlined"
-                        size="small"
-                        onClick={onSelectIngredients}
-                        disabled={leftChecked.length === 0}
-                        aria-label="move selected right"
-                    >
-                        &gt;
-                    </Button>
-                    <Button
-                        sx={buttonStyle}
-                        variant="outlined"
-                        size="small"
-                        onClick={onRemoveIngredients}
-                        disabled={rightChecked.length === 0}
-                        aria-label="move selected left"
-                    >
-                        &lt;
-                    </Button>
-                    <Button
-                        sx={buttonStyle}
-                        variant="outlined"
-                        size="small"
-                        onClick={onRemoveAll}
-                        disabled={selectedIngredients.length === 0}
-                        aria-label="move all left"
-                    >
-                        ≪
-                    </Button>
+        <div>
+            <div>Available Ingredients</div>
+            <Grid container spacing={2} justifyContent="center" alignItems="center">
+
+                <Grid item>{customList(availableIngredients)}</Grid>
+                <Grid item>
+                    <Grid container direction="column" alignItems="center">
+                        <Button
+                            sx={buttonStyle}
+                            variant="outlined"
+                            size="small"
+                            onClick={onSelectAll}
+                            disabled={availableIngredients.length === 0}
+                            aria-label="move all right"
+                        >
+                            ≫
+                        </Button>
+                        <Button
+                            sx={buttonStyle}
+                            variant="outlined"
+                            size="small"
+                            onClick={onSelectIngredients}
+                            disabled={leftChecked.length === 0}
+                            aria-label="move selected right"
+                        >
+                            &gt;
+                        </Button>
+                        <Button
+                            sx={buttonStyle}
+                            variant="outlined"
+                            size="small"
+                            onClick={onRemoveIngredients}
+                            disabled={rightChecked.length === 0}
+                            aria-label="move selected left"
+                        >
+                            &lt;
+                        </Button>
+                        <Button
+                            sx={buttonStyle}
+                            variant="outlined"
+                            size="small"
+                            onClick={onRemoveAll}
+                            disabled={selectedIngredients.length === 0}
+                            aria-label="move all left"
+                        >
+                            ≪
+                        </Button>
+                    </Grid>
                 </Grid>
+                <Grid item>{customList(selectedIngredients)}</Grid>
             </Grid>
-            <Grid item>{customList(selectedIngredients)}</Grid>
-        </Grid>
+            <div>Selected Ingredients</div>
+        </div>
+
     );
 }

@@ -37,7 +37,7 @@ public class CakeController {
 
     @PostMapping("/update")
     public ResponseEntity update(@RequestBody Cake cake) {
-        cakeServiceImplementation.update((Cake) cake);
+        cakeServiceImplementation.update( cake);
         return ResponseEntity.status(HttpStatus.OK).body(cakeServiceImplementation.getAll());
     }
 

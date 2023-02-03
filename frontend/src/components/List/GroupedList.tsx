@@ -41,7 +41,7 @@ export const GroupedList = (props: ICustomListProps): JSX.Element => {
                 <GridToolbarDensitySelector />
                 <GridToolbarExport />
                 {props.showManageButtons
-                    && <Button variant="text" onClick={() => props.onManage(false)} startIcon={<AddCircleOutlineIcon />} style={addButtonStyle}>Add</Button>}
+                    && <Button variant="text" onClick={() => props.onManage(false)} disabled={selectedItems.length >= 1} startIcon={<AddCircleOutlineIcon />} style={addButtonStyle}>Add</Button>}
                 <Button variant="text" onClick={onDelete} disabled={selectedItems.length == 0} startIcon={<DeleteIcon />} style={deleteButtonStyle}>Delete</Button>
                 {props.showManageButtons
                     && <Button variant="text" disabled={selectedItems.length !== 1} onClick={() => props.onManage(true)} startIcon={<ManageSearchIcon style={{ position: "relative", bottom: 1, left: 2 }} />} style={{ ...addButtonStyle }}>Edit</Button>}

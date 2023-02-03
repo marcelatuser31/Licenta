@@ -3,6 +3,7 @@ package Backend.Service.Implementation;
 import Backend.Model.Cake;
 import Backend.Model.Ingredient;
 import Backend.Repository.CakeRepository;
+import Backend.Repository.IngredientRepository;
 import Backend.Service.CakeService;
 import Backend.Utils.CakeType;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.UUID;
 public class CakeServiceImplementation implements CakeService {
 
     private final CakeRepository cakeRepository;
+    private final IngredientRepository ingredientRepository;
 
     public Cake getById(UUID id) {
         Cake cake = cakeRepository.findFirstById(id);
@@ -62,6 +64,12 @@ public class CakeServiceImplementation implements CakeService {
     @Override
     public void update(Cake cake) {
         Cake dbCake = cakeRepository.findFirstById(cake.getId());
+
+        for(Ingredient i : cake.getIngredients()){
+            if(i.getId() == null){
+                    ingredientRepository.save(i);
+            }
+        }
         if (dbCake != null) {
             dbCake.setName(cake.getName());
             dbCake.setPrice(cake.getPrice());
