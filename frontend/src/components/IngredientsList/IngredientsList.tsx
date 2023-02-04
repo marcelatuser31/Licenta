@@ -2,10 +2,11 @@ import AddIcon from '@mui/icons-material/Add';
 import { Button, Checkbox, Grid, IconButton, List, ListItem, ListItemIcon, ListItemText, Paper } from "@mui/material";
 import axios from 'axios';
 import React, { useEffect } from "react";
+import { DEFAULT_FONT } from '../../Utils/constants';
 import { IIngredient } from "../../Utils/Models/IIngredient";
 import { IngredientRoutes } from '../../Utils/Routes/backEndRoutes';
 import { IIngredientsListProps } from "./IngredientaList.types";
-import { buttonStyle, paperStyle } from "./IngredientsList.styles";
+import { availableIngredientsLabel, buttonStyle, paperStyle, selectedIngredientsLabel } from "./IngredientsList.styles";
 
 export const IngredientsList = (props: IIngredientsListProps): JSX.Element => {
     const [checkedIngredients, setCheckedIngredients] = React.useState<IIngredient[]>([])
@@ -124,7 +125,7 @@ export const IngredientsList = (props: IIngredientsListProps): JSX.Element => {
 
     return (
         <div>
-            <div>Available Ingredients</div>
+            <div style={availableIngredientsLabel}>Available Ingredients</div>
             <Grid container spacing={2} justifyContent="center" alignItems="center">
 
                 <Grid item>{customList(availableIngredients)}</Grid>
@@ -174,7 +175,7 @@ export const IngredientsList = (props: IIngredientsListProps): JSX.Element => {
                 </Grid>
                 <Grid item>{customList(selectedIngredients)}</Grid>
             </Grid>
-            <div>Selected Ingredients</div>
+            <div style={selectedIngredientsLabel}>Selected Ingredients</div>
         </div>
 
     );

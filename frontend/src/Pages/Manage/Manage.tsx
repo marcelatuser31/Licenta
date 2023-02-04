@@ -284,7 +284,7 @@ export const Manage = (): JSX.Element => {
                     <CustomDropdown
                         options={localStorage.getItem("cakeTypes")?.split(",") || []}
                         setDefaultValue={(option: string) => setSelectedCake({ ...selectedCake, type: option })}
-                        defaultValue={getSelectedItem()?.cakeType || ""}
+                        defaultValue={getSelectedItem()?.cakeType || selectedCake?.type || ""}
                         name={"Cake Type"} />
                 }
                 labelStyle={sectionLabelTypeStyle}

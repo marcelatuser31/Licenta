@@ -14,7 +14,7 @@ import { DEFAULT_PRODUCT_PHOTO } from "../../Utils/images";
 import { getImageURLfromByteArray } from "../../Utils/methods";
 import { IDrink } from "../../Utils/Models/IDrink"
 import { DrinkRoutes } from "../../Utils/Routes/backEndRoutes";
-import { dividerStyle, itemsContainerStyle, labelSectionStyle } from "../Cakes/Cakes.styles";
+import { contentSortByNameStyle, dividerStyle, itemsContainerStyle, labelSectionStyle } from "../Cakes/Cakes.styles";
 
 const getCard = (drink: IDrink, index: number): JSX.Element => {
     const favoriteList: IFavoriteItem[] = JSON.parse(localStorage.getItem(FAVORITE_ITEMS_LIST_KEY) as string)
@@ -121,11 +121,11 @@ export const Drinks = (): JSX.Element => {
             <StackItem>
                 <Stack gap='60'>
                     <Section name={SORT_BY_PRICE} labelStyle={labelSectionStyle} contentValue={getSortByPriceContent()}></Section>
-                    <Section name={SORT_BY_NAME} labelStyle={labelSectionStyle} contentValue={getSortByNameContent()}></Section>
+                    <Section name={SORT_BY_NAME} labelStyle={labelSectionStyle} valueStyle={contentSortByNameStyle} contentValue={getSortByNameContent()}></Section>
                 </Stack>
             </StackItem>
             <div className={dividerStyle} />
-            <Section name={"All"} contentValue={getDrinksContent()}></Section>
+            <Section name={"Type: All"} contentValue={getDrinksContent()}></Section>
         </Stack >
         <Footer />
     </div >

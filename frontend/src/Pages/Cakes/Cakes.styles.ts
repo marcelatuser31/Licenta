@@ -42,3 +42,14 @@ export const dividerStyle: string = mergeStyles({
     top: 20,
     left: 50,
 })
+
+export const contentSortByNameStyle: string = mergeStyles({
+    fontSize: "20px",
+    position: "relative",
+    top: "30px",
+    fontWeight: 600,
+    color: "Black",
+    left: 30,
+    width: 100,
+    height: 95
+})
