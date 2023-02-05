@@ -45,4 +45,9 @@ public class DrinkController {
     public ResponseEntity addImage(@RequestParam (value="image", required = false) MultipartFile image, @RequestParam(value="id") UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(drinkServiceImplementation.addDrinkImage(id, image));
     }
+
+    @PostMapping("/deleteDrink")
+    public void deleteDrink(@RequestBody String id){
+        drinkServiceImplementation.deleteDrink(UUID.fromString(id.substring(0,id.length()-1)));
+    }
 }

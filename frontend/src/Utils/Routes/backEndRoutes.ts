@@ -32,6 +32,7 @@ export namespace DrinkRoutes {
     export const AddDrink: string = `${serverURL}/Drink/addDrink`
     export const AddImage: string = `${serverURL}/Drink/addImage`
     export const Update: string = `${serverURL}/Drink/update`
+    export const Delete: string = `${serverURL}/Drink/deleteDrink`
 }
 
 export namespace IngredientRoutes {

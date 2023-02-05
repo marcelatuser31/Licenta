@@ -76,6 +76,7 @@ public class CakeServiceImplementation implements CakeService {
             dbCake.setWeight(cake.getWeight());
             dbCake.setAmount(cake.getAmount());
             dbCake.setIngredients(cake.getIngredients());
+            dbCake.setType(cake.getType());
 
             cakeRepository.save(dbCake);
         }

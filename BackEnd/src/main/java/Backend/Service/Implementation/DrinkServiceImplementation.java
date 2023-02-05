@@ -64,4 +64,11 @@ public class DrinkServiceImplementation implements DrinkService {
             drinkRepository.save(dbDrink);
         }
     }
+
+    @Override
+    public void deleteDrink(UUID id) {
+        Drink drink=drinkRepository.findFirstById(id);
+        if(drink!=null)
+            drinkRepository.delete(drink);
+    }
 }

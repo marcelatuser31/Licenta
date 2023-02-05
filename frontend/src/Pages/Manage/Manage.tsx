@@ -143,7 +143,7 @@ export const Manage = (): JSX.Element => {
     const onCakeAction = async (): Promise<void> => {
         const path: string = isEditMode ? CakeRoutes.Update : CakeRoutes.AddCake;
 
-        const type = isEditMode ? getSelectedItem().cakeType : selectedCake.type
+        const type = selectedCake.type || getSelectedItem().cakeType
         const cake: any = {
             ...getSelectedItem(),
             ...getDifferentField(selectedCake),
@@ -284,7 +284,7 @@ export const Manage = (): JSX.Element => {
                     <CustomDropdown
                         options={localStorage.getItem("cakeTypes")?.split(",") || []}
                         setDefaultValue={(option: string) => setSelectedCake({ ...selectedCake, type: option })}
-                        defaultValue={getSelectedItem()?.cakeType || selectedCake?.type || ""}
+                        defaultValue={selectedCake?.type || getSelectedItem()?.cakeType || ""}
                         name={"Cake Type"} />
                 }
                 labelStyle={sectionLabelTypeStyle}
@@ -345,12 +345,18 @@ export const Manage = (): JSX.Element => {
     }
 
     const onDeleteItems = async (deletedItems: any): Promise<void> => {
-        deletedItems.forEach(async (item: any) =>
-            await axios.post(CakeRoutes.DeleteCake, item.id as string)
-        )
+        deletedItems.forEach(async (item: any) => {
+            if (getSelectedItem().type === CAKE) {
+                await axios.post(CakeRoutes.DeleteCake, item.id as string)
+            }
+            else await axios.post(DrinkRoutes.Delete, item.id as string)
+        })
 
-        const response = await axios.get(CakeRoutes.GetAll);
-        setCakes(response.data);
+        const responseCakes = await axios.get(CakeRoutes.GetAll);
+        setCakes(responseCakes.data);
+
+        const responseDrinks = await axios.get(DrinkRoutes.GetAll);
+        setDrinks(responseDrinks.data)
     }
 
     return <>

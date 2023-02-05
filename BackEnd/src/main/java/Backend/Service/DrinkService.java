@@ -15,4 +15,5 @@ public interface DrinkService {
     Drink addDrink(Drink drink);
     Drink addDrinkImage(UUID id, MultipartFile image);
     void update(Drink drink);
+    void deleteDrink(UUID id);
 }
