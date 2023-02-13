@@ -137,7 +137,12 @@ public class CakeServiceImplementation implements CakeService {
 
     @Override
     public Cake addCake(Cake cake) {
-        Cake newCake = new Cake(UUID.randomUUID(), cake.getName(), cake.getPrice(), cake.getWeight(), cake.getAmount(), cake.getIngredients(), cake.getType(), cake.getExpirationDate(), null);
+        Cake newCake = new Cake(UUID.randomUUID(),
+                cake.getName(), cake.getPrice(),
+                cake.getWeight(), cake.getAmount(),
+                cake.getIngredients(), cake.getType(),
+                cake.getExpirationDate(),
+                null);
 
         for(Ingredient i : cake.getIngredients()){
             if(i.getId() == null){

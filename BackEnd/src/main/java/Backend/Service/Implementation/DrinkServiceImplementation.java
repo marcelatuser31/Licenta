@@ -29,7 +29,13 @@ public class DrinkServiceImplementation implements DrinkService {
 
     @Override
     public Drink addDrink(Drink drink) {
-        Drink newDrink = new Drink(UUID.randomUUID(), drink.getName(), drink.getWeight(), drink.getPrice(), drink.getAmount(), null);
+        Drink newDrink = new Drink(UUID.randomUUID(),
+                drink.getName(),
+                drink.getWeight(),
+                drink.getPrice(),
+                drink.getAmount(),
+                null);
+
         drinkRepository.save(newDrink);
         return newDrink;
     }

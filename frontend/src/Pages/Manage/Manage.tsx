@@ -334,7 +334,7 @@ export const Manage = (): JSX.Element => {
             {getIngredientsList(ingredientsList)}
             {shouldDisplayNewIngredient && addIngredientContent}
             {getCakeTypeSection()}
-            {getUploadImageSection()}
+            {isEditMode && getUploadImageSection()}
 
         </div >
     }

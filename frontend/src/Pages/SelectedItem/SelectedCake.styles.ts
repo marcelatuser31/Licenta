@@ -9,7 +9,7 @@ export const titleStyle: string = mergeStyles({
     color: 'black',
     position: "relative",
     top: "30px",
-    fontFamily: 'Brush Script MT',
+    fontFamily: DEFAULT_FONT,
     width: 600
 })
 
@@ -27,7 +27,8 @@ export const valueStyle: string = mergeStyles({
     fontWeight: 600,
     color: "Black",
     left: 30,
-    width: 100
+    width: 100,
+    fontFamily: DEFAULT_FONT
 })
 
 export const labelStyle: string = mergeStyles({

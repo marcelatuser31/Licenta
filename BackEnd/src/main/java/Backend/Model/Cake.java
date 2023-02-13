@@ -21,7 +21,6 @@ public class Cake implements Serializable {
     @Id
     @GenericGenerator(name="UUID", strategy = "uuid2")
     @GeneratedValue(generator = "UUID")
-
     private UUID id;
     private String name;
     private Float price;

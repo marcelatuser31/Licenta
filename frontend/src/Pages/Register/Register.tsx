@@ -43,7 +43,12 @@ export const Register = (): JSX.Element => {
     }
 
     const onClick = async (): Promise<void> => {
-        if ((person.name === "") || (person.address === "") || (person.phone === "") || (person.role.username === "") || (person.role.password === "") || (person.role.email == "")) {
+        if ((person.name === "")
+            || (person.address === "")
+            || (person.phone === "")
+            || (person.role.username === "")
+            || (person.role.password === "")
+            || (person.role.email == "")) {
             getMessage(SweetAlertIcon.Error, ERROR_MESSAGE, "All fields requierd")
         }
         else {

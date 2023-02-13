@@ -35,11 +35,19 @@ public class PersonServiceImplementation implements PersonService {
 
     @Override
     public void register(Person person) {
-        Person newPerson=new Person(UUID.randomUUID(),person.getName(),person.getAddress(),person.getPhone(),person.getRole(), person.isActive(), null);
+        Person newPerson=new Person(UUID.randomUUID(),
+                person.getName(),
+                person.getAddress(),
+                person.getPhone(),
+                person.getRole(),
+                person.isActive(),
+                null);
         personRepository.save(newPerson);
 
-        String message = "Username-ul tau este " + person.getRole().getUsername() + " si parola" + person.getRole().getPassword();
-//        sendEmail(person.getRole().getEmail(), message, "New Account");
+        String message = "Username-ul tau este " + person.getRole().getUsername()
+                + " si parola"
+                + person.getRole().getPassword();
+        sendEmail(person.getRole().getEmail(), message, "New Account");
     }
 
     @Override
@@ -73,7 +81,6 @@ public class PersonServiceImplementation implements PersonService {
             }
         });
 
-        //Start our mail message
         MimeMessage msg = new MimeMessage(session);
         try {
             msg.setFrom(new InternetAddress(username));

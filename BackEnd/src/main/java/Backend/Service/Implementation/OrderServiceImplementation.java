@@ -82,7 +82,13 @@ public class OrderServiceImplementation implements OrderService {
         }
 
         Person person = personRepository.findFirstById(orderDTO.getId());
-        Order order = new Order(UUID.randomUUID(), person, cakeList, drinkList, LocalDateTime.now(), orderDTO.getAddress(), orderDTO.getPaymentMethod());
+        Order order = new Order(UUID.randomUUID(),
+                person,
+                cakeList,
+                drinkList,
+                LocalDateTime.now(),
+                orderDTO.getAddress(),
+                orderDTO.getPaymentMethod());
         orderRepository.save(order);
 
         Float suma;
@@ -118,7 +124,7 @@ public class OrderServiceImplementation implements OrderService {
         }
 
         String message = "Comanda a fost plasata cu succes." + "<br/>" + "Valoarea comenzii este " + suma + " RON." + "<br/>" + "Produsele comandate sunt:" + "<br/>" + orderList;
-//        personServiceImplementation.sendEmail(person.getRole().getEmail(), message, "Add Order");
+        personServiceImplementation.sendEmail(person.getRole().getEmail(), message, "Add Order");
         return new OrderResponseDTO(suma, errorMessages);
     }
 

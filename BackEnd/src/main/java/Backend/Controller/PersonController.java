@@ -31,7 +31,7 @@ public class PersonController {
 
     @PostMapping("/register")
     public void register(@RequestBody Person person) {
-        personServiceImplementation.register(person);
+     personServiceImplementation.register(person);
     }
 
     @PostMapping("/update")

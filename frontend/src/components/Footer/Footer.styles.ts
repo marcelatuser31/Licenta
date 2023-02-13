@@ -1,5 +1,5 @@
 import { mergeStyles } from "@fluentui/merge-styles";
-import { DEFAULT_COLOR } from "../../Utils/constants";
+import { DEFAULT_COLOR, DEFAULT_FONT } from "../../Utils/constants";
 
 export const footerStyle: string = mergeStyles({
     marginTop: "6rem",
@@ -19,7 +19,7 @@ export const textStyle: string = mergeStyles({
     fontSize: "1.1vw",
     fontWeight: 600,
     color: "Black",
-    fontFamily: "Georgia",
+    fontFamily: DEFAULT_FONT,
     width: 350
 })
 
