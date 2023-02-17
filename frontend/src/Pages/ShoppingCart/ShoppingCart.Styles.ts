@@ -11,7 +11,7 @@ export const listStyle: string = mergeStyles({
 
 export const boxStyle: CSSProperties = {
     height: '700px',
-    width: '65%'
+    width: '80%'
 }
 
 export const outerDiv: string = mergeStyles({

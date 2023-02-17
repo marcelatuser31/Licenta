@@ -12,13 +12,13 @@ export const footerStyle: string = mergeStyles({
 })
 
 export const iconStyle: string = mergeStyles({
-    color: "white"
+    color: "Black"
 })
 
 export const textStyle: string = mergeStyles({
     fontSize: "1.1vw",
     fontWeight: 600,
-    color: "Black",
+    color: "White",
     fontFamily: DEFAULT_FONT,
     width: 350
 })

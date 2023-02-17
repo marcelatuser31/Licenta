@@ -108,7 +108,7 @@ export const Profile = (): JSX.Element => {
             <StackItem className={photoStackStyle}>
                 <Stack gap="20">
                     <StackItem>
-                        <img width={260} height={300} alt={'Not found'} src={getImageURLfromByteArray(person?.image) || DEFAULT_PROFILE_PHOTO}></img>
+                        <img width={280} height={300} alt={'Not found'} src={getImageURLfromByteArray(person?.image) || DEFAULT_PROFILE_PHOTO}></img>
                     </StackItem>
                     <StackItem>
                         <div className={outerDiv}>
@@ -123,7 +123,7 @@ export const Profile = (): JSX.Element => {
                 </Stack>
             </StackItem>
             <StackItem className={informationStackStyle}>
-                <Stack gap="5" >
+                <Stack gap="20" >
                     <StackItem className={sectionTitleStyle}>
                         General Information
                     </StackItem>

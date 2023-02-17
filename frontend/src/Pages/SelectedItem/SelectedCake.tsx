@@ -119,11 +119,12 @@ export const SelectedCake = (): JSX.Element => {
                     <Section name={"Weight:"} contentValue={getWeightContent()} gap={10} />
                     <Section name={"Ingredients:"} contentValue={getIngredientsContent()} />
                     <Section name={"Cake Message:"} contentValue={getMessageContent()} gap={10} />
-                    {person.role.type == RoleType.Admin
-                        ? <Section name={"Upload Photo:"} contentValue={getUploadContent()} gap={10} />
-                        : <StackItem align="center">
+                    {person.role.type == RoleType.Client
+                        // ? <Section name={"Upload Photo:"} contentValue={getUploadContent()} gap={10} />
+                        ? <StackItem align="center">
                             <Button variant="contained" className={addToCartStyle} endIcon={<ShoppingCartCheckoutIcon />} onClick={onAddToCart} >Add to cart</Button>
-                        </StackItem>}
+                        </StackItem>
+                        : undefined}
                 </Stack>
             </StackItem>
         </Stack >

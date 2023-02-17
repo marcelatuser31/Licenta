@@ -44,8 +44,8 @@ public class PersonServiceImplementation implements PersonService {
                 null);
         personRepository.save(newPerson);
 
-        String message = "Username-ul tau este " + person.getRole().getUsername()
-                + " si parola"
+        String message = "Your username is: " + person.getRole().getUsername()
+                + ", and your password is: "
                 + person.getRole().getPassword();
         sendEmail(person.getRole().getEmail(), message, "New Account");
     }

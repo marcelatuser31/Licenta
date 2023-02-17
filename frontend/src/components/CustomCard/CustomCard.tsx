@@ -10,13 +10,16 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IIngredient } from "../../Utils/Models/IIngredient"
 import { avatarStyle, cardHeaderStyle, cardStyle, ingredientsNameStyle } from "./CustomCard.styles"
 import { NavigateFunction, useNavigate } from "react-router-dom"
-import { FAVORITE_ITEMS_LIST_KEY } from "../../Utils/constants"
+import { FAVORITE_ITEMS_LIST_KEY, PERSON_KEY } from "../../Utils/constants"
 import { Stack } from "@fluentui/react"
+import { IPerson } from "../../Utils/Models/IPerson"
+import { RoleType } from "../../Utils/enums"
 
 export const CustomCard = (props: ICardProps): JSX.Element => {
     const [expanded, setExpanded] = React.useState(false);
     const navigate: NavigateFunction = useNavigate()
     const [isFavorite, setIsFavorite] = useState<Boolean>(props.isFavorite)
+    const person: IPerson = JSON.parse(localStorage.getItem(PERSON_KEY) as string)
 
     React.useEffect(() => {
         setIsFavorite(props.isFavorite)
@@ -99,9 +102,10 @@ export const CustomCard = (props: ICardProps): JSX.Element => {
                 <CardContent>
                 </CardContent>
                 <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                        <FavoriteIcon color={isFavorite ? "error" : "inherit"} onClick={onFavoriteIcon} />
-                    </IconButton>
+                    {person.role.type == RoleType.Client &&
+                        <IconButton aria-label="add to favorites">
+                            <FavoriteIcon color={isFavorite ? "error" : "inherit"} onClick={onFavoriteIcon} />
+                        </IconButton>}
                     <IconButton aria-label="share">
                         <ShareIcon />
                     </IconButton>

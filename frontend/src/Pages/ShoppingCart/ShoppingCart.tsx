@@ -212,6 +212,6 @@ export const ShoppingCart = (): JSX.Element => {
                 </Box>
             </div>
         </StackItem>
-        <CustomDialog height={selectedPaymentMethod === CASH_ON_DELIVERY ? 300 : 600} width={500} openDialog={openDialog} title={"Add Order"} content={dialogContent} onClose={() => setOpenDialog(false)} onSubmit={onSave}></CustomDialog>
+        <CustomDialog height={selectedPaymentMethod === CASH_ON_DELIVERY ? 300 : 650} width={500} openDialog={openDialog} title={"Add Order"} content={dialogContent} onClose={() => setOpenDialog(false)} onSubmit={onSave}></CustomDialog>
     </Stack >
 }

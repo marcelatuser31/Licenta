@@ -123,7 +123,7 @@ public class OrderServiceImplementation implements OrderService {
             orderList = orderList + newItem;
         }
 
-        String message = "Comanda a fost plasata cu succes." + "<br/>" + "Valoarea comenzii este " + suma + " RON." + "<br/>" + "Produsele comandate sunt:" + "<br/>" + orderList;
+        String message = "Your order has been placed successfully." + "<br/>" + "You have to pay " + suma + " RON." + "<br/>" + "Your order:" + "<br/>" + orderList;
         personServiceImplementation.sendEmail(person.getRole().getEmail(), message, "Add Order");
         return new OrderResponseDTO(suma, errorMessages);
     }
