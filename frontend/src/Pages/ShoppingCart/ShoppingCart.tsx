@@ -174,7 +174,7 @@ export const ShoppingCart = (): JSX.Element => {
                 newDrinks = newDrinks.filter((drink: IItem) => item.id !== drink.id)
             }
             else {
-                newCakes = newCakes.filter((cake: IItem) => item.id !== cake.id)
+                newCakes = newCakes.filter((cake: IItem) => item.id !== cake.id + (cake.price * cake.weight) + cake.cakeMessage + cake.weight)
             }
         })
         localStorage.setItem(ORDER_LIST_KEY, JSON.stringify({ cakes: newCakes, drinks: newDrinks }))

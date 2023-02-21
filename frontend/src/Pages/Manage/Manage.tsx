@@ -8,7 +8,7 @@ import { ICake } from "../../Utils/Models/ICake"
 import { IDrink } from "../../Utils/Models/IDrink"
 import { IIngredient } from "../../Utils/Models/IIngredient"
 import { CakeRoutes, DrinkRoutes, IngredientRoutes } from "../../Utils/Routes/backEndRoutes"
-import { ADD_MESSAGE, CAKE, DRINK, SUCCESSFULLY } from "../../Utils/constants"
+import { ADD_MESSAGE, CAKE, DRINK, EDIT_MESSAGE, SUCCESSFULLY } from "../../Utils/constants"
 import { ItemField, SweetAlertIcon } from "../../Utils/enums"
 import { getMessage, onUploadPhoto, reloadPage } from "../../Utils/methods"
 import { CustomDialog } from "../../components/CustomDialog/CustomDialog"
@@ -153,7 +153,7 @@ export const Manage = (): JSX.Element => {
             type: type
         }
         const response = await axios.post(path, cake);
-        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, ADD_MESSAGE)
+        getMessage(SweetAlertIcon.Succes, SUCCESSFULLY, isEditMode ? EDIT_MESSAGE : ADD_MESSAGE)
         setCakes(response.data)
 
         const r = await axios.get(IngredientRoutes.GetAll);
@@ -357,6 +357,7 @@ export const Manage = (): JSX.Element => {
 
         const responseDrinks = await axios.get(DrinkRoutes.GetAll);
         setDrinks(responseDrinks.data)
+        reloadPage()
     }
 
     return <>

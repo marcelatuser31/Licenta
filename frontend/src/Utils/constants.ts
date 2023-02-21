@@ -19,6 +19,7 @@ export const SUCCESSFULLY: string = 'Successfully'
 export const ERROR_MESSAGE: string = '...Ooops'
 export const ADD_ORDER_MESSAGE: string = 'Your order has been placed'
 export const ADD_MESSAGE: string = 'Item has been added'
+export const EDIT_MESSAGE: string = 'Item has been edited'
 export const LOGIN_MESSAGE: string = "Username or password didn't match"
 export const REGISTER_MESSAGE: string = "All fields are requierd"
 export const FORGOT_PASSWORD_MESSAGE: string = "Password was sent"
